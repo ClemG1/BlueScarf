@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_2Yt0wP8HEemfJIBnJqP07A" name="customProfil">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_2ZdboP8HEemfJIBnJqP07A">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Package" xmi:id="_3wvXoP8HEemfJIBnJqP07A" name="ProfilSystem">
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_HfZB0P8IEemfJIBnJqP07A" name="ChooseUserName"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_KC5gYP8IEemfJIBnJqP07A" name="ChoosePassword"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_XfQ-4P8IEemfJIBnJqP07A" name="GiveAdressMail"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_cgW6MP8IEemfJIBnJqP07A" name="ChooseProfilPicture"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_6BfSQP8HEemfJIBnJqP07A" name="HumanUser"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_MRW8AP8IEemfJIBnJqP07A" memberEnd="_MRW8A_8IEemfJIBnJqP07A _MRW8BP8IEemfJIBnJqP07A">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_MRW8Af8IEemfJIBnJqP07A" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_MRW8Av8IEemfJIBnJqP07A" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_MRW8A_8IEemfJIBnJqP07A" name="chooseusername" type="_HfZB0P8IEemfJIBnJqP07A" association="_MRW8AP8IEemfJIBnJqP07A"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_MRW8BP8IEemfJIBnJqP07A" name="humanuser" type="_6BfSQP8HEemfJIBnJqP07A" association="_MRW8AP8IEemfJIBnJqP07A"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_M0ca8P8IEemfJIBnJqP07A" memberEnd="_M0ca8_8IEemfJIBnJqP07A _M0ca9P8IEemfJIBnJqP07A">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_M0ca8f8IEemfJIBnJqP07A" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_M0ca8v8IEemfJIBnJqP07A" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_M0ca8_8IEemfJIBnJqP07A" name="choosepassword" type="_KC5gYP8IEemfJIBnJqP07A" association="_M0ca8P8IEemfJIBnJqP07A"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_M0ca9P8IEemfJIBnJqP07A" name="humanuser" type="_6BfSQP8HEemfJIBnJqP07A" association="_M0ca8P8IEemfJIBnJqP07A"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_b29X4P8IEemfJIBnJqP07A" memberEnd="_b29X4_8IEemfJIBnJqP07A _b29X5P8IEemfJIBnJqP07A">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_b29X4f8IEemfJIBnJqP07A" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_b29X4v8IEemfJIBnJqP07A" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_b29X4_8IEemfJIBnJqP07A" name="giveadressmail" type="_XfQ-4P8IEemfJIBnJqP07A" association="_b29X4P8IEemfJIBnJqP07A"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_b29X5P8IEemfJIBnJqP07A" name="humanuser" type="_6BfSQP8HEemfJIBnJqP07A" association="_b29X4P8IEemfJIBnJqP07A"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_lNBIUP8IEemfJIBnJqP07A" memberEnd="_lNBIU_8IEemfJIBnJqP07A _lNBIVP8IEemfJIBnJqP07A">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_lNBIUf8IEemfJIBnJqP07A" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_lNBIUv8IEemfJIBnJqP07A" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_lNBIU_8IEemfJIBnJqP07A" name="chooseprofilpicture" type="_cgW6MP8IEemfJIBnJqP07A" association="_lNBIUP8IEemfJIBnJqP07A"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_lNBIVP8IEemfJIBnJqP07A" name="humanuser" type="_6BfSQP8HEemfJIBnJqP07A" association="_lNBIUP8IEemfJIBnJqP07A"/>
+  </packagedElement>
+</uml:Model>
