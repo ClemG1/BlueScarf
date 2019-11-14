@@ -1,0 +1,8 @@
+### This file is used to put all notes and ideas that could appear during the design process ###
+
++ need to use a P2P system
+	* we might use supernodes to supervise an area network (by using admin computers for example)
+
++ we can't use a local datbase for each workstation because of the limit size condition (50 MO)
+
+

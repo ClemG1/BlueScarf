@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_jM1qkAauEeq7jo3X-wBDxw" name="config">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_jUJMcAauEeq7jo3X-wBDxw">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Package" xmi:id="_kuBwgAauEeq7jo3X-wBDxw" name="workStation">
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_k0UwUAavEeq7jo3X-wBDxw" name="installJavaVirtualMachine"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_qIvQQAavEeq7jo3X-wBDxw" name="installAppFiles"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_n_aowAauEeq7jo3X-wBDxw" name="Admin"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_pghZsAavEeq7jo3X-wBDxw" memberEnd="_pghZswavEeq7jo3X-wBDxw _pghZtAavEeq7jo3X-wBDxw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_pghZsQavEeq7jo3X-wBDxw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_pghZsgavEeq7jo3X-wBDxw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_pghZswavEeq7jo3X-wBDxw" name="installjavavirtualmachine" type="_k0UwUAavEeq7jo3X-wBDxw" association="_pghZsAavEeq7jo3X-wBDxw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_pghZtAavEeq7jo3X-wBDxw" name="admin" type="_n_aowAauEeq7jo3X-wBDxw" association="_pghZsAavEeq7jo3X-wBDxw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_taO2MAavEeq7jo3X-wBDxw" memberEnd="_taO2MwavEeq7jo3X-wBDxw _taO2NAavEeq7jo3X-wBDxw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_taO2MQavEeq7jo3X-wBDxw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_taO2MgavEeq7jo3X-wBDxw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_taO2MwavEeq7jo3X-wBDxw" name="installappfiles" type="_qIvQQAavEeq7jo3X-wBDxw" association="_taO2MAavEeq7jo3X-wBDxw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_taO2NAavEeq7jo3X-wBDxw" name="admin" type="_n_aowAauEeq7jo3X-wBDxw" association="_taO2MAavEeq7jo3X-wBDxw"/>
+  </packagedElement>
+</uml:Model>
