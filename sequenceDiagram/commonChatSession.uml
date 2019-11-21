@@ -4,41 +4,22 @@
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
   <packagedElement xmi:type="uml:Interaction" xmi:id="_ZzpUUQazEeq7jo3X-wBDxw" name="Interaction1">
-    <ownedComment xmi:type="uml:Comment" xmi:id="_4WMlwAa1Eeq7jo3X-wBDxw">
-      <body>Here the chat system is an abstraction of the P2P system. In reality when a new user is connecting to the app, he scans all the online user thanks to a super nodes system.&#xD;
-</body>
-    </ownedComment>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_68CcEQa0Eeq7jo3X-wBDxw" name="" type="_ZzpUUQazEeq7jo3X-wBDxw"/>
-    <lifeline xmi:type="uml:Lifeline" xmi:id="_bDE74AazEeq7jo3X-wBDxw" name="humanUser" coveredBy="_tkIcQAazEeq7jo3X-wBDxw _-6jRUQa6Eeqc6O3qZD-kZg _-6jRUAa6Eeqc6O3qZD-kZg _6FUAsga6Eeqc6O3qZD-kZg _2Erc0Qa6Eeqc6O3qZD-kZg"/>
-    <lifeline xmi:type="uml:Lifeline" xmi:id="_dxC-AAazEeq7jo3X-wBDxw" name="chatSystem" coveredBy="_tkIcQQazEeq7jo3X-wBDxw _kR9Q0Qa0Eeq7jo3X-wBDxw _tld5AAazEeq7jo3X-wBDxw _kRzf1ga0Eeq7jo3X-wBDxw"/>
-    <lifeline xmi:type="uml:Lifeline" xmi:id="_e5TmkAazEeq7jo3X-wBDxw" name="dataBase" coveredBy="_ulH30ga2Eeq7jo3X-wBDxw _Vbg5oQa3Eeq7jo3X-wBDxw _UZpM8Aa3Eeq7jo3X-wBDxw"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_e5TmkAazEeq7jo3X-wBDxw" name="centralDataBase" coveredBy="_ulH30ga2Eeq7jo3X-wBDxw _Vbg5oQa3Eeq7jo3X-wBDxw"/>
     <lifeline xmi:type="uml:Lifeline" xmi:id="_hEzNwAazEeq7jo3X-wBDxw" name="systemClock"/>
-    <lifeline xmi:type="uml:Lifeline" xmi:id="_eWPgUAa0Eeq7jo3X-wBDxw" name="humanUser2" coveredBy="_kRgk4Qa0Eeq7jo3X-wBDxw _kR9Q0ga0Eeq7jo3X-wBDxw _CMLeUga0Eeq7jo3X-wBDxw"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_eWPgUAa0Eeq7jo3X-wBDxw" name="humanUser2" coveredBy="_kRgk4Qa0Eeq7jo3X-wBDxw"/>
     <lifeline xmi:type="uml:Lifeline" xmi:id="_68CcEAa0Eeq7jo3X-wBDxw" name="" represents="_68CcEQa0Eeq7jo3X-wBDxw"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_tkIcQAazEeq7jo3X-wBDxw" name="Message5SendEvent" covered="_bDE74AazEeq7jo3X-wBDxw" message="_tj1hUAazEeq7jo3X-wBDxw"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_tkIcQQazEeq7jo3X-wBDxw" name="Message5ReceiveEvent" covered="_dxC-AAazEeq7jo3X-wBDxw" message="_tj1hUAazEeq7jo3X-wBDxw"/>
-    <fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="_tld5AAazEeq7jo3X-wBDxw" name="BehaviorExecutionSpecification8" covered="_dxC-AAazEeq7jo3X-wBDxw" start="_tkIcQQazEeq7jo3X-wBDxw"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_kR9Q0Qa0Eeq7jo3X-wBDxw" name="Message21SendEvent" covered="_dxC-AAazEeq7jo3X-wBDxw" message="_kR9Q0Aa0Eeq7jo3X-wBDxw"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_ulH30ga2Eeq7jo3X-wBDxw" name="Message26ReceiveEvent" covered="_e5TmkAazEeq7jo3X-wBDxw" message="_ulH30Aa2Eeq7jo3X-wBDxw"/>
-    <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_UZpM8Aa3Eeq7jo3X-wBDxw" name="ActionExecutionSpecification31" covered="_e5TmkAazEeq7jo3X-wBDxw" finish="_Vbg5oQa3Eeq7jo3X-wBDxw" start="_ulH30ga2Eeq7jo3X-wBDxw"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_Vbg5oQa3Eeq7jo3X-wBDxw" name="Message33SendEvent" covered="_e5TmkAazEeq7jo3X-wBDxw" message="_Vbg5oAa3Eeq7jo3X-wBDxw"/>
-    <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_-6jRUQa6Eeqc6O3qZD-kZg" name="ActionExecutionSpecification35Finish" covered="_bDE74AazEeq7jo3X-wBDxw" execution="_-6jRUAa6Eeqc6O3qZD-kZg"/>
     <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_zQO_QQa6Eeqc6O3qZD-kZg"/>
-    <fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="_kRzf1ga0Eeq7jo3X-wBDxw" name="BehaviorExecutionSpecification19" covered="_dxC-AAazEeq7jo3X-wBDxw" finish="_kR9Q0Qa0Eeq7jo3X-wBDxw"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_ulH30Qa2Eeq7jo3X-wBDxw" name="Message26SendEvent" message="_ulH30Aa2Eeq7jo3X-wBDxw"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_CMLeUQa0Eeq7jo3X-wBDxw" name="Message12SendEvent" message="_CMLeUAa0Eeq7jo3X-wBDxw"/>
-    <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_-6jRUAa6Eeqc6O3qZD-kZg" name="ActionExecutionSpecification35" covered="_bDE74AazEeq7jo3X-wBDxw" finish="_-6jRUQa6Eeqc6O3qZD-kZg" start="_CMLeUQa0Eeq7jo3X-wBDxw"/>
-    <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_2Erc0Qa6Eeqc6O3qZD-kZg" covered="_bDE74AazEeq7jo3X-wBDxw"/>
-    <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_6FUAsga6Eeqc6O3qZD-kZg" covered="_bDE74AazEeq7jo3X-wBDxw"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_kRgk4Qa0Eeq7jo3X-wBDxw" name="Message16SendEvent" covered="_eWPgUAa0Eeq7jo3X-wBDxw" message="_kRgk4Aa0Eeq7jo3X-wBDxw"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_kR9Q0ga0Eeq7jo3X-wBDxw" name="Message21ReceiveEvent" covered="_eWPgUAa0Eeq7jo3X-wBDxw" message="_kR9Q0Aa0Eeq7jo3X-wBDxw"/>
+    <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_-nXiQAwuEeqA-_9smV4mfg"/>
     <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_c4dzYAa3Eeq7jo3X-wBDxw"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_CMLeUga0Eeq7jo3X-wBDxw" name="Message12ReceiveEvent" covered="_eWPgUAa0Eeq7jo3X-wBDxw" message="_CMLeUAa0Eeq7jo3X-wBDxw"/>
-    <message xmi:type="uml:Message" xmi:id="_tj1hUAazEeq7jo3X-wBDxw" name="connect()" receiveEvent="_tkIcQQazEeq7jo3X-wBDxw" sendEvent="_tkIcQAazEeq7jo3X-wBDxw"/>
     <message xmi:type="uml:Message" xmi:id="_tlnqAAazEeq7jo3X-wBDxw" name="displayOnlineUser()" messageSort="reply"/>
-    <message xmi:type="uml:Message" xmi:id="_CMLeUAa0Eeq7jo3X-wBDxw" name="StartChatSessionWith(username)" messageSort="asynchCall" receiveEvent="_CMLeUga0Eeq7jo3X-wBDxw" sendEvent="_CMLeUQa0Eeq7jo3X-wBDxw"/>
+    <message xmi:type="uml:Message" xmi:id="_CMLeUAa0Eeq7jo3X-wBDxw" name="StartChatSessionWith(username)" messageSort="asynchCall" sendEvent="_CMLeUQa0Eeq7jo3X-wBDxw"/>
     <message xmi:type="uml:Message" xmi:id="_kRgk4Aa0Eeq7jo3X-wBDxw" name="connect()" sendEvent="_kRgk4Qa0Eeq7jo3X-wBDxw"/>
-    <message xmi:type="uml:Message" xmi:id="_kR9Q0Aa0Eeq7jo3X-wBDxw" name="displayOnlineUser()" messageSort="reply" receiveEvent="_kR9Q0ga0Eeq7jo3X-wBDxw" sendEvent="_kR9Q0Qa0Eeq7jo3X-wBDxw"/>
     <message xmi:type="uml:Message" xmi:id="_ulH30Aa2Eeq7jo3X-wBDxw" name="retrieveMessageHistory(User1,User2)" messageSort="asynchCall" receiveEvent="_ulH30ga2Eeq7jo3X-wBDxw" sendEvent="_ulH30Qa2Eeq7jo3X-wBDxw"/>
     <message xmi:type="uml:Message" xmi:id="_Vbg5oAa3Eeq7jo3X-wBDxw" name="giveMessageHistory()" messageSort="asynchCall" sendEvent="_Vbg5oQa3Eeq7jo3X-wBDxw"/>
   </packagedElement>
