@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_kOYYEAz5Eeq8iaKpUJPmQw" name="displayOnlineUsers">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_kPa54Az5Eeq8iaKpUJPmQw">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_kOrTAAz5Eeq8iaKpUJPmQw" name="Interaction1">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_EjHDsAz6Eeq8iaKpUJPmQw">
+      <body>Function to minimize picture size&#xD;
+We aim at the same size as favicon</body>
+    </ownedComment>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_ooLp4Az5Eeq8iaKpUJPmQw" name="localFilesUser1" coveredBy="_x43yIQz5Eeq8iaKpUJPmQw _5n1B4gz5Eeq8iaKpUJPmQw _9Iw8kQz6Eeq8iaKpUJPmQw"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_rBRBIAz5Eeq8iaKpUJPmQw" name="ConfigClass" coveredBy="_x43yIgz5Eeq8iaKpUJPmQw _5n1B4Qz5Eeq8iaKpUJPmQw"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_wvt8QAz6Eeq8iaKpUJPmQw" name="HumanUser2" coveredBy="_9Iw8kgz6Eeq8iaKpUJPmQw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_x43yIQz5Eeq8iaKpUJPmQw" name="Message3SendEvent" covered="_ooLp4Az5Eeq8iaKpUJPmQw" message="_x43yIAz5Eeq8iaKpUJPmQw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_x43yIgz5Eeq8iaKpUJPmQw" name="Message3ReceiveEvent" covered="_rBRBIAz5Eeq8iaKpUJPmQw" message="_x43yIAz5Eeq8iaKpUJPmQw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_5n1B4Qz5Eeq8iaKpUJPmQw" name="Message6SendEvent" covered="_rBRBIAz5Eeq8iaKpUJPmQw" message="_5n1B4Az5Eeq8iaKpUJPmQw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_5n1B4gz5Eeq8iaKpUJPmQw" name="Message6ReceiveEvent" covered="_ooLp4Az5Eeq8iaKpUJPmQw" message="_5n1B4Az5Eeq8iaKpUJPmQw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_9Iw8kQz6Eeq8iaKpUJPmQw" name="Message11SendEvent" covered="_ooLp4Az5Eeq8iaKpUJPmQw" message="_9Iw8kAz6Eeq8iaKpUJPmQw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_9Iw8kgz6Eeq8iaKpUJPmQw" name="Message11ReceiveEvent" covered="_wvt8QAz6Eeq8iaKpUJPmQw" message="_9Iw8kAz6Eeq8iaKpUJPmQw"/>
+    <message xmi:type="uml:Message" xmi:id="_x43yIAz5Eeq8iaKpUJPmQw" name="AskConfig" messageSort="asynchCall" receiveEvent="_x43yIgz5Eeq8iaKpUJPmQw" sendEvent="_x43yIQz5Eeq8iaKpUJPmQw"/>
+    <message xmi:type="uml:Message" xmi:id="_5n1B4Az5Eeq8iaKpUJPmQw" name="GiveCustomUser" messageSort="asynchCall" receiveEvent="_5n1B4gz5Eeq8iaKpUJPmQw" sendEvent="_5n1B4Qz5Eeq8iaKpUJPmQw"/>
+    <message xmi:type="uml:Message" xmi:id="_9Iw8kAz6Eeq8iaKpUJPmQw" name="scanToConnectUser(MinimumConfig)" messageSort="asynchCall" receiveEvent="_9Iw8kgz6Eeq8iaKpUJPmQw" sendEvent="_9Iw8kQz6Eeq8iaKpUJPmQw"/>
+  </packagedElement>
+</uml:Model>

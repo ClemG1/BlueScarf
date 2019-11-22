@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/papyrus/infra/gmfdiag/style" xmi:id="_kOrTAQz5Eeq8iaKpUJPmQw" type="PapyrusUMLSequenceDiagram" name="Sequence Diagram" measurementUnit="Pixel">
+  <children xsi:type="notation:Shape" xmi:id="_kOrTAgz5Eeq8iaKpUJPmQw" type="Interaction_Shape">
+    <children xsi:type="notation:DecorationNode" xmi:id="_kOrTAwz5Eeq8iaKpUJPmQw" type="Interaction_NameLabel"/>
+    <children xsi:type="notation:BasicCompartment" xmi:id="_kOrTBAz5Eeq8iaKpUJPmQw" type="Interaction_SubfragmentCompartment">
+      <children xsi:type="notation:Shape" xmi:id="_ooUz0Az5Eeq8iaKpUJPmQw" type="Lifeline_Shape">
+        <children xsi:type="notation:DecorationNode" xmi:id="_ooUz0gz5Eeq8iaKpUJPmQw" type="Lifeline_NameLabel"/>
+        <element href="displayOnlineUsers.uml#_ooLp4Az5Eeq8iaKpUJPmQw"/>
+        <layoutConstraint xsi:type="notation:Bounds" xmi:id="_ooUz0Qz5Eeq8iaKpUJPmQw" x="274" y="10"/>
+      </children>
+      <children xsi:type="notation:Shape" xmi:id="_rBRBIQz5Eeq8iaKpUJPmQw" type="Lifeline_Shape">
+        <children xsi:type="notation:DecorationNode" xmi:id="_rBRBIwz5Eeq8iaKpUJPmQw" type="Lifeline_NameLabel"/>
+        <element href="displayOnlineUsers.uml#_rBRBIAz5Eeq8iaKpUJPmQw"/>
+        <layoutConstraint xsi:type="notation:Bounds" xmi:id="_rBRBIgz5Eeq8iaKpUJPmQw" x="434" y="10"/>
+      </children>
+      <children xsi:type="notation:Shape" xmi:id="_EjHDsQz6Eeq8iaKpUJPmQw" type="Comment_Shape">
+        <children xsi:type="notation:DecorationNode" xmi:id="_EjHDswz6Eeq8iaKpUJPmQw" type="Comment_BodyLabel"/>
+        <element href="displayOnlineUsers.uml#_EjHDsAz6Eeq8iaKpUJPmQw"/>
+        <layoutConstraint xsi:type="notation:Bounds" xmi:id="_EjHDsgz6Eeq8iaKpUJPmQw" x="674" y="36" width="161"/>
+      </children>
+      <children xsi:type="notation:Shape" xmi:id="_wv3tQAz6Eeq8iaKpUJPmQw" type="Lifeline_Shape">
+        <children xsi:type="notation:DecorationNode" xmi:id="_wv3tQgz6Eeq8iaKpUJPmQw" type="Lifeline_NameLabel"/>
+        <element href="displayOnlineUsers.uml#_wvt8QAz6Eeq8iaKpUJPmQw"/>
+        <layoutConstraint xsi:type="notation:Bounds" xmi:id="_wv3tQQz6Eeq8iaKpUJPmQw" x="34" y="10"/>
+      </children>
+      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_kOrTBQz5Eeq8iaKpUJPmQw"/>
+    </children>
+    <element href="displayOnlineUsers.uml#_kOrTAAz5Eeq8iaKpUJPmQw"/>
+    <layoutConstraint xsi:type="notation:Bounds" xmi:id="_kOrTBgz5Eeq8iaKpUJPmQw"/>
+  </children>
+  <styles xsi:type="notation:StringValueStyle" xmi:id="_kOrTBwz5Eeq8iaKpUJPmQw" name="diagram_compatibility_version" stringValue="1.4.0"/>
+  <styles xsi:type="notation:DiagramStyle" xmi:id="_kOrTCAz5Eeq8iaKpUJPmQw"/>
+  <styles xsi:type="style:PapyrusDiagramStyle" xmi:id="_kOrTCQz5Eeq8iaKpUJPmQw" diagramKindId="org.eclipse.papyrus.uml.diagram.sequence">
+    <owner href="displayOnlineUsers.uml#_kOYYEAz5Eeq8iaKpUJPmQw"/>
+  </styles>
+  <element href="displayOnlineUsers.uml#_kOrTAAz5Eeq8iaKpUJPmQw"/>
+  <edges xsi:type="notation:Connector" xmi:id="_x43yIwz5Eeq8iaKpUJPmQw" type="Message_AsynchEdge" source="_ooUz0Az5Eeq8iaKpUJPmQw" target="_rBRBIQz5Eeq8iaKpUJPmQw">
+    <children xsi:type="notation:DecorationNode" xmi:id="_x43yJgz5Eeq8iaKpUJPmQw" type="Message_AsynchNameLabel">
+      <layoutConstraint xsi:type="notation:Location" xmi:id="_x43yJwz5Eeq8iaKpUJPmQw" x="1" y="-13"/>
+    </children>
+    <children xsi:type="notation:DecorationNode" xmi:id="_x43yKAz5Eeq8iaKpUJPmQw" type="Message_AsynchStereotypeLabel">
+      <layoutConstraint xsi:type="notation:Location" xmi:id="_x43yKQz5Eeq8iaKpUJPmQw" x="1" y="-33"/>
+    </children>
+    <styles xsi:type="notation:FontStyle" xmi:id="_x43yJAz5Eeq8iaKpUJPmQw"/>
+    <element href="displayOnlineUsers.uml#_x43yIAz5Eeq8iaKpUJPmQw"/>
+    <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_x43yJQz5Eeq8iaKpUJPmQw" points="[0, 0, -260, 0]$[260, 0, 0, 0]"/>
+    <sourceAnchor xsi:type="notation:IdentityAnchor" xmi:id="_x5KtEAz5Eeq8iaKpUJPmQw" id="(0.5,0.15142857142857144)"/>
+    <targetAnchor xsi:type="notation:IdentityAnchor" xmi:id="_x5KtEQz5Eeq8iaKpUJPmQw" id="(0.5,0.15142857142857144)"/>
+  </edges>
+  <edges xsi:type="notation:Connector" xmi:id="_5n1B4wz5Eeq8iaKpUJPmQw" type="Message_AsynchEdge" source="_rBRBIQz5Eeq8iaKpUJPmQw" target="_ooUz0Az5Eeq8iaKpUJPmQw">
+    <children xsi:type="notation:DecorationNode" xmi:id="_5n1B5gz5Eeq8iaKpUJPmQw" type="Message_AsynchNameLabel">
+      <layoutConstraint xsi:type="notation:Location" xmi:id="_5n1B5wz5Eeq8iaKpUJPmQw" x="1" y="-13"/>
+    </children>
+    <children xsi:type="notation:DecorationNode" xmi:id="_5n1B6Az5Eeq8iaKpUJPmQw" type="Message_AsynchStereotypeLabel">
+      <layoutConstraint xsi:type="notation:Location" xmi:id="_5n1B6Qz5Eeq8iaKpUJPmQw" x="1" y="-33"/>
+    </children>
+    <styles xsi:type="notation:FontStyle" xmi:id="_5n1B5Az5Eeq8iaKpUJPmQw"/>
+    <element href="displayOnlineUsers.uml#_5n1B4Az5Eeq8iaKpUJPmQw"/>
+    <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_5n1B5Qz5Eeq8iaKpUJPmQw" points="[0, 0, 260, 0]$[-260, 0, 0, 0]"/>
+    <sourceAnchor xsi:type="notation:IdentityAnchor" xmi:id="_5n-y4Az5Eeq8iaKpUJPmQw" id="(0.5,0.26571428571428574)"/>
+    <targetAnchor xsi:type="notation:IdentityAnchor" xmi:id="_5n-y4Qz5Eeq8iaKpUJPmQw" id="(0.5,0.26571428571428574)"/>
+  </edges>
+  <edges xsi:type="notation:Connector" xmi:id="_9I6tkAz6Eeq8iaKpUJPmQw" type="Message_AsynchEdge" source="_ooUz0Az5Eeq8iaKpUJPmQw" target="_wv3tQAz6Eeq8iaKpUJPmQw">
+    <children xsi:type="notation:DecorationNode" xmi:id="_9I6tkwz6Eeq8iaKpUJPmQw" type="Message_AsynchNameLabel">
+      <layoutConstraint xsi:type="notation:Location" xmi:id="_9I6tlAz6Eeq8iaKpUJPmQw" x="1" y="-13"/>
+    </children>
+    <children xsi:type="notation:DecorationNode" xmi:id="_9I6tlQz6Eeq8iaKpUJPmQw" type="Message_AsynchStereotypeLabel">
+      <layoutConstraint xsi:type="notation:Location" xmi:id="_9I6tlgz6Eeq8iaKpUJPmQw" x="1" y="-33"/>
+    </children>
+    <styles xsi:type="notation:FontStyle" xmi:id="_9I6tkQz6Eeq8iaKpUJPmQw"/>
+    <element href="displayOnlineUsers.uml#_9Iw8kAz6Eeq8iaKpUJPmQw"/>
+    <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_9I6tkgz6Eeq8iaKpUJPmQw" points="[0, 0, 240, 0]$[-240, 0, 0, 0]"/>
+    <sourceAnchor xsi:type="notation:IdentityAnchor" xmi:id="_9JNogAz6Eeq8iaKpUJPmQw" id="(0.5,0.3514285714285714)"/>
+    <targetAnchor xsi:type="notation:IdentityAnchor" xmi:id="_9JNogQz6Eeq8iaKpUJPmQw" id="(0.5,0.3514285714285714)"/>
+  </edges>
+</notation:Diagram>

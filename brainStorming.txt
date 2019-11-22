@@ -6,3 +6,4 @@
 + we can't use a local datbase for each workstation because of the limit size condition (50 MO)
 
 
++ we can save the username and the user picture always in locals files
