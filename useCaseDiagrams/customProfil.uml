@@ -4,10 +4,11 @@
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
   <packagedElement xmi:type="uml:Package" xmi:id="_3wvXoP8HEemfJIBnJqP07A" name="ProfilSystem">
-    <packagedElement xmi:type="uml:UseCase" xmi:id="_HfZB0P8IEemfJIBnJqP07A" name="ChooseUserName"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_HfZB0P8IEemfJIBnJqP07A" name="ChooseLogIn"/>
     <packagedElement xmi:type="uml:UseCase" xmi:id="_KC5gYP8IEemfJIBnJqP07A" name="ChoosePassword"/>
     <packagedElement xmi:type="uml:UseCase" xmi:id="_XfQ-4P8IEemfJIBnJqP07A" name="GiveAdressMail"/>
     <packagedElement xmi:type="uml:UseCase" xmi:id="_cgW6MP8IEemfJIBnJqP07A" name="ChooseProfilPicture"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_O9EJAA-KEeqC54hOdQhtjg" name="giveNameSurname"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Actor" xmi:id="_6BfSQP8HEemfJIBnJqP07A" name="HumanUser"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_MRW8AP8IEemfJIBnJqP07A" memberEnd="_MRW8A_8IEemfJIBnJqP07A _MRW8BP8IEemfJIBnJqP07A">
@@ -37,5 +38,12 @@
     </eAnnotations>
     <ownedEnd xmi:type="uml:Property" xmi:id="_lNBIU_8IEemfJIBnJqP07A" name="chooseprofilpicture" type="_cgW6MP8IEemfJIBnJqP07A" association="_lNBIUP8IEemfJIBnJqP07A"/>
     <ownedEnd xmi:type="uml:Property" xmi:id="_lNBIVP8IEemfJIBnJqP07A" name="humanuser" type="_6BfSQP8HEemfJIBnJqP07A" association="_lNBIUP8IEemfJIBnJqP07A"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_V1KpQA-KEeqC54hOdQhtjg" memberEnd="_V1KpQw-KEeqC54hOdQhtjg _V1KpRA-KEeqC54hOdQhtjg">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_V1KpQQ-KEeqC54hOdQhtjg" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_V1KpQg-KEeqC54hOdQhtjg" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_V1KpQw-KEeqC54hOdQhtjg" name="givenamesurname" type="_O9EJAA-KEeqC54hOdQhtjg" association="_V1KpQA-KEeqC54hOdQhtjg"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_V1KpRA-KEeqC54hOdQhtjg" name="humanuser" type="_6BfSQP8HEemfJIBnJqP07A" association="_V1KpQA-KEeqC54hOdQhtjg"/>
   </packagedElement>
 </uml:Model>
