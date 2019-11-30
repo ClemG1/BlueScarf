@@ -2,23 +2,28 @@ package localSystem;
 
 import java.io.*;
 
-public class LocalFiles {
+public class LocalFilesManager extends Thread {
 	
 	//Attributes
-	private String path;
-	private String name;
-	private File localFile;
+	private String path; //path to the file
+	private String name; //name of the file
+	private File localFile; //use to stock the File that this class creates
+	private String message; //string that you want to update (write or delete)
+	private char separator; //separator used in the file
 	
 	/*
 	 * @brief : class constructor
 	 * @param : name of the file
 	 * @returns : none
 	 */
-	public LocalFiles (String name, String path) {
+	public LocalFilesManager (String name, String path, String message, char separator) {
 		this.path = path;
 		this.name = name;
 		File file = new File(path + name);
 		this.localFile = file;
+		this.message = message;
+		this.separator = separator;
+		start();
 	}
 	
 	/*
@@ -119,6 +124,11 @@ public class LocalFiles {
 		return message;
 	}
 	
+	/*
+	 * @brief : delete a line in a file
+	 * @param : the file, the string to delete, the separator in the file
+	 * @returns : none
+	 */
 	private void deleteInFile (File file, String toDelete, char separator) {
 		manageReadPermission(file);
 		File tempFile = new File(this.path + "temp" + this.name);
@@ -157,17 +167,18 @@ public class LocalFiles {
 	}
 	
 	/*
-	 * @brief : test function of our functionalities
+	 * @brief : run function of the thread
 	 * @param : none
 	 * @returns: none
 	 */
-	public void test (String toWrite, char separator) {
+	public void run () {
 		createFile(this.localFile);
-		write(this.localFile,toWrite,separator);
-		write(this.localFile,"Denis",separator);
-		write(this.localFile,"Jacques",separator);
-		deleteInFile(this.localFile,"Denis",separator);
-		System.out.println(readAllFile(this.localFile));
+		write(this.localFile, "test1", '-');
+		write(this.localFile, this.message, this.separator);
+		write(this.localFile, "test3", '-');
+		readAllFile(this.localFile);
+		deleteInFile(this.localFile, this.message, this.separator);
+		readAllFile(this.localFile);
 		deleteFile(this.localFile);
 	}
 
