@@ -10,19 +10,21 @@ public class LocalFilesManager extends Thread {
 	private File localFile; //use to stock the File that this class creates
 	private String message; //string that you want to update (write or delete)
 	private char separator; //separator used in the file
+	private String mode; //use to define what the thread must do, you can check the different modes in the run function
 	
 	/*
 	 * @brief : class constructor
 	 * @param : name of the file
 	 * @returns : none
 	 */
-	public LocalFilesManager (String name, String path, String message, char separator) {
+	public LocalFilesManager (String name, String path, String message, char separator, String mode) {
 		this.path = path;
 		this.name = name;
 		File file = new File(path + name);
 		this.localFile = file;
 		this.message = message;
 		this.separator = separator;
+		this.mode = mode;
 		start();
 	}
 	
@@ -69,8 +71,12 @@ public class LocalFilesManager extends Thread {
 	 * @brief : write a string into a file
 	 * @param : the file, the string to write
 	 * @returns : none
+	 * @note : if the file doesn't exist it is created
 	 */
-	private void write (File file, String toWrite , char separator) {
+	synchronized private void write (File file, String toWrite , char separator) {
+		if (!this.localFile.exists()) {
+			createFile(this.localFile);
+		}
 		manageWritePermission(file);
 		try {
 			FileWriter bufferOut = new FileWriter(file,true);
@@ -100,7 +106,7 @@ public class LocalFilesManager extends Thread {
 	 * @param : the file, the string to write
 	 * @returns : none
 	 */
-	private String readAllFile (File file) {
+	synchronized private String readAllFile (File file) {
 		String message = "";
 		manageReadPermission(file);
 		try {
@@ -129,10 +135,10 @@ public class LocalFilesManager extends Thread {
 	 * @param : the file, the string to delete, the separator in the file
 	 * @returns : none
 	 */
-	private void deleteInFile (File file, String toDelete, char separator) {
+	synchronized private void deleteInFile (File file, String toDelete, char separator) {
 		manageReadPermission(file);
 		File tempFile = new File(this.path + "temp" + this.name);
-		createFile(tempFile);
+		//createFile(tempFile);
 		try {
 			FileReader bufferIn = new FileReader(file);
 			String currentMessage = "";
@@ -153,7 +159,9 @@ public class LocalFilesManager extends Thread {
 			
 			bufferIn.close();
 			deleteFile(file);
-			tempFile.renameTo(this.localFile);
+			if (! tempFile.renameTo(this.localFile)) {
+				System.out.println("The file hasn't been renamed");
+			}
 			
 		}
 		catch (FileNotFoundException fnfe) {
@@ -172,14 +180,22 @@ public class LocalFilesManager extends Thread {
 	 * @returns: none
 	 */
 	public void run () {
-		createFile(this.localFile);
-		write(this.localFile, "test1", '-');
-		write(this.localFile, this.message, this.separator);
-		write(this.localFile, "test3", '-');
-		readAllFile(this.localFile);
-		deleteInFile(this.localFile, this.message, this.separator);
-		readAllFile(this.localFile);
-		deleteFile(this.localFile);
+		switch(this.mode) {
+		case "w" : //write mode : use to write something in a file
+			write(this.localFile, this.message, this.separator);
+			break;
+		case "r" : //reading mode : use to display a file
+			System.out.println(readAllFile(this.localFile));
+			break;
+		case "u" : //update mode : use to delete something in a file
+			deleteInFile(this.localFile, this.message, this.separator);
+			break;
+		case "d" : //delete mode : use to delete a file
+			deleteFile(this.localFile);
+			break;
+		default : 
+			System.out.println("Invalid system mode for the local file manger thread");
+		}
 	}
 
 }
