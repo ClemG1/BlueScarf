@@ -19,7 +19,8 @@ public class User extends Thread{
 
 	public void run () {
 		//System.out.println(this.firstName + " " + this.lastName + " is connected.");
-		LocalFilesManager testFile1 = new LocalFilesManager("test.txt","/home/gehin/Documents/insa/projects/BlueScarf/","test1",'-',"w");
+		LocalFilesManager testFile1 = new LocalFilesManager("test.txt",LocalFilesManager.getPath(),"test1",'-',"w");
+		
 	}
 	
 }

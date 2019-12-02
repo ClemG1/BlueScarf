@@ -2,6 +2,8 @@ package localSystem;
 
 import java.io.*;
 
+import javax.print.DocFlavor.URL;
+
 public class LocalFilesManager extends Thread {
 	
 	//Attributes
@@ -26,6 +28,12 @@ public class LocalFilesManager extends Thread {
 		this.separator = separator;
 		this.mode = mode;
 		start();
+	}
+	
+	public static String getPath() {
+		java.net.URL pathCurrent = null;
+		pathCurrent = LocalFilesManager.class.getResource(".");
+		return pathCurrent.toString();
 	}
 	
 	/*
