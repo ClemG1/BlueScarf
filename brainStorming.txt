@@ -7,3 +7,5 @@
 
 
 + we can save the username and the user picture always in locals files
+
++ For the network package do what's in comment, I don't have TDs of java for the sockets
