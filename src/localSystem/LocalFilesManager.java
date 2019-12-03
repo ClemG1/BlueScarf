@@ -14,11 +14,11 @@ public class LocalFilesManager extends Thread {
 	private char separator; //separator used in the file
 	private String mode; //use to define what the thread must do, you can check the different modes in the run function
 	
-	/*
-	 * @brief : class constructor
-	 * @param : name of the file
-	 * @returns : none
-	 */
+	/**
+	  * @brief : class constructor
+	  * @param : name of the file
+	  * @returns : none
+	 **/
 	public LocalFilesManager (String name, String path, String message, char separator, String mode) {
 		this.path = path;
 		this.name = name;
@@ -30,17 +30,22 @@ public class LocalFilesManager extends Thread {
 		start();
 	}
 	
+	/**
+	  * @brief : use to find the path of the current directory
+	  * @param : none
+	  * @returns : a path
+	 **/
 	public static String getPath() {
 		java.net.URL pathCurrent = null;
 		pathCurrent = LocalFilesManager.class.getResource(".");
 		return pathCurrent.toString();
 	}
 	
-	/*
-	 * @brief : create a new file
-	 * @param : the file to create
-	 * @returns : none
-	 */
+	/**
+	  * @brief : create a new file
+	  * @param : the file to create
+	  * @returns : none
+	 **/
 	private void createFile(File file) {
 		try {
 			if(! localFile.createNewFile()) {
@@ -53,34 +58,34 @@ public class LocalFilesManager extends Thread {
 		}
 	}
 	
-	/*
-	 * @brief : delete a file
-	 * @param : the file
-	 * @returns : none
-	 */
+	/**
+	  * @brief : delete a file
+	  * @param : the file
+	  * @returns : none
+	 **/
 	private void deleteFile (File file) {
 		if (! file.delete()) {
 			System.out.println("The file hasn't been deleted.");
 		}
 	}
 	
-	/*
-	 * @brief : checkout if the file is writable, otherwise the file is set writable
-	 * @param : a file
-	 * @returns : none
-	 */
+	/**
+	  * @brief : checkout if the file is writable, otherwise the file is set writable
+	  * @param : a file
+	  * @returns : none
+	 **/
 	private void manageWritePermission (File file) {
 		if(! file.canWrite()) {
 			file.setWritable(true);
 		}
 	}
 	
-	/*
-	 * @brief : write a string into a file
-	 * @param : the file, the string to write
-	 * @returns : none
-	 * @note : if the file doesn't exist it is created
-	 */
+	/**
+	  * @brief : write a string into a file
+	  * @param : the file, the string to write
+	  * @returns : none
+	  * @note : if the file doesn't exist it is created
+	 **/
 	synchronized private void write (File file, String toWrite , char separator) {
 		if (!this.localFile.exists()) {
 			createFile(this.localFile);
@@ -98,22 +103,22 @@ public class LocalFilesManager extends Thread {
 		}
 	}
 	
-	/*
-	 * @brief : checkout if the file is writable, otherwise the file is set writable
-	 * @param : a file
-	 * @returns : none
-	 */
+	/**
+	  * @brief : checkout if the file is writable, otherwise the file is set writable
+	  * @param : a file
+	  * @returns : none
+	 **/
 	private void manageReadPermission (File file) {
 		if(! file.canRead()) {
 			file.setReadable(true);
 		}
 	}
 	
-	/*
-	 * @brief : write a string into a file
-	 * @param : the file, the string to write
-	 * @returns : none
-	 */
+	/**
+	  * @brief : write a string into a file
+	  * @param : the file, the string to write
+	  * @returns : none
+	 **/
 	synchronized private String readAllFile (File file) {
 		String message = "";
 		manageReadPermission(file);
@@ -138,11 +143,11 @@ public class LocalFilesManager extends Thread {
 		return message;
 	}
 	
-	/*
-	 * @brief : delete a line in a file
-	 * @param : the file, the string to delete, the separator in the file
-	 * @returns : none
-	 */
+	/**
+	  * @brief : delete a line in a file
+	  * @param : the file, the string to delete, the separator in the file
+	  * @returns : none
+	 **/
 	synchronized private void deleteInFile (File file, String toDelete, char separator) {
 		manageReadPermission(file);
 		File tempFile = new File(this.path + "temp" + this.name);
@@ -182,11 +187,11 @@ public class LocalFilesManager extends Thread {
 		}
 	}
 	
-	/*
-	 * @brief : run function of the thread
-	 * @param : none
-	 * @returns: none
-	 */
+	/**
+	  * @brief : run function of the thread
+	  * @param : none
+	  * @returns: none
+	 **/
 	public void run () {
 		switch(this.mode) {
 		case "w" : //write mode : use to write something in a file

@@ -6,11 +6,11 @@ public class User extends Thread{
 	private String firstName; //first name of the user
 	private String lastName; //last name of the user
 	
-	/*
-	 * @brief : class constructor
-	 * @param : none
-	 * @returns : none
-	 */
+	/**
+	  * @brief : class constructor
+	  * @param : none
+	  * @returns : none
+	 **/
 	public User (String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -18,9 +18,7 @@ public class User extends Thread{
 	}
 
 	public void run () {
-		//System.out.println(this.firstName + " " + this.lastName + " is connected.");
 		LocalFilesManager testFile1 = new LocalFilesManager("test.txt",LocalFilesManager.getPath(),"test1",'-',"w");
-		
 	}
 	
 }
