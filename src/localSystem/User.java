@@ -18,7 +18,7 @@ public class User extends Thread{
 	}
 
 	public void run () {
-		LocalFilesManager testFile1 = new LocalFilesManager("test.txt",LocalFilesManager.getPath(),"test1",'-',"w");
+		LocalFilesManager profilFile = new LocalFilesManager(".profil",LocalFilesManager.getPath(),this.firstName + " " + this.lastName,'-',"w");
 	}
 	
 }

@@ -36,9 +36,7 @@ public class LocalFilesManager extends Thread {
 	  * @returns : a path
 	 **/
 	public static String getPath() {
-		java.net.URL pathCurrent = null;
-		pathCurrent = LocalFilesManager.class.getResource(".");
-		return pathCurrent.toString();
+		return System.getProperty("user.dir") + "/configFiles/" ;
 	}
 	
 	/**
