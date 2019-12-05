@@ -2,8 +2,6 @@ package localSystem;
 
 import java.io.*;
 
-import javax.print.DocFlavor.URL;
-
 public class LocalFilesManager extends Thread {
 	
 	//Attributes
@@ -27,7 +25,6 @@ public class LocalFilesManager extends Thread {
 		this.message = message;
 		this.separator = separator;
 		this.mode = mode;
-		start();
 	}
 	
 	/**
