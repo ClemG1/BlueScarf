@@ -1,6 +1,7 @@
 package localSystem;
 
 import network.NetworkManager;
+import database.DatabaseDriver;
 
 public class User extends Thread{
 	
@@ -21,8 +22,8 @@ public class User extends Thread{
 	}
 
 	public void run () {
-		LocalFilesManager profilFile = new LocalFilesManager(".profil",LocalFilesManager.getPath(),this.firstName + " " + this.lastName,'-',"w");
-		profilFile.start();
+		DatabaseDriver dbDriver = new DatabaseDriver();
+		dbDriver.test();
 	}
 	
 }
