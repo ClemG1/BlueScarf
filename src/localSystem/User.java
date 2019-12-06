@@ -2,6 +2,7 @@ package localSystem;
 
 import network.NetworkManager;
 import database.DatabaseDriver;
+import graphic.InterfaceHM;
 
 public class User extends Thread{
 	
@@ -22,8 +23,8 @@ public class User extends Thread{
 	}
 
 	public void run () {
-		DatabaseDriver dbDriver = new DatabaseDriver();
-		dbDriver.test();
+		InterfaceHM window = new InterfaceHM();
+		window.start();
 	}
 	
 }
