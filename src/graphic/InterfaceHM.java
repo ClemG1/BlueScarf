@@ -6,10 +6,11 @@ import javax.swing.*;
 public class InterfaceHM {
 	
 	//Attributes
-	JFrame mainWindow;
-	JPanel usersSection;
-	JPanel chatingSection;
-	JPanel filesSection;
+	JFrame mainWindow; //main window of the app
+	JPanel relativePanel; //this is a panel that has the same size than the main window to make it responsive
+	JPanel usersSection; //section where online users are displayed
+	JPanel chatingSection; //section for chat with your friend ;)
+	JPanel filesSection; //section where available files are displayed
 
 	/**
 	  * @brief : class constructor
@@ -17,10 +18,26 @@ public class InterfaceHM {
 	  * @returns : none
 	 **/
 	public InterfaceHM () {
+		//use to set the size of the sections in the relative panel
+		float sizeBorderSection = 1; //users and files section
+		float sizeMiddleSection = 3; //chating section
+		
+		//create a relative panel for responsive
+		RelativeLayout rl = new RelativeLayout(RelativeLayout.X_AXIS,10);
+		this.relativePanel = new JPanel(rl);
+		
+		//create the main window
 		this.mainWindow = new JFrame("BlueScarf");
+		
+		//create the different panel for each section
 		this.usersSection = new JPanel(new GridLayout(2, 0));
 		this.chatingSection = new JPanel(new GridLayout(2, 0));
 		this.filesSection = new JPanel(new GridLayout(2, 0));
+		
+		//add the sections at the relative panel
+		this.relativePanel.add(this.usersSection,sizeBorderSection);
+		this.relativePanel.add(this.chatingSection,sizeMiddleSection);
+		this.relativePanel.add(this.filesSection,sizeBorderSection);
 	}
 	
 	private void addWidgets() {
@@ -35,7 +52,7 @@ public class InterfaceHM {
 		chatLabel.setVerticalAlignment(SwingConstants.TOP);
 		filesLabel.setVerticalAlignment(SwingConstants.TOP);
 		
-		//set the panels' size
+		//set the panels' size when you open the app
 		this.usersSection.setPreferredSize(new Dimension(200, 800));
 		this.chatingSection.setPreferredSize(new Dimension(400, 800));
 		this.filesSection.setPreferredSize(new Dimension(200, 800));
@@ -59,17 +76,13 @@ public class InterfaceHM {
 	        JFrame.setDefaultLookAndFeelDecorated(true);
 	        
 	        //set up the  main window.
-	        this.mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        
-	        //this.mainWindow.setSize(new Dimension(1000, 800));  
+	        this.mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	        
 	        //creates the components of the window
 	        addWidgets();
 	        
-	        //add our section to the window
-	        this.mainWindow.getContentPane().add(this.usersSection, BorderLayout.WEST);
-	        this.mainWindow.getContentPane().add(this.chatingSection, BorderLayout.CENTER);
-	        this.mainWindow.getContentPane().add(this.filesSection, BorderLayout.EAST);
+	        //add the relative panel to the window
+	        this.mainWindow.getContentPane().add(this.relativePanel);
 	        this.mainWindow.pack();
 	        
 	        //Display the window.
