@@ -11,6 +11,7 @@ public class InterfaceHM {
 	JPanel usersSection; //section where online users are displayed
 	JPanel chatingSection; //section for chat with your friend ;)
 	JPanel filesSection; //section where available files are displayed
+	JMenuBar menuBar; //menu at the top of the interface
 
 	/**
 	  * @brief : class constructor
@@ -25,9 +26,20 @@ public class InterfaceHM {
 		//create a relative panel for responsive
 		RelativeLayout rl = new RelativeLayout(RelativeLayout.X_AXIS,10);
 		this.relativePanel = new JPanel(rl);
+		this.relativePanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
 		//create the main window
 		this.mainWindow = new JFrame("BlueScarf");
+		
+		//create the menu bar
+		this.menuBar = new JMenuBar();
+		
+		//set the gap between each component of the menu bar
+		this.menuBar.setMargin(new Insets(10,20,5,20));
+		
+		//set the background color of the menu bar
+		Color menuBarColor = new Color(19, 73, 107);
+		this.menuBar.setBackground(menuBarColor);
 		
 		//create the different panel for each section
 		this.usersSection = new JPanel(new GridLayout(2, 0));
@@ -41,6 +53,22 @@ public class InterfaceHM {
 	}
 	
 	private void addWidgets() {
+		
+		//create menu
+		JMenu customizeMenu = new JMenu("Customize");
+		JMenu helpMenu = new JMenu("Help");
+		
+		//create menu items
+		JMenuItem profilMenuItem = new JMenuItem("profil");
+		JMenuItem helpMenuItem = new JMenuItem("About BlueScarf");
+		
+		//add menus to the menu bar
+		this.menuBar.add(customizeMenu);
+		this.menuBar.add(helpMenu);
+		
+		//add menu items to the menu
+		customizeMenu.add(profilMenuItem);
+		helpMenu.add(helpMenuItem);
 		
 		//create labels
 		JLabel usersLabel = new JLabel("Online Users : ", SwingConstants.LEFT);
@@ -80,6 +108,9 @@ public class InterfaceHM {
 	        
 	        //creates the components of the window
 	        addWidgets();
+	        
+	        //add the menu bar to the main window
+	        this.mainWindow.setJMenuBar(this.menuBar);
 	        
 	        //add the relative panel to the window
 	        this.mainWindow.getContentPane().add(this.relativePanel);
