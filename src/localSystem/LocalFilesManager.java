@@ -11,6 +11,7 @@ public class LocalFilesManager extends Thread {
 	private String message; //string that you want to update (write or delete)
 	private char separator; //separator used in the file
 	private String mode; //use to define what the thread must do, you can check the different modes in the run function
+	private String dataFile; //use to save the text in a file
 	
 	/**
 	  * @brief : class constructor
@@ -182,6 +183,10 @@ public class LocalFilesManager extends Thread {
 		}
 	}
 	
+	public String getDataFile() {
+		return this.dataFile;
+	}
+	
 	/**
 	  * @brief : run function of the thread
 	  * @param : none
@@ -193,7 +198,7 @@ public class LocalFilesManager extends Thread {
 			write(this.localFile, this.message, this.separator);
 			break;
 		case "r" : //reading mode : use to display a file
-			System.out.println(readAllFile(this.localFile));
+			this.dataFile = readAllFile(this.localFile);
 			break;
 		case "u" : //update mode : use to delete something in a file
 			deleteInFile(this.localFile, this.message, this.separator);
