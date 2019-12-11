@@ -2,7 +2,11 @@ package graphic;
 
 import localSystem.LocalFilesManager;
 import java.awt.*;
+import java.awt.event.MouseListener;
+
 import javax.swing.*;
+
+import com.sun.glass.events.MouseEvent;
 
 public class InterfaceHM {
 	
@@ -13,6 +17,7 @@ public class InterfaceHM {
 	JPanel chatingSection; //section for chat with your friend ;)
 	JPanel filesSection; //section where available files are displayed
 	JMenuBar menuBar; //menu at the top of the interface
+
 
 	/**
 	  * @brief : class constructor
@@ -63,12 +68,18 @@ public class InterfaceHM {
 			this.usersSection = new JPanel(new GridLayout(numberOfUser,0,5,5));
 			int k = 0;
 			while (k  < numberOfUser) {
-				JLabel user = new JLabel(usersTab[k], SwingConstants.LEFT);
-				user.setBorder(BorderFactory.createRaisedBevelBorder());
-				user.setOpaque(true);
-				user.setBackground(Color.WHITE);
+				//JLabel user = new JLabel(usersTab[k], SwingConstants.LEFT);
+				//user.setBorder(BorderFactory.createRaisedBevelBorder());
+				//user.setOpaque(true);
+				//user.setBackground(Color.WHITE);
+				UserCheckBox user = new UserCheckBox(usersTab[k],false) ;
+				user.setBackground(Color.gray);
+				
+				user.setHoverBackgroundColor(Color.cyan);
+				user.setPressedBackgroundColor(Color.darkGray);
 				this.usersSection.add(user);
 				k++;
+				
 			}
 		}
 		catch (InterruptedException ie) {
@@ -172,8 +183,9 @@ public class InterfaceHM {
 		
 		try {
 			//Make sure we have nice window decorations.
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-	        JFrame.setDefaultLookAndFeelDecorated(true);
+			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			JFrame.setDefaultLookAndFeelDecorated(true);
 	        
 	        //set up the  main window.
 	        this.mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
