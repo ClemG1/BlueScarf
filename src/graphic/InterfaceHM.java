@@ -17,7 +17,7 @@ public class InterfaceHM {
 	JPanel chatingSection; //section for chat with your friend ;)
 	JPanel filesSection; //section where available files are displayed
 	JMenuBar menuBar; //menu at the top of the interface
-
+	static JTextArea chatEditor;
 
 	/**
 	  * @brief : class constructor
@@ -145,9 +145,12 @@ public class InterfaceHM {
 		JLabel chatLabel = new JLabel("Chat Box : ", SwingConstants.LEFT);
 		JLabel filesLabel = new JLabel("Your Files : ", SwingConstants.LEFT);
 
-		//create JEditorPane
-		JTextArea chatEditor = new JTextArea();
+		//create JTextArea
+		chatEditor = new JTextArea(1,50);
 
+		//create SendButton
+		SendButton sendButton = new SendButton("Send");
+		
 		//set the vertical alignment of the labels
 		chatLabel.setVerticalAlignment(SwingConstants.TOP);
 		filesLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -156,6 +159,7 @@ public class InterfaceHM {
 		//add the labels and Editor Pane to the panels
 		this.chatingSection.add(chatLabel);
 		this.chatingSection.add(chatEditor);
+		this.chatingSection.add(sendButton);
 		this.filesSection.add(filesLabel);
 		
 		//set the panels' size when you open the app
@@ -177,6 +181,13 @@ public class InterfaceHM {
 		this.relativePanel.add(this.chatingSection,sizeMiddleSection);
 		this.relativePanel.add(this.filesSection,sizeBorderSection);
 		/********************End of Relative Panel Management**************/
+	}
+	
+	/*
+	 * 
+	 */
+	public static String getTextChatEditor() {
+		return chatEditor.getText();
 	}
 	
 	/**

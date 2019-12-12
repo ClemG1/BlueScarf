@@ -24,7 +24,7 @@ public class UserButton extends JButton{
     @Override
     protected void paintComponent(Graphics g) {
         if (getModel().isPressed()) {
-       		System.out.println("Pressed " + pressed);
+       		//System.out.println("Pressed " + pressed);
             if (pressed) {
                 setCurrentBackgroundColor(getBackground());
                 g.setColor(getBackground());
@@ -43,7 +43,7 @@ public class UserButton extends JButton{
                 g.setColor(hoverBackgroundColor);
             }
         } else {
-            System.out.println("Dernier else " + this.pressed);
+            //System.out.println("Dernier else " + this.pressed);
             if (pressed) {
                 g.setColor(getCurrentBackgroundColor());
             } else {
