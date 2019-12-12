@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
-public class UserCheckBox extends JCheckBox{
+public class UserButton extends JButton{
 	
 	private Color hoverBackgroundColor;
     private Color pressedBackgroundColor;
@@ -14,8 +14,8 @@ public class UserCheckBox extends JCheckBox{
     private boolean pressed;
 
 
-    public UserCheckBox(String text, boolean selected) {
-        super(text,selected);
+    public UserButton(String text) {
+        super(text);
         super.setContentAreaFilled(false);
         this.pressed=false;
         this.currentBackgroundColor = this.getBackground();
@@ -25,30 +25,30 @@ public class UserCheckBox extends JCheckBox{
     protected void paintComponent(Graphics g) {
         if (getModel().isPressed()) {
        		System.out.println("Pressed " + pressed);
-        	if (pressed==false) {
-        		setCurrentBackgroundColor(getPressedBackgroundColor());
-        		g.setColor(getPressedBackgroundColor());
-        		pressed=true;
- 
-        	} else {
-        		setCurrentBackgroundColor(getBackground());
-        		g.setColor(getBackground());
-        		pressed=false;
-        	}
-            
+            if (pressed) {
+                setCurrentBackgroundColor(getBackground());
+                g.setColor(getBackground());
+                pressed=false;
+            } else {
+                setCurrentBackgroundColor(getPressedBackgroundColor());
+                g.setColor(getPressedBackgroundColor());
+                pressed=true;
+
+            }
+
         } else if (getModel().isRollover()) {
-        	if (pressed==false) {
+            if (pressed) {
+                g.setColor(getCurrentBackgroundColor());
+            } else {
                 g.setColor(hoverBackgroundColor);
-        	} else {
-        		g.setColor(getCurrentBackgroundColor());
-        	}
+            }
         } else {
-        	if (pressed==false) 
-        	{
-        		g.setColor(getBackground());
-        	} else {
-        		g.setColor(getCurrentBackgroundColor());
-        	}
+            System.out.println("Dernier else " + this.pressed);
+            if (pressed) {
+                g.setColor(getCurrentBackgroundColor());
+            } else {
+                g.setColor(getBackground());
+            }
         }
         g.fillRect(0, 0, getWidth(), getHeight());
         super.paintComponent(g);

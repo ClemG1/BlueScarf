@@ -72,7 +72,7 @@ public class InterfaceHM {
 				//user.setBorder(BorderFactory.createRaisedBevelBorder());
 				//user.setOpaque(true);
 				//user.setBackground(Color.WHITE);
-				UserCheckBox user = new UserCheckBox(usersTab[k],false) ;
+				UserButton user = new UserButton(usersTab[k]) ;
 				user.setBackground(Color.gray);
 				
 				user.setHoverBackgroundColor(Color.cyan);
@@ -144,13 +144,18 @@ public class InterfaceHM {
 		//create labels
 		JLabel chatLabel = new JLabel("Chat Box : ", SwingConstants.LEFT);
 		JLabel filesLabel = new JLabel("Your Files : ", SwingConstants.LEFT);
-		
+
+		//create JEditorPane
+		JTextArea chatEditor = new JTextArea();
+
 		//set the vertical alignment of the labels
 		chatLabel.setVerticalAlignment(SwingConstants.TOP);
 		filesLabel.setVerticalAlignment(SwingConstants.TOP);
+
 		
-		//add the labels to the panels
+		//add the labels and Editor Pane to the panels
 		this.chatingSection.add(chatLabel);
+		this.chatingSection.add(chatEditor);
 		this.filesSection.add(filesLabel);
 		
 		//set the panels' size when you open the app
