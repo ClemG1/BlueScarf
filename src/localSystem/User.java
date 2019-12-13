@@ -23,8 +23,8 @@ public class User extends Thread{
 	}
 
 	public void run () {
-		InterfaceHM window = new InterfaceHM();
-		window.start();
+		DatabaseDriver databaseDriver = new DatabaseDriver();
+		databaseDriver.test();
 	}
 	
 }

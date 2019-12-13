@@ -55,7 +55,7 @@ public class DatabaseDriver {
 	 **/
 	private void connect() {
 		try {
-			this.connection = DriverManager.getConnection(this.dbURL);
+			this.connection = DriverManager.getConnection(this.dbURL,"","");
 		}
 		catch (SQLException sqle) {
 			System.out.println(sqle.toString());
