@@ -64,8 +64,6 @@ public class NetworkManager extends Thread{
 					InetAddress clientAddress = inPacket.getAddress();
 					int clientPort = inPacket.getPort();
 					String messageIn = new String(inPacket.getData(), 0, inPacket.getLength());
-					//do something right here
-					System.out.println(messageIn); //test
 				}
 			}
 			

@@ -83,6 +83,12 @@ public class InterfaceHM {
 		}
 	}
 	
+	/**
+	  * @brief : retrieve all the message with a user
+	  * @param : none
+	  * @return : none
+	  * @note : use username.txt file, also add the text box to send message and the send button
+	 **/
 	private void displayMessage() {
 		try {
 			LocalFilesManager filesManager = new LocalFilesManager("conv/JohnMcDavid.txt",LocalFilesManager.getPath(),"",'-',"r");
