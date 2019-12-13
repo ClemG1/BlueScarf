@@ -45,8 +45,7 @@ public class InterfaceHM {
 		this.menuBar.setBackground(menuBarColor);
 		
 		//create the different panel for each section
-		//this.usersSection = null;
-		this.chatingSection = new JPanel();
+		//this.chatingSection = new JPanel();
 		this.filesSection = new JPanel();
 		
 	}
@@ -68,10 +67,6 @@ public class InterfaceHM {
 			this.usersSection = new JPanel(new GridLayout(numberOfUser,0,5,5));
 			int k = 0;
 			while (k  < numberOfUser) {
-				//JLabel user = new JLabel(usersTab[k], SwingConstants.LEFT);
-				//user.setBorder(BorderFactory.createRaisedBevelBorder());
-				//user.setOpaque(true);
-				//user.setBackground(Color.WHITE);
 				UserButton user = new UserButton(usersTab[k]) ;
 				user.setBackground(Color.gray);
 				
@@ -81,6 +76,52 @@ public class InterfaceHM {
 				k++;
 				
 			}
+		}
+		catch (InterruptedException ie) {
+			System.out.println(ie.toString());
+			ie.printStackTrace();
+		}
+	}
+	
+	private void displayMessage() {
+		try {
+			LocalFilesManager filesManager = new LocalFilesManager("conv/JohnMcDavid.txt",LocalFilesManager.getPath(),"",'-',"r");
+			filesManager.start();
+			filesManager.join();
+			String messages = filesManager.getDataFile();
+			String messagesTab[] = messages.split("-");
+			int numberOfMessages = messagesTab.length - 1;
+			this.chatingSection = new JPanel(new GridLayout((numberOfMessages +  1),2,5,5));
+			int k = 0;
+			while (k  < numberOfMessages) {
+				String messageDriver[] = new String[2];
+				messageDriver[0] = messagesTab[k].substring(0, 5);
+				messageDriver[1] = messagesTab[k].substring(5);
+				if(messageDriver[0].equals("send:") ) { //decide if it's display left or right
+					JLabel message = new JLabel(messageDriver[1], SwingConstants.RIGHT) ;
+					message.setOpaque(true);
+					message.setBackground(Color.WHITE);
+					this.chatingSection.add(new JPanel()); //empty panel for display
+					this.chatingSection.add(message);
+				}
+				else {
+					JLabel message = new JLabel(messageDriver[1], SwingConstants.LEFT) ;
+					message.setBackground(Color.WHITE);
+					this.chatingSection.add(message);
+					this.chatingSection.add(new JPanel()); //empty panel for display
+				}
+				k++;
+			}
+			
+			//create JTextArea
+			chatEditor = new JTextArea(1,50);
+			
+			//create SendButton
+			SendButton sendButton = new SendButton("Send");
+			
+			//add to the sending message panel
+			this.chatingSection.add(chatEditor);
+			this.chatingSection.add(sendButton);
 		}
 		catch (InterruptedException ie) {
 			System.out.println(ie.toString());
@@ -140,26 +181,23 @@ public class InterfaceHM {
 		
 		/*************End OF Online user Management**************/
 		
+		/*******************Chat box Management******************/
+		displayMessage();
+		
+		//set borders
+		this.chatingSection.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		/***************End of chat box management***************/
+		
 		/*******************To Modify********************************/
 		//create labels
-		JLabel chatLabel = new JLabel("Chat Box : ", SwingConstants.LEFT);
 		JLabel filesLabel = new JLabel("Your Files : ", SwingConstants.LEFT);
 
-		//create JTextArea
-		chatEditor = new JTextArea(1,50);
-
-		//create SendButton
-		SendButton sendButton = new SendButton("Send");
-		
 		//set the vertical alignment of the labels
-		chatLabel.setVerticalAlignment(SwingConstants.TOP);
 		filesLabel.setVerticalAlignment(SwingConstants.TOP);
 
 		
 		//add the labels and Editor Pane to the panels
-		this.chatingSection.add(chatLabel);
-		this.chatingSection.add(chatEditor);
-		this.chatingSection.add(sendButton);
 		this.filesSection.add(filesLabel);
 		
 		//set the panels' size when you open the app
@@ -167,7 +205,6 @@ public class InterfaceHM {
 		this.filesSection.setPreferredSize(new Dimension(200, 800));
 		
 		//set borders around panels
-		this.chatingSection.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.filesSection.setBorder(BorderFactory.createLineBorder(Color.black));
 		/**************************End To Modify*********************************/
 		
