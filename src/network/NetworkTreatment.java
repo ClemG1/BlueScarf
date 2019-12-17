@@ -40,12 +40,16 @@ public class NetworkTreatment extends Thread{
 	public void run() {
 		switch(this.type) {
 		
-		case "c:" :
-			String messagePart[] = this.message.split(":");
-			String name = messagePart[3];
+		case "c:" : //connection packet
+			String messagePart[] = this.message.split(":"); //split the content of the connection packet
+			String name = messagePart[3]; //get the name of the user who send the message
+			
 			LocalFilesManager onlineUserNameWritter = new LocalFilesManager("onlineUser.txt", LocalFilesManager.getPath(), name, '-', "w");
 			onlineUserNameWritter.start();
+			
+			//create the string that need to be right in the file "onlineUserData.txt"
 			String onlineUserData = "id:" + messagePart[1] + "address:" + this.clientAddress.toString() + "port:" + String.valueOf(this.clientPort);
+			
 			LocalFilesManager onlineUserDataWritter = new LocalFilesManager("onlineUserData.txt", LocalFilesManager.getPath(), onlineUserData, '-', "w");
 			onlineUserDataWritter.start();
 			break;
