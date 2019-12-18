@@ -59,7 +59,7 @@ public class LocalFilesManager extends Thread {
 	  * @param : the file
 	  * @returns : none
 	 **/
-	private void deleteFile (File file) {
+	synchronized private void deleteFile (File file) {
 		if (! file.delete()) {
 			System.out.println("The file hasn't been deleted.");
 		}

@@ -1,5 +1,6 @@
 package network;
 
+import localSystem.LocalFilesManager;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -17,6 +18,7 @@ public class NetworkManager extends Thread{
 	private int portServer = 6666;
 	private int portClient = 6969;
 	private InetAddress ipAddress;
+	private Boolean clientWorking = true;
 	
 	/**
 	  * @brief : class constructor
@@ -86,14 +88,41 @@ public class NetworkManager extends Thread{
 	  * @param : none
 	  * @returns: none
 	 **/
-	public void run() {
+	public synchronized void run() {
 		try {
 			switch (this.mode) {
 			case "-c":
 				
-				this.socket = new Socket("10.1.5.17",this.portServer);
-				send();
-				this.socket.close();
+				LocalFilesManager contact = new LocalFilesManager("contact.txt", "/home/cgehin/Documents/BlueScarf/configFiles/", "", '-', "r");
+				contact.start();
+				contact.join();
+				String ipContact = contact.getDataFile();
+				
+				clientWorking = false;
+				notifyAll();
+				System.out.println("I justed notify");
+				
+				if(ipContact.contains("none")) {
+					System.out.println("Client : I'm waiting");
+					while(!clientWorking) {
+						wait();
+						clientWorking = true;
+					}
+					System.out.println("Client : I'm done waiting");
+					LocalFilesManager newContact = new LocalFilesManager("contact.txt", "/home/cgehin/Documents/BlueScarf/configFiles/", "", '-', "r");
+					newContact.start();
+					newContact.join();
+					String ipNewContact = newContact.getDataFile();
+					this.socket = new Socket(ipNewContact,this.portServer);
+					send();
+					this.socket.close();
+				} 
+				else { //ipContact is a valid ip
+					
+					this.socket = new Socket(ipContact,this.portServer);
+					send();
+					this.socket.close();
+				}
 				
 				break;
 			case "-s":
@@ -101,23 +130,35 @@ public class NetworkManager extends Thread{
 				this.serverSocket = new ServerSocket(this.portServer);
 				System.out.println("Server up");
 				
-				//wait for connection state
-				Socket socket = this.serverSocket.accept();
-				System.out.println("Connection established");
+				System.out.println("Server : I'm waiting");
+				while (clientWorking) {
+					System.out.println("I'm in the loop");
+					wait();
+					clientWorking = false;
+				}
+				System.out.println("Server : I'm done waiting");
 				
-				//connection established state
-				BufferedReader bufferIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				String msg = "";
-				while ((msg = bufferIn.readLine()) != null) { //until the client end the connection
-					System.out.println(msg);
+				//treatment when new connection
+				LocalFilesManager contactDelete = new LocalFilesManager("contact.txt", "/home/cgehin/Documents/BlueScarf/configFiles/", "", '-', "d");
+				contactDelete.start();
+				String ipToWrite = this.ipAddress.toString().substring(1);
+				LocalFilesManager contactWrite = new LocalFilesManager("contact.txt", "/home/cgehin/Documents/BlueScarf/configFiles/", ipToWrite, '\0', "w");
+				contactWrite.start();
+				
+				//wait for connection state
+				while(true) {
+					
+					Socket socket = this.serverSocket.accept();
+					
+					clientWorking = true;
+					notifyAll();
+					
+					System.out.println("Connection established");
+					ServerThread serverThread = new ServerThread(socket);
+					serverThread.start();
 				}
 				
-				//connection closed state
-				bufferIn.close();
-				socket.close();
-				System.out.println("Connection closed");
-				
-				break;
+				//break;
 				
 			default:
 				System.out.println("Invalid Network mode.");	
