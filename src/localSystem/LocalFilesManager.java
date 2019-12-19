@@ -2,30 +2,23 @@ package localSystem;
 
 import java.io.*;
 
-public class LocalFilesManager extends Thread {
+public class LocalFilesManager {
 	
 	//Attributes
 	private String path; //path to the file
 	private String name; //name of the file
 	private File localFile; //use to stock the File that this class creates
-	private String message; //string that you want to update (write or delete)
-	private char separator; //separator used in the file
-	private String mode; //use to define what the thread must do, you can check the different modes in the run function
-	private String dataFile; //use to save the text in a file
 	
 	/**
 	  * @brief : class constructor
 	  * @param : name of the file
 	  * @returns : none
 	 **/
-	public LocalFilesManager (String name, String path, String message, char separator, String mode) {
+	public LocalFilesManager (String name, String path) {
 		this.path = path;
 		this.name = name;
 		File file = new File(path + name);
 		this.localFile = file;
-		this.message = message;
-		this.separator = separator;
-		this.mode = mode;
 	}
 	
 	/**
@@ -39,10 +32,10 @@ public class LocalFilesManager extends Thread {
 	
 	/**
 	  * @brief : create a new file
-	  * @param : the file to create
+	  * @param : none
 	  * @returns : none
 	 **/
-	private void createFile(File file) {
+	private void createFile() {
 		try {
 			if(! localFile.createNewFile()) {
 				System.out.println("The file name is already used.");
@@ -56,11 +49,11 @@ public class LocalFilesManager extends Thread {
 	
 	/**
 	  * @brief : delete a file
-	  * @param : the file
+	  * @param : none
 	  * @returns : none
 	 **/
-	synchronized private void deleteFile (File file) {
-		if (! file.delete()) {
+	public void deleteFile () {
+		if (! this.localFile.delete()) {
 			System.out.println("The file hasn't been deleted.");
 		}
 	}
@@ -70,25 +63,25 @@ public class LocalFilesManager extends Thread {
 	  * @param : a file
 	  * @returns : none
 	 **/
-	private void manageWritePermission (File file) {
-		if(! file.canWrite()) {
-			file.setWritable(true);
+	private void manageWritePermission () {
+		if(! this.localFile.canWrite()) {
+			this.localFile.setWritable(true);
 		}
 	}
 	
 	/**
 	  * @brief : write a string into a file
-	  * @param : the file, the string to write
+	  * @param : the string to write
 	  * @returns : none
 	  * @note : if the file doesn't exist it is created
 	 **/
-	synchronized private void write (File file, String toWrite , char separator) {
+	public void write (String toWrite , char separator) {
 		if (!this.localFile.exists()) {
-			createFile(this.localFile);
+			createFile();
 		}
-		manageWritePermission(file);
+		manageWritePermission();
 		try {
-			FileWriter bufferOut = new FileWriter(file,true);
+			FileWriter bufferOut = new FileWriter(this.localFile,true);
 			bufferOut.write(toWrite + separator);
 			bufferOut.flush();
 			bufferOut.close();
@@ -104,9 +97,9 @@ public class LocalFilesManager extends Thread {
 	  * @param : a file
 	  * @returns : none
 	 **/
-	private void manageReadPermission (File file) {
-		if(! file.canRead()) {
-			file.setReadable(true);
+	private void manageReadPermission () {
+		if(! this.localFile.canRead()) {
+			this.localFile.setReadable(true);
 		}
 	}
 	
@@ -115,11 +108,11 @@ public class LocalFilesManager extends Thread {
 	  * @param : the file, the string to write
 	  * @returns : none
 	 **/
-	synchronized private String readAllFile (File file) {
+	public String readAllFile () {
 		String message = "";
-		manageReadPermission(file);
+		manageReadPermission();
 		try {
-			FileReader bufferIn = new FileReader(file);
+			FileReader bufferIn = new FileReader(this.localFile);
 			//reading loop
 			int character;
 			while ( (character = (bufferIn.read())) != -1) {
@@ -140,16 +133,39 @@ public class LocalFilesManager extends Thread {
 	}
 	
 	/**
+	  * @brief : write a string into a temporary file
+	  * @param : the temporary file, the string to write, a separator
+	  * @returns : none
+	  * @note : if the file doesn't exist it is created
+	 **/
+	private void writeTempFile (File file, String toWrite , char separator) {
+		if (!file.exists()) {
+			createFile();
+		}
+		manageWritePermission();
+		try {
+			FileWriter bufferOut = new FileWriter(file,true);
+			bufferOut.write(toWrite + separator);
+			bufferOut.flush();
+			bufferOut.close();
+		}
+		catch (IOException ioe) {
+			System.out.println(ioe.toString());
+			ioe.printStackTrace();
+		}
+	}
+	
+	/**
 	  * @brief : delete a line in a file
 	  * @param : the file, the string to delete, the separator in the file
 	  * @returns : none
 	 **/
-	synchronized private void deleteInFile (File file, String toDelete, char separator) {
-		manageReadPermission(file);
+	public void deleteInFile (File file, String toDelete, char separator) {
+		manageReadPermission();
 		File tempFile = new File(this.path + "temp" + this.name);
 		//createFile(tempFile);
 		try {
-			FileReader bufferIn = new FileReader(file);
+			FileReader bufferIn = new FileReader(this.localFile);
 			String currentMessage = "";
 			//reading loop
 			int character;
@@ -160,14 +176,14 @@ public class LocalFilesManager extends Thread {
 				}
 				else { //we reached the end of the message
 					if (! currentMessage.equals(toDelete)) {
-						write(tempFile,currentMessage,separator);
+						writeTempFile(tempFile,currentMessage,separator);
 					}
 					currentMessage = "";
 				}
 			}
 			
 			bufferIn.close();
-			deleteFile(file);
+			deleteFile();
 			if (! tempFile.renameTo(this.localFile)) {
 				System.out.println("The file hasn't been renamed");
 			}
@@ -180,34 +196,6 @@ public class LocalFilesManager extends Thread {
 		catch (IOException ioe) {
 			System.out.println(ioe.toString());
 			ioe.printStackTrace();
-		}
-	}
-	
-	public String getDataFile() {
-		return this.dataFile;
-	}
-	
-	/**
-	  * @brief : run function of the thread
-	  * @param : none
-	  * @returns: none
-	 **/
-	public void run () {
-		switch(this.mode) {
-		case "w" : //write mode : use to write something in a file
-			write(this.localFile, this.message, this.separator);
-			break;
-		case "r" : //reading mode : use to display a file
-			this.dataFile = readAllFile(this.localFile);
-			break;
-		case "u" : //update mode : use to delete something in a file
-			deleteInFile(this.localFile, this.message, this.separator);
-			break;
-		case "d" : //delete mode : use to delete a file
-			deleteFile(this.localFile);
-			break;
-		default : 
-			System.out.println("Invalid system mode for the local file manger thread");
 		}
 	}
 

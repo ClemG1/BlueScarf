@@ -2,7 +2,7 @@ package graphic;
 
 import localSystem.LocalFilesManager;
 import java.awt.*;
-import java.awt.event.MouseListener;
+//import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
@@ -57,29 +57,20 @@ public class InterfaceHM {
 	  * @note : use onlineUsers.txt file
 	 **/
 	private void displayOnlineUsers() {
-		try {
-			LocalFilesManager filesManager = new LocalFilesManager("onlineUsers.txt",LocalFilesManager.getPath(),"",'-',"r");
-			filesManager.start();
-			filesManager.join();
-			String users = filesManager.getDataFile();
-			String usersTab[] = users.split("-");
-			int numberOfUser = usersTab.length - 1;
-			this.usersSection = new JPanel(new GridLayout(numberOfUser,0,5,5));
-			int k = 0;
-			while (k  < numberOfUser) {
-				UserButton user = new UserButton(usersTab[k]) ;
-				user.setBackground(Color.gray);
-				
-				user.setHoverBackgroundColor(Color.cyan);
-				user.setPressedBackgroundColor(Color.darkGray);
-				this.usersSection.add(user);
-				k++;
-				
-			}
-		}
-		catch (InterruptedException ie) {
-			System.out.println(ie.toString());
-			ie.printStackTrace();
+		LocalFilesManager onlineUsersFileDriver = new LocalFilesManager("onlineUsers.txt",LocalFilesManager.getPath());
+		String users = onlineUsersFileDriver.readAllFile();
+		String usersTab[] = users.split("-");
+		int numberOfUser = usersTab.length - 1;
+		this.usersSection = new JPanel(new GridLayout(numberOfUser,0,5,5));
+		int k = 0;
+		while (k  < numberOfUser) {
+			UserButton user = new UserButton(usersTab[k]) ;
+			user.setBackground(Color.gray);
+			
+			user.setHoverBackgroundColor(Color.cyan);
+			user.setPressedBackgroundColor(Color.darkGray);
+			this.usersSection.add(user);
+			k++;
 		}
 	}
 	
@@ -90,34 +81,31 @@ public class InterfaceHM {
 	  * @note : use username.txt file, also add the text box to send message and the send button
 	 **/
 	private void displayMessage() {
-		try {
-			LocalFilesManager filesManager = new LocalFilesManager("conv/JohnMcDavid.txt",LocalFilesManager.getPath(),"",'-',"r");
-			filesManager.start();
-			filesManager.join();
-			String messages = filesManager.getDataFile();
-			String messagesTab[] = messages.split("-");
-			int numberOfMessages = messagesTab.length - 1;
-			this.chatingSection = new JPanel(new GridLayout((numberOfMessages +  1),2,5,5));
-			int k = 0;
-			while (k  < numberOfMessages) {
-				String messageDriver[] = new String[2];
-				messageDriver[0] = messagesTab[k].substring(0, 5);
-				messageDriver[1] = messagesTab[k].substring(5);
-				if(messageDriver[0].equals("send:") ) { //decide if it's display left or right
-					JLabel message = new JLabel(messageDriver[1], SwingConstants.RIGHT) ;
-					message.setOpaque(true);
-					message.setBackground(Color.WHITE);
-					this.chatingSection.add(new JPanel()); //empty panel for display
-					this.chatingSection.add(message);
-				}
-				else {
-					JLabel message = new JLabel(messageDriver[1], SwingConstants.LEFT) ;
-					message.setBackground(Color.WHITE);
-					this.chatingSection.add(message);
-					this.chatingSection.add(new JPanel()); //empty panel for display
-				}
-				k++;
+		LocalFilesManager convFileDriver = new LocalFilesManager("conv/JohnMcDavid.txt",LocalFilesManager.getPath());
+		String messages = convFileDriver.readAllFile();
+		String messagesTab[] = messages.split("-");
+		int numberOfMessages = messagesTab.length - 1;
+		this.chatingSection = new JPanel(new GridLayout((numberOfMessages +  1),2,5,5));
+		int k = 0;
+		while (k  < numberOfMessages) {
+			String messageDriver[] = new String[2];
+			messageDriver[0] = messagesTab[k].substring(0, 5);
+			messageDriver[1] = messagesTab[k].substring(5);
+			if(messageDriver[0].equals("send:") ) { //decide if it's display left or right
+				JLabel message = new JLabel(messageDriver[1], SwingConstants.RIGHT) ;
+				message.setOpaque(true);
+				message.setBackground(Color.WHITE);
+				this.chatingSection.add(new JPanel()); //empty panel for display
+				this.chatingSection.add(message);
 			}
+			else {
+				JLabel message = new JLabel(messageDriver[1], SwingConstants.LEFT) ;
+				message.setBackground(Color.WHITE);
+				this.chatingSection.add(message);
+				this.chatingSection.add(new JPanel()); //empty panel for display
+			}
+			k++;
+		}
 			
 			//create JTextArea
 			chatEditor = new JTextArea(1,50);
@@ -128,11 +116,6 @@ public class InterfaceHM {
 			//add to the sending message panel
 			this.chatingSection.add(chatEditor);
 			this.chatingSection.add(sendButton);
-		}
-		catch (InterruptedException ie) {
-			System.out.println(ie.toString());
-			ie.printStackTrace();
-		}
 	}
 	
 	/**
