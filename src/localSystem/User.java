@@ -28,8 +28,8 @@ public class User extends Thread{
 	public void run () {
 		try {
 			NetworkManager networkManager = new NetworkManager();
-			//networkManager.startServer();
-			networkManager.connectTo(InetAddress.getByName("127.0.0.1"));;
+			networkManager.startServer();
+			//networkManager.connectTo(InetAddress.getByName("127.0.0.1"));
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
