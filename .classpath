@@ -11,6 +11,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/cgehin/Téléchargements/mysql-connector.jar"/>
+	<classpathentry kind="lib" path="/home/gehin/Documents/insa/projects/BlueScarf/databaseSrc/mysql-connector.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

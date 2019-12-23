@@ -17,7 +17,7 @@ public class DatabaseDriver {
 	 **/
 	public DatabaseDriver() {
 		this.jdbcDriver = "com.mysql.jdbc.Driver";
-		this.dbURL = "jbdc:mysql://localhost/";
+		this.dbURL = "jdbc:mysql://localhost";
 		this.connection = null;
 		this.statement = null;
 	}
@@ -55,7 +55,7 @@ public class DatabaseDriver {
 	 **/
 	private void connect() {
 		try {
-			this.connection = DriverManager.getConnection(this.dbURL,"","");
+			this.connection = DriverManager.getConnection(this.dbURL,"root","E\"vkG6if");
 		}
 		catch (SQLException sqle) {
 			System.out.println(sqle.toString());
@@ -80,17 +80,14 @@ public class DatabaseDriver {
 	
 	
 	public void test() {
-		registerDriver();
-		connect();
-		createStatement();
-		String sql = "CREATE DATABASE TEST";
 		try {
-			this.statement.executeUpdate(sql);
-			System.out.println("test OK");
+			registerDriver();
+			connect();
+			createStatement();
 		}
-		catch (SQLException sqle) {
-			System.out.println(sqle.toString());
-			sqle.printStackTrace();
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
 		}
 	}
 }
