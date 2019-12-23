@@ -60,7 +60,7 @@ public class Client extends Thread {
 	  * @returns: none
 	 **/
 	public void run() {
-		
+		send();
 	}
 	
 }

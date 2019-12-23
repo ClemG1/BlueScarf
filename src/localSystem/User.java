@@ -1,6 +1,9 @@
 package localSystem;
 
 import network.NetworkManager;
+
+import java.net.InetAddress;
+
 import database.DatabaseDriver;
 import graphic.InterfaceHM;
 
@@ -23,10 +26,15 @@ public class User extends Thread{
 	}
 
 	public void run () {
-		NetworkManager server = new NetworkManager("-s");
-		server.start();
-		NetworkManager client = new NetworkManager("-c");
-		client.start();
+		try {
+			NetworkManager networkManager = new NetworkManager();
+			//networkManager.startServer();
+			networkManager.connectTo(InetAddress.getByName("127.0.0.1"));;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
 	}
 	
 }

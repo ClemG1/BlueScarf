@@ -3,11 +3,10 @@ package network;
 import java.net.*;
 import java.util.*;
 
-public class NetworkManager extends Thread{
+public class NetworkManager {
 	
 	//Attributes
-	private int portServer = 6666;
-	private int portClient = 6969;
+	private int portServer = 6969;
 	private InetAddress ipAddress;
 	
 	/**
@@ -16,7 +15,7 @@ public class NetworkManager extends Thread{
 	  * @returns : none
 	  * @note : TCP protocol used
 	 **/
-	public NetworkManager(String mode) {
+	public NetworkManager() {
 		try {
 			
 			//find the ip address of the computer
@@ -44,18 +43,25 @@ public class NetworkManager extends Thread{
 		
 	}
 	
-	
-	
 	/**
-	  * @brief : run function of the thread
+	  * @brief : start a thread server bind to the server port 
 	  * @param : none
 	  * @returns: none
 	 **/
-	public void run() {
+	public void startServer() {
 		Server server = new Server(this.portServer);
 		server.start();
-		Client client = new Client(this.ipAddress, this.portServer);
+	}
+	
+	/**
+	  * @brief : start a thread client to a server listening on the server port 
+	  * @param : the ip address of the server you want to connect to
+	  * @returns: none
+	 **/
+	public void connectTo(InetAddress ipAddress) {
+		Client client = new Client(ipAddress,this.portServer);
 		client.start();
 	}
+	
 
 }
