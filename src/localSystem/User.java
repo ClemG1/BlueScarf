@@ -25,10 +25,14 @@ public class User extends Thread{
 		this.id = id;
 	}
 
+	/**
+	  * @brief : run function of the thread
+	  * @param : none
+	  * @returns: none
+	 **/
 	public void run () {
 		try {
-			DatabaseDriver database = new DatabaseDriver();
-			database.test();
+
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());

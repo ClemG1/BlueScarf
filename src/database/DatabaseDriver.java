@@ -17,7 +17,7 @@ public class DatabaseDriver {
 	 **/
 	public DatabaseDriver() {
 		this.jdbcDriver = "com.mysql.jdbc.Driver";
-		this.dbURL = "jdbc:mysql://localhost";
+		this.dbURL = "jdbc:mysql://localhost/bluescarf";
 		this.connection = null;
 		this.statement = null;
 	}
@@ -78,8 +78,12 @@ public class DatabaseDriver {
 		}
 	}
 	
-	
-	public void test() {
+	/**
+	  * @brief : prepare to use the database
+	  * @param : none
+	  * @returns : none
+	 **/
+	private void prepare() {
 		try {
 			registerDriver();
 			connect();
@@ -88,6 +92,27 @@ public class DatabaseDriver {
 		catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
+		}
+	}
+	
+	public boolean checkAdmin(String login, String password) {
+		try {
+			boolean isAdmin;
+			prepare();
+			String query = "SELECT id FROM admin WHERE login = '" + login + "' AND password = '" + password +"';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next() == false) {
+				isAdmin = false;
+			}
+			else {
+				isAdmin = true;
+			}
+			return isAdmin;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return false;
 		}
 	}
 }
