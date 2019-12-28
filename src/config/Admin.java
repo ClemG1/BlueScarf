@@ -21,7 +21,7 @@ public class Admin extends Thread{
 			System.out.println("Please enter your password : ");
 			String password = scanner.next();
 			DatabaseDriver database = new DatabaseDriver();
-			if(database.checkAdmin(login, password)) {
+			if(database.isAdmin(login, password)) {
 				System.out.println("Authentication successed");
 				isAdmin = true;
 			}

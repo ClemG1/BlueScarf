@@ -83,7 +83,7 @@ public class DatabaseDriver {
 	  * @param : none
 	  * @returns : none
 	 **/
-	private void prepare() {
+	private void init() {
 		try {
 			registerDriver();
 			connect();
@@ -95,10 +95,15 @@ public class DatabaseDriver {
 		}
 	}
 	
-	public boolean checkAdmin(String login, String password) {
+	/**
+	  * @brief : check if the user is an admin by is login and password
+	  * @param : a login and password
+	  * @returns : true if the login and password match with an admin else false
+	 **/
+	public boolean isAdmin(String login, String password) {
 		try {
 			boolean isAdmin;
-			prepare();
+			init();
 			String query = "SELECT id FROM admin WHERE login = '" + login + "' AND password = '" + password +"';";
 			ResultSet result = this.statement.executeQuery(query);
 			if (result.next() == false) {
@@ -113,6 +118,58 @@ public class DatabaseDriver {
 			System.out.println(e.toString());
 			e.printStackTrace();
 			return false;
+		}
+	}
+	
+	/**
+	  * @brief : check if the login and password match with a user
+	  * @param : a login and password
+	  * @returns : true if the login and password match with an user else false
+	 **/
+	public boolean isUser (String login, String password) {
+		try {
+			boolean isUser;
+			init();
+			String query = "SELECT id FROM user WHERE login = '" + login + "' AND password = '" + password +"';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next() == false) {
+				isUser = false;
+			}
+			else {
+				isUser = true;
+			}
+			return isUser;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	  * @brief : retrieve the id of a user using his name
+	  * @param : a name
+	  * @returns : the id
+	 **/
+	public int getIdByName (String name) {
+		try {
+			int id;
+			init();
+			String query = "SELECT id FROM user WHERE name = '" + name + "';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next() == false) {
+				id = -1;
+			}
+			else {
+				id = result.getInt(1);
+			}
+			return id;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return -1;
 		}
 	}
 }
