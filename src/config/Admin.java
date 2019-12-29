@@ -43,7 +43,8 @@ public class Admin extends Thread{
 	  * @returns: none
 	 **/
 	public void run() {
-		
+		DatabaseDriver database = new DatabaseDriver();
+		System.out.println(database.getIpToConnect());
 	}
 	
 }

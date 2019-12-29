@@ -96,6 +96,54 @@ public class DatabaseDriver {
 	}
 	
 	/**
+	  * @brief : create the database use by the application
+	  * @param : none
+	  * @returns : none
+	 **/
+	public void createDatabase() {
+		try {
+			init();
+			
+			//create user table
+			String query = "CREATE TABLE user ( id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, name VARCHAR(100) NOT NULL, login VARCHAR(25) NOT NULL, password VARCHAR(25) NOT NULL, email VARCHAR(250));";
+			int result = this.statement.executeUpdate(query);
+			if ( result == 0) {
+				System.out.println("User table created.");
+			}
+			
+			//create admin table
+			query = "CREATE TABLE admin ( id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, name VARCHAR(100) NOT NULL, login VARCHAR(25) NOT NULL, password VARCHAR(25) NOT NULL, email VARCHAR(250));";
+			result = this.statement.executeUpdate(query);
+			if ( result == 0) {
+				System.out.println("Admin table created.");
+			}
+			//Add the root admin
+			query = "INSERT INTO admin (name,login,password,email) VALUES ('root','root','Iamgroot','root@bluescarf.com');";
+			result = this.statement.executeUpdate(query);
+			if ( result == 1) {
+				System.out.println("Root added.");
+			}
+			
+			//create connectTo table
+			query = "CREATE TABLE connectTo ( id INT PRIMARY KEY NOT NULL, ip VARCHAR(15));";
+			result = this.statement.executeUpdate(query);
+			if ( result == 0) {
+				System.out.println("ConnectTo table created.");
+			}
+			//Init at NULL
+			query = "INSERT INTO connectTo (id,ip) VALUES (0,NULL);";
+			result = this.statement.executeUpdate(query);
+			if ( result == 1) {
+				System.out.println("ConnectTo initialized.");
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	  * @brief : check if the user is an admin by is login and password
 	  * @param : a login and password
 	  * @returns : true if the login and password match with an admin else false
@@ -172,4 +220,28 @@ public class DatabaseDriver {
 			return -1;
 		}
 	}
+
+	/**
+	  * @brief : give the ip address to connect to when you launch the app
+	  * @param : none
+	  * @returns : the ip address or NULL if no one is connected
+	 **/
+	public String getIpToConnect() {
+		try {
+			init();
+			String ip = "";
+			String query = "SELECT ip FROM connectTo;";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next()) {
+				ip = result.getString(1);
+			}
+			return ip;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return "NULL";
+		}
+	}
+
 }
