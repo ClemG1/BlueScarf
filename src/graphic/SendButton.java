@@ -23,10 +23,9 @@ public class SendButton extends JButton implements MouseInputListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getButton()==1) {
-			System.out.println(InterfaceHM.getTextChatEditor());
+		System.out.println("coucoué");
+			//System.out.println(InterfaceHM.getTextChatEditor());
 
-		}
 	}
 
 
