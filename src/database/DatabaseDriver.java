@@ -16,78 +16,20 @@ public class DatabaseDriver {
 	  * @returns : none
 	 **/
 	public DatabaseDriver() {
-		this.jdbcDriver = "com.mysql.jdbc.Driver";
-		this.dbURL = "jdbc:mysql://localhost/bluescarf";
-		this.connection = null;
-		this.statement = null;
-	}
-	
-	/**
-	  * @brief : register the driver for the database
-	  * @param : none
-	  * @returns : none
-	 **/
-	private void registerDriver() {
 		try {
+			this.jdbcDriver = "com.mysql.jdbc.Driver";
+			this.dbURL = "jdbc:mysql://localhost/bluescarf";
+			this.connection = null;
+			this.statement = null;
+			
+			//register driver
 			Class.forName(this.jdbcDriver);
-		}
-		
-		/*********Exceptions handling*****************/
-		catch (ExceptionInInitializerError eie) {
-			System.out.println(eie.toString());
-			eie.printStackTrace();
-		}
-		catch (LinkageError le) {
-			System.out.println(le.toString());
-			le.printStackTrace();
-		}
-		catch (ClassNotFoundException cnfe) {
-			System.out.println(cnfe.toString());
-			cnfe.printStackTrace();
-		}
-		/***********End of Exceptions handling**********/
-	}
-
-	/**
-	  * @brief : connect the database
-	  * @param : none
-	  * @returns : none
-	 **/
-	private void connect() {
-		try {
+			
+			//connect
 			this.connection = DriverManager.getConnection(this.dbURL,"root","E\"vkG6if");
-		}
-		catch (SQLException sqle) {
-			System.out.println(sqle.toString());
-			sqle.printStackTrace();
-		}
-	}
-	
-	/**
-	  * @brief : create a statement
-	  * @param : none
-	  * @returns : none
-	 **/
-	private void createStatement() {
-		try {
+			
+			//create statement
 			this.statement = this.connection.createStatement();
-		}
-		catch (SQLException sqle) {
-			System.out.println(sqle.toString());
-			sqle.printStackTrace();
-		}
-	}
-	
-	/**
-	  * @brief : prepare to use the database
-	  * @param : none
-	  * @returns : none
-	 **/
-	private void init() {
-		try {
-			registerDriver();
-			connect();
-			createStatement();
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -101,9 +43,7 @@ public class DatabaseDriver {
 	  * @returns : none
 	 **/
 	public void createDatabase() {
-		try {
-			init();
-			
+		try {			
 			//create user table
 			String query = "CREATE TABLE user ( id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, name VARCHAR(100) NOT NULL, login VARCHAR(25) NOT NULL, password VARCHAR(25) NOT NULL, email VARCHAR(250));";
 			int result = this.statement.executeUpdate(query);
@@ -151,7 +91,6 @@ public class DatabaseDriver {
 	public boolean isAdmin(String login, String password) {
 		try {
 			boolean isAdmin;
-			init();
 			String query = "SELECT id FROM admin WHERE login = '" + login + "' AND password = '" + password +"';";
 			ResultSet result = this.statement.executeQuery(query);
 			if (result.next() == false) {
@@ -177,7 +116,6 @@ public class DatabaseDriver {
 	public boolean isUser (String login, String password) {
 		try {
 			boolean isUser;
-			init();
 			String query = "SELECT id FROM user WHERE login = '" + login + "' AND password = '" + password +"';";
 			ResultSet result = this.statement.executeQuery(query);
 			if (result.next() == false) {
@@ -203,7 +141,6 @@ public class DatabaseDriver {
 	public int getIdByName (String name) {
 		try {
 			int id;
-			init();
 			String query = "SELECT id FROM user WHERE name = '" + name + "';";
 			ResultSet result = this.statement.executeQuery(query);
 			if (result.next() == false) {
@@ -228,8 +165,7 @@ public class DatabaseDriver {
 	 **/
 	public String getIpToConnect() {
 		try {
-			init();
-			String ip = "";
+			String ip = null;
 			String query = "SELECT ip FROM connectTo;";
 			ResultSet result = this.statement.executeQuery(query);
 			if (result.next()) {
@@ -240,7 +176,35 @@ public class DatabaseDriver {
 		catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
-			return "NULL";
+			return null;
+		}
+	}
+	
+	public void updateIpToConnect(String ip) {
+		try {
+			String query = "UPDATE connectTo SET ip = '" + ip + "' WHERE id = 0;";
+			int result = this.statement.executeUpdate(query);
+			if ( result == 1) {
+				System.out.println("Ip updated.");
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void setIpToConnectToNULL() {
+		try {
+			String query = "UPDATE connectTo SET ip = NULL WHERE id = 0;";
+			int result = this.statement.executeUpdate(query);
+			if ( result == 1) {
+				System.out.println("Ip reset to null.");
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
 		}
 	}
 

@@ -1,5 +1,6 @@
 package network;
 
+import database.DatabaseDriver;
 import java.net.*;
 import java.util.*;
 
@@ -27,7 +28,7 @@ public class NetworkManager {
 			    while ((! found) && addressList.hasMoreElements()) {
 			    	InetAddress address = (InetAddress) addressList.nextElement();
 			        String addressPart[] = address.getHostAddress().split("\\.");
-			        if ((addressPart.length == 4) && (!addressPart[0].equals("127")) && (!addressPart[0].equals("192"))) { //a suitable address has been found
+			        if ((addressPart.length == 4) && (!addressPart[0].equals("127")) /*&& (!addressPart[0].equals("192"))*/) { //a suitable address has been found
 			        	found = true;
 			        	this.ipAddress = address;
 			        }
@@ -48,7 +49,7 @@ public class NetworkManager {
 	  * @param : none
 	  * @returns: none
 	 **/
-	public void startServer() {
+	private void startServer() {
 		Server server = new Server(this.portServer);
 		server.start();
 	}
@@ -63,5 +64,25 @@ public class NetworkManager {
 		client.start();
 	}
 	
+	public void connectToNetwork ( ) {
+		try {
+			DatabaseDriver database = new DatabaseDriver();
+			String ipToConnect = database.getIpToConnect();
+			String localIp = this.ipAddress.toString().substring(1);
+			if (ipToConnect == null) { //nobody is connected
+				database.updateIpToConnect(localIp);
+				startServer();
+			}
+			else { //someone is connected
+				startServer();
+				connectTo(InetAddress.getByName(ipToConnect));
+				database.updateIpToConnect(localIp);
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
 
 }

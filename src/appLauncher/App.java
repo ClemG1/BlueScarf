@@ -8,8 +8,6 @@ public class App {
 		
 		User newUser = new User("Donald","Johnson",1); //Personal informations needs to be retrieve from the database
 		newUser.start();
-		InterfaceHM graphicInterface = new InterfaceHM();
-		graphicInterface.start();
 	}
 
 }

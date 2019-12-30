@@ -32,7 +32,8 @@ public class User extends Thread{
 	 **/
 	public void run () {
 		try {
-
+			NetworkManager networkDriver = new NetworkManager();
+			networkDriver.connectToNetwork();
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
