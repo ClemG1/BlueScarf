@@ -1,0 +1,1 @@
+send:Hi Did you repair the printer?-recv:Hi nope a piece is still missing it was shippped yesterday it may be repaired tomorrow morning-send:I can't wait that long I havea report to print for M. Brown-recv:Oh I can't help you. Good Luck with that one.-send:hello-

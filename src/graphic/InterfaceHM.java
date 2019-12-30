@@ -2,8 +2,7 @@ package graphic;
 
 import localSystem.LocalFilesManager;
 import java.awt.*;
-import java.awt.event.MouseListener;
-
+import appLauncher.App;
 import javax.swing.*;
 
 //import com.sun.glass.events.MouseEvent;
@@ -18,7 +17,7 @@ public class InterfaceHM {
 	JPanel filesSection; //section where available files are displayed
 	JMenuBar menuBar; //menu at the top of the interface
 	static JTextArea chatEditor;
-
+	public static String userWith; //user with whom you're in conversation
 	/**
 	  * @brief : class constructor
 	  * @param : none
@@ -68,8 +67,7 @@ public class InterfaceHM {
 			int k = 0;
 			while (k  < numberOfUser) {
 				UserButton user = new UserButton(usersTab[k]) ;
-				user.setBackground(Color.gray);
-				
+				user.setBackground(Color.blue);
 				user.setHoverBackgroundColor(Color.cyan);
 				user.setPressedBackgroundColor(Color.darkGray);
 				this.usersSection.add(user);
@@ -83,23 +81,45 @@ public class InterfaceHM {
 		}
 	}
 	
+	public void UpdateChatEditor(String user) {
+		App.window.ClearChatEditor();
+		App.window.displayMessage(user);			
+		App.window.chatingSection.validate();	
+		App.window.chatingSection.repaint();
+		this.userWith = user;
+	}
 	/**
 	  * @brief : retrieve all the message with a user
 	  * @param : none
 	  * @return : none
 	  * @note : use username.txt file, also add the text box to send message and the send button
 	 **/
-	private void displayMessage() {
+	private void ClearChatEditor() {
+
+		App.window.chatingSection.removeAll();
+		App.window.chatingSection.validate();		
+	}
+	
+	/**
+	  * @brief : retrieve all the message with a user
+	  * @param : none
+	  * @return : none
+	  * @note : use username.txt file, also add the text box to send message and the send button
+	 **/
+	private void displayMessage(String UserConvFile) {
 		try {
-			LocalFilesManager filesManager = new LocalFilesManager("conv/JohnMcDavid.txt",LocalFilesManager.getPath(),"",'-',"r");
+			LocalFilesManager filesManager = new LocalFilesManager("conv/" + UserConvFile + ".txt",LocalFilesManager.getPath(),"",'-',"r");
 			filesManager.start();
 			filesManager.join();
 			String messages = filesManager.getDataFile();
 			String messagesTab[] = messages.split("-");
-			int numberOfMessages = messagesTab.length - 1;
-			this.chatingSection = new JPanel(new GridLayout((numberOfMessages +  1),2,5,5));
+			int numberOfMessages = messagesTab.length-1;
+			System.out.println("length message "+messagesTab.length+"numberOfMessages: "+numberOfMessages+" " +messagesTab[numberOfMessages]);
+			JPanel grid =  new JPanel(new GridLayout((numberOfMessages +  1),2,5,5));
+			this.chatingSection.add(grid);
 			int k = 0;
 			while (k  < numberOfMessages) {
+				System.out.println("numero k : "+k+" "+ messagesTab[k]+"  "+messagesTab[k].substring(0, 5));
 				String messageDriver[] = new String[2];
 				messageDriver[0] = messagesTab[k].substring(0, 5);
 				messageDriver[1] = messagesTab[k].substring(5);
@@ -107,8 +127,9 @@ public class InterfaceHM {
 					JLabel message = new JLabel(messageDriver[1], SwingConstants.RIGHT) ;
 					message.setOpaque(true);
 					message.setBackground(Color.WHITE);
-					this.chatingSection.add(new JPanel()); //empty panel for display
 					this.chatingSection.add(message);
+					this.chatingSection.add(new JPanel()); //empty panel for display
+
 				}
 				else {
 					JLabel message = new JLabel(messageDriver[1], SwingConstants.LEFT) ;
@@ -124,6 +145,7 @@ public class InterfaceHM {
 			
 			//create SendButton
 			SendButton sendButton = new SendButton("Send");
+			
 			
 			//add to the sending message panel
 			this.chatingSection.add(chatEditor);
@@ -188,7 +210,8 @@ public class InterfaceHM {
 		/*************End OF Online user Management**************/
 		
 		/*******************Chat box Management******************/
-		displayMessage();
+		this.chatingSection = new JPanel();
+		//displayMessage("DanyBrown");
 		
 		//set borders
 		this.chatingSection.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -226,9 +249,9 @@ public class InterfaceHM {
 		/********************End of Relative Panel Management**************/
 	}
 	
-	/*
-	 * 
-	 */
+	/**
+	  * @brief : return text written in ChatEditor
+	 **/
 	public static String getTextChatEditor() {
 		return chatEditor.getText();
 	}

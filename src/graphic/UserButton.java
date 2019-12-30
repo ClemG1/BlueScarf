@@ -1,62 +1,27 @@
 package graphic;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import appLauncher.App;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.event.MouseInputListener;
 
-public class UserButton extends JButton{
-	
+public class UserButton extends JButton implements MouseInputListener {
+	private String user;
 	private Color hoverBackgroundColor;
     private Color pressedBackgroundColor;
-    private Color currentBackgroundColor;
-
-    private boolean pressed;
-
+    private Color BackgroundColor;
 
     public UserButton(String text) {
         super(text);
-        super.setContentAreaFilled(false);
-        this.pressed=false;
-        this.currentBackgroundColor = this.getBackground();
+        this.user=getUserName(text);
+        //super.setContentAreaFilled(false);
+        this.setOpaque(false);
+        this.BackgroundColor = this.getBackground();
+        addMouseListener(this);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        if (getModel().isPressed()) {
-       		//System.out.println("Pressed " + pressed);
-            if (pressed) {
-                setCurrentBackgroundColor(getBackground());
-                g.setColor(getBackground());
-                pressed=false;
-            } else {
-                setCurrentBackgroundColor(getPressedBackgroundColor());
-                g.setColor(getPressedBackgroundColor());
-                pressed=true;
-
-            }
-
-        } else if (getModel().isRollover()) {
-            if (pressed) {
-                g.setColor(getCurrentBackgroundColor());
-            } else {
-                g.setColor(hoverBackgroundColor);
-            }
-        } else {
-            //System.out.println("Dernier else " + this.pressed);
-            if (pressed) {
-                g.setColor(getCurrentBackgroundColor());
-            } else {
-                g.setColor(getBackground());
-            }
-        }
-        g.fillRect(0, 0, getWidth(), getHeight());
-        super.paintComponent(g);
-    }
-
-    @Override
-    public void setContentAreaFilled(boolean b) {
-    }
 
     public Color getHoverBackgroundColor() {
         return hoverBackgroundColor;
@@ -75,10 +40,77 @@ public class UserButton extends JButton{
     }
     
     public Color getCurrentBackgroundColor() {
-        return currentBackgroundColor;
+        return BackgroundColor;
     }
 
     public void setCurrentBackgroundColor(Color currentBackgroundColor) {
-        this.currentBackgroundColor = currentBackgroundColor;
+        this.BackgroundColor = currentBackgroundColor;
     }
+    
+	/**
+	  * @brief : when given the text in the UserButton return the fileName associated with this user 
+	  * @param : text in UserButton
+	  * @return : fileName
+	 **/
+    public String getUserName(String user) {
+    	String userna="";
+    	String userNaes[]=user.split(" ");
+    	int namesNumber = userNaes.length;
+    	int i=0;
+    	while (i<namesNumber) {
+    		userna =userna+ userNaes[i];
+    		i=i+1;
+    	}
+    	return userna;
+    }
+    
+    @Override
+	public void mouseClicked(MouseEvent e) {
+    		this.setBackground(BackgroundColor);
+    		App.window.UpdateChatEditor(user);
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		//this.setBackground(hoverBackgroundColor);
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+    	//if (e.getClickCount()%2 == 0) {
+    	//	this.setBackground(pressedBackgroundColor);
+    	//}else {
+    	//	this.setBackground(BackgroundColor);
+    	//}
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		//System.out.println("pressed");
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		//System.out.println("released");
+	}
+
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		//System.out.println("dragged");
+	}
+
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		//System.out.println("moved");
+	}
 }
