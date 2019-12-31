@@ -18,7 +18,7 @@ public class DatabaseDriver {
 	public DatabaseDriver() {
 		try {
 			this.jdbcDriver = "com.mysql.jdbc.Driver";
-			this.dbURL = "jdbc:mysql://localhost/bluescarf";
+			this.dbURL = "jdbc:mysql://192.168.1.31/bluescarf";
 			this.connection = null;
 			this.statement = null;
 			

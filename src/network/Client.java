@@ -19,6 +19,7 @@ public class Client extends Thread {
 	public Client(InetAddress ipAddress, int portServer) {
 		try {
 			this.socket = new Socket(ipAddress,portServer);
+			System.out.println("Connection established");
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());

@@ -76,7 +76,7 @@ public class NetworkManager {
 			else { //someone is connected
 				startServer();
 				connectTo(InetAddress.getByName(ipToConnect));
-				database.updateIpToConnect(localIp);
+				//database.updateIpToConnect(localIp);
 			}
 		}
 		catch (Exception e) {
