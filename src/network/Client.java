@@ -6,19 +6,23 @@ import java.io.OutputStreamWriter;
 import java.net.*;
 import java.util.Scanner;
 
+import localSystem.LocalFilesManager;
+
 public class Client extends Thread {
 
 	//Attributes
 	private Socket socket;
+	private String messageType;
 	
 	/**
 	  * @brief : class constructor
 	  * @param : ip to connect to, port to connect to 
 	  * @returns : none
 	 **/
-	public Client(InetAddress ipAddress, int portServer) {
+	public Client(InetAddress ipAddress, String messageType) {
 		try {
-			this.socket = new Socket(ipAddress,portServer);
+			this.socket = new Socket(ipAddress,NetworkManager.portServer);
+			this.messageType = messageType;
 			System.out.println("Connection established");
 		}
 		catch (Exception e) {
@@ -55,13 +59,62 @@ public class Client extends Thread {
 		}
 	}
 	
+	private void sendConnectionMsg () {
+		try {
+			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
+			contact.write(NetworkManager.ipAddress.toString(), '-');
+			String myContact = "-c:" + NetworkManager.ipAddress.toString();
+			bufferOut.write(myContact);
+			bufferOut.flush();
+			System.out.println("Contact.txt send.");
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	private void respondConnectionMsg() {
+		try {
+			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
+			String myContacts = "-r:" + contact.readAllFile();
+			bufferOut.write(myContacts);
+			bufferOut.flush();
+			System.out.println("Contact.txt send.");
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	  * @brief : run function of the thread
 	  * @param : none
 	  * @returns: none
 	 **/
 	public void run() {
-		send();
+		switch (this.messageType) {
+		case "-c" :
+			sendConnectionMsg();
+			send();
+			break;
+		case "-r" :
+			respondConnectionMsg();
+			send();
+			break;
+		case "-d" : 
+			break;
+		case "-m" :
+			send ();
+			break;
+		case "-u" :
+			break;
+		default :
+			System.out.println("Message type unkown.");
+		}
 	}
 	
 }

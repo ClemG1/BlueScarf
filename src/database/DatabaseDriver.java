@@ -18,7 +18,7 @@ public class DatabaseDriver {
 	public DatabaseDriver() {
 		try {
 			this.jdbcDriver = "com.mysql.jdbc.Driver";
-			this.dbURL = "jdbc:mysql://192.168.1.31/bluescarf";
+			this.dbURL = "jdbc:mysql://srv-bdens.insa-toulouse.fr/tpservlet_01";
 			this.connection = null;
 			this.statement = null;
 			
@@ -26,7 +26,7 @@ public class DatabaseDriver {
 			Class.forName(this.jdbcDriver);
 			
 			//connect
-			this.connection = DriverManager.getConnection(this.dbURL,"root","E\"vkG6if");
+			this.connection = DriverManager.getConnection(this.dbURL,"tpservlet_01","simieNg0");
 			
 			//create statement
 			this.statement = this.connection.createStatement();

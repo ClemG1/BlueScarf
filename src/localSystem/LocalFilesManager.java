@@ -27,7 +27,7 @@ public class LocalFilesManager {
 	  * @returns : a path
 	 **/
 	public static String getPath() {
-		return System.getProperty("user.dir") + "/configFiles/" ;
+		return System.getProperty("user.dir") + "/../configFiles/" ;
 	}
 	
 	/**

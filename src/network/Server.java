@@ -2,6 +2,8 @@ package network;
 
 import java.net.*;
 
+import localSystem.LocalFilesManager;
+
 public class Server extends Thread {
 	
 	//Attributes
@@ -12,9 +14,9 @@ public class Server extends Thread {
 	  * @param : the port for the server socket
 	  * @returns : none
 	 **/
-	public Server(int portServer) {
+	public Server() {
 		try {
-			this.serverSocket = new ServerSocket(portServer);
+			this.serverSocket = new ServerSocket(NetworkManager.portServer);
 			System.out.println("server up");
 		}
 		catch (Exception e) {
@@ -34,11 +36,12 @@ public class Server extends Thread {
 		try {
 			while(true) {
 				
-				Socket socket = this.serverSocket.accept();;
+				Socket socket = this.serverSocket.accept();
 				
 				System.out.println("Connection established");
 				ServerThread serverThread = new ServerThread(socket);
 				serverThread.start();
+
 			}
 		}
 		catch (Exception e) {
