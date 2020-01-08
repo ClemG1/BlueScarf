@@ -72,7 +72,7 @@ public class NetworkManager {
 			}
 			else { //someone is connected
 				startServer();
-				Client client = new Client(InetAddress.getByName(ipToConnect),"-c");
+				Client client = new Client(InetAddress.getByName(ipToConnect),"-c:");
 				client.start();
 				database.updateIpToConnect(localIp);
 			}
