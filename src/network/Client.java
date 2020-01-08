@@ -84,7 +84,7 @@ public class Client extends Thread {
 			String myContacts = "-r:" + contact.readAllFile();
 			bufferOut.write(myContacts);
 			bufferOut.flush();
-			System.out.println("Contact.txt send.");
+			System.out.println("Answer sent.");
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
