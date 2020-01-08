@@ -81,6 +81,7 @@ public class Client extends Thread {
 		try {
 			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
+			System.out.println("read all file result : " + contact.readAllFile());
 			String myContacts = "-r:" + contact.readAllFile();
 			bufferOut.write(myContacts);
 			bufferOut.flush();

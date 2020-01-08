@@ -34,13 +34,13 @@ public class ServerThread extends Thread{
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 			while ((msg = bufferIn.readLine()) != null) { //until the client end the connection
 				System.out.println(msg);
-				if(msg.subSequence(0, 3).equals("-c:")) {
+				if(msg.subSequence(0, 3).toString().equals("-c:")) {
 					System.out.println("Contact received.");
 					Client client = new Client(this.socket.getInetAddress(),"-r");
 					client.start();
 					contact.write(msg.substring(3,msg.length()), '-');
 				}
-				if(msg.subSequence(0, 3).equals("-r:")) {
+				if(msg.subSequence(0, 3).toString().equals("-r:")) {
 					System.out.println("response received.");
 					contact.write(msg.substring(3, msg.length()), '-');
 				}
