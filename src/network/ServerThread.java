@@ -37,7 +37,7 @@ public class ServerThread extends Thread{
 				String msgHeader = msg.subSequence(0, 3).toString();
 				String msgData = msg.substring(3).toString();
 				switch (msgHeader) {
-					case "-c" :
+					case "-c:" :
 						System.out.println("Contact received.");
 						contact.write(msgData, '-');
 						String allOnlineUsers = contact.readAllFile();
@@ -49,15 +49,15 @@ public class ServerThread extends Thread{
 							}
 						}
 						break;
-					case "-m" :
+					case "-m:" :
 						System.out.println(msgData);
 						break;
-					case "-r" :
+					case "-r:" :
 						System.out.println("response received.");
 						contact.deleteFile();
 						contact.write(msgData, '\0');
 						break;
-					case "-u" :
+					case "-u:" :
 						System.out.println("update received.");
 						contact.deleteFile();
 						contact.write(msgData, '\0');
