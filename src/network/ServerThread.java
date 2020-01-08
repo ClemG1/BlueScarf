@@ -43,7 +43,7 @@ public class ServerThread extends Thread{
 				if(msg.subSequence(0, 3).toString().equals("-r:")) {
 					System.out.println("response received.");
 					contact.deleteFile();
-					contact.write(msg.substring(3, msg.length()), '-');
+					contact.write(msg.substring(3, msg.length()), '\0');
 				}
 			}
 			
