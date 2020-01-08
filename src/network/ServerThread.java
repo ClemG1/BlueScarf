@@ -34,16 +34,36 @@ public class ServerThread extends Thread{
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 			while ((msg = bufferIn.readLine()) != null) { //until the client end the connection
 				System.out.println(msg);
-				if(msg.subSequence(0, 3).toString().equals("-c:")) {
-					System.out.println("Contact received.");
-					contact.write(msg.substring(3,msg.length()), '-');
-					Client client = new Client(this.socket.getInetAddress(),"-r");
-					client.start();
-				}
-				if(msg.subSequence(0, 3).toString().equals("-r:")) {
-					System.out.println("response received.");
-					contact.deleteFile();
-					contact.write(msg.substring(3, msg.length()), '\0');
+				String msgHeader = msg.subSequence(0, 3).toString();
+				String msgData = msg.substring(3).toString();
+				switch (msgHeader) {
+					case "-c" :
+						System.out.println("Contact received.");
+						contact.write(msgData, '-');
+						String allOnlineUsers = contact.readAllFile();
+						String onlineUsers[] = allOnlineUsers.split("-");
+						for(int i = 0; i < onlineUsers.length; i++) {
+							if(! onlineUsers[i].equals(NetworkManager.ipAddress.toString())) {
+								Client client = new Client(InetAddress.getByName(onlineUsers[i]),"-u:");
+								client.start();
+							}
+						}
+						break;
+					case "-m" :
+						System.out.println(msgData);
+						break;
+					case "-r" :
+						System.out.println("response received.");
+						contact.deleteFile();
+						contact.write(msgData, '\0');
+						break;
+					case "-u" :
+						System.out.println("update received.");
+						contact.deleteFile();
+						contact.write(msgData, '\0');
+						break;
+					default :
+						System.out.println("Incorrect message header.");
 				}
 			}
 			

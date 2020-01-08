@@ -86,7 +86,22 @@ public class Client extends Thread {
 			bufferOut.write(myContacts);
 			bufferOut.newLine();
 			bufferOut.flush();
-		System.out.println("Answer sent : " + myContacts);
+			System.out.println("Answer sent : " + myContacts);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	private void updateUserMessage() {
+		try {
+			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
+			String myContacts = "-u:" + contact.readAllFile();
+			bufferOut.write(myContacts);
+			bufferOut.newLine();
+			bufferOut.flush();
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -115,6 +130,8 @@ public class Client extends Thread {
 			send ();
 			break;
 		case "-u" :
+			updateUserMessage();
+			send();
 			break;
 		default :
 			System.out.println("Message type unkown.");
