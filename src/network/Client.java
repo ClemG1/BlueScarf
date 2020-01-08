@@ -44,7 +44,7 @@ public class Client extends Thread {
 			System.out.println("Please enter your message : ");
 			String msg = scanner.next();
 			while (msg.compareToIgnoreCase("exit") != 0) {
-				bufferOut.write(msg);
+				bufferOut.write("-m:" + msg);
 				bufferOut.newLine();
 				bufferOut.flush();
 				System.out.println("Send : " + msg);

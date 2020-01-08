@@ -109,27 +109,24 @@ public class LocalFilesManager {
 	  * @returns : none
 	 **/
 	public String readAllFile () {
-		String message = "";
-		manageReadPermission();
 		try {
+			String message = "";
+			manageReadPermission();
 			FileReader bufferIn = new FileReader(this.localFile);
 			//reading loop
 			int character;
 			while ( (character = (bufferIn.read())) != -1) {
 				message = message + (char) character;
 			}
-			
+
 			bufferIn.close();
+			return message;
 		}
-		catch (FileNotFoundException fnfe) {
-			System.out.println(fnfe.toString());
-			fnfe.printStackTrace();
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return null;
 		}
-		catch (IOException ioe) {
-			System.out.println(ioe.toString());
-			ioe.printStackTrace();
-		}
-		return message;
 	}
 	
 	/**

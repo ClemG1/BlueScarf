@@ -32,8 +32,10 @@ public class User extends Thread{
 	 **/
 	public void run () {
 		try {
-			NetworkManager networkDriver = new NetworkManager();
-			networkDriver.connectToNetwork();
+			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
+			System.out.println(contact.readAllFile());
+			/*NetworkManager networkDriver = new NetworkManager();
+			networkDriver.connectToNetwork();*/
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
