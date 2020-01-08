@@ -35,6 +35,7 @@ public class ServerThread extends Thread{
 			while ((msg = bufferIn.readLine()) != null) { //until the client end the connection
 				System.out.println(msg);
 				if(msg.subSequence(0, 3).equals("-c:")) {
+					System.out.println("Contact received.");
 					Client client = new Client(this.socket.getInetAddress(),"-r");
 					client.start();
 					contact.write(msg.substring(0,(msg.length()-2)), '-');
