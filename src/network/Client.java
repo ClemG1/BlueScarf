@@ -116,20 +116,20 @@ public class Client extends Thread {
 	 **/
 	public void run() {
 		switch (this.messageType) {
-		case "-c" :
+		case "-c:" :
 			sendConnectionMsg();
 			send();
 			break;
-		case "-r" :
+		case "-r:" :
 			respondConnectionMsg();
 			send();
 			break;
-		case "-d" : 
+		case "-d:" : 
 			break;
-		case "-m" :
+		case "-m:" :
 			send ();
 			break;
-		case "-u" :
+		case "-u:" :
 			updateUserMessage();
 			send();
 			break;
