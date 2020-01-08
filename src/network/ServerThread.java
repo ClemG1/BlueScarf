@@ -44,6 +44,7 @@ public class ServerThread extends Thread{
 						String onlineUsers[] = allOnlineUsers.split("-");
 						for(int i = 0; i < onlineUsers.length; i++) {
 							if(! onlineUsers[i].equals(NetworkManager.ipAddress.toString())) {
+								System.out.println("ip to connect : (" + onlineUsers[i] + ")");
 								Client client = new Client(InetAddress.getByName(onlineUsers[i]),"-u:");
 								client.start();
 							}
