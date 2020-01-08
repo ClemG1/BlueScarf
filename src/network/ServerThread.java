@@ -36,12 +36,13 @@ public class ServerThread extends Thread{
 				System.out.println(msg);
 				if(msg.subSequence(0, 3).toString().equals("-c:")) {
 					System.out.println("Contact received.");
+					contact.write(msg.substring(3,msg.length()), '-');
 					Client client = new Client(this.socket.getInetAddress(),"-r");
 					client.start();
-					contact.write(msg.substring(3,msg.length()), '-');
 				}
 				if(msg.subSequence(0, 3).toString().equals("-r:")) {
 					System.out.println("response received.");
+					contact.deleteFile();
 					contact.write(msg.substring(3, msg.length()), '-');
 				}
 			}
