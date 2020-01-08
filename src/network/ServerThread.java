@@ -41,7 +41,8 @@ public class ServerThread extends Thread{
 					contact.write(msg.substring(3,msg.length()), '-');
 				}
 				if(msg.subSequence(0, 3).equals("-r:")) {
-					contact.write(msg.substring(0, (msg.length()-2)), '-');
+					System.out.println("response received.");
+					contact.write(msg.substring(3, msg.length()), '-');
 				}
 			}
 			
