@@ -57,10 +57,8 @@ public class InterfaceHM {
 	 **/
 	private void displayOnlineUsers() {
 		try {
-			LocalFilesManager filesManager = new LocalFilesManager("onlineUsers.txt",LocalFilesManager.getPath(),"",'-',"r");
-			filesManager.start();
-			filesManager.join();
-			String users = filesManager.getDataFile();
+			LocalFilesManager filesManager = new LocalFilesManager("onlineUsers.txt",LocalFilesManager.getPath());
+			String users = filesManager.readAllFile();
 			String usersTab[] = users.split("-");
 			int numberOfUser = usersTab.length - 1;
 			this.usersSection = new JPanel(new GridLayout(numberOfUser,0,5,5));
@@ -75,9 +73,9 @@ public class InterfaceHM {
 				
 			}
 		}
-		catch (InterruptedException ie) {
-			System.out.println(ie.toString());
-			ie.printStackTrace();
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
 		}
 	}
 	
@@ -108,10 +106,8 @@ public class InterfaceHM {
 	 **/
 	private void displayMessage(String UserConvFile) {
 		try {
-			LocalFilesManager filesManager = new LocalFilesManager("conv/" + UserConvFile + ".txt",LocalFilesManager.getPath(),"",'-',"r");
-			filesManager.start();
-			filesManager.join();
-			String messages = filesManager.getDataFile();
+			LocalFilesManager filesManager = new LocalFilesManager("conv/" + UserConvFile + ".txt",LocalFilesManager.getPath());
+			String messages = filesManager.readAllFile();
 			String messagesTab[] = messages.split("-");
 			int numberOfMessages = messagesTab.length-1;
 			System.out.println("length message "+messagesTab.length+"numberOfMessages: "+numberOfMessages+" " +messagesTab[numberOfMessages]);
@@ -151,9 +147,9 @@ public class InterfaceHM {
 			this.chatingSection.add(chatEditor);
 			this.chatingSection.add(sendButton);
 		}
-		catch (InterruptedException ie) {
-			System.out.println(ie.toString());
-			ie.printStackTrace();
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
 		}
 	}
 	

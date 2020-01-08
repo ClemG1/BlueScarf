@@ -31,14 +31,13 @@ public class SendButton extends JButton implements MouseInputListener {
 		try {
 		System.out.println(InterfaceHM.getTextChatEditor());
 		String toAppend ="send: "+ InterfaceHM.getTextChatEditor();
-		LocalFilesManager filesManager = new LocalFilesManager("conv/" + InterfaceHM.userWith + ".txt",LocalFilesManager.getPath(),toAppend,'-',"w");
-		filesManager.start();
-		filesManager.join();
+		LocalFilesManager filesManager = new LocalFilesManager("conv/" + InterfaceHM.userWith + ".txt",LocalFilesManager.getPath());
+		filesManager.write(toAppend, '-');
 		App.window.UpdateChatEditor(InterfaceHM.userWith);
 		}
-		catch (InterruptedException ie) {
-			System.out.println(ie.toString());
-			ie.printStackTrace();
+		catch (Exception ex) {
+			System.out.println(ex.toString());
+			ex.printStackTrace();
 		}
 	}
 
