@@ -1,5 +1,7 @@
 package graphic;
 
+import database.DatabaseDriver;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -14,6 +16,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AuthentificationWindow extends JFrame {
 
@@ -24,7 +30,7 @@ public class AuthentificationWindow extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void start() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -49,7 +55,7 @@ public class AuthentificationWindow extends JFrame {
 		setContentPane(contentPane);
 		
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.NORTH);
+		contentPane.add(panel, BorderLayout.CENTER);
 		
 		JLabel lblPassword = new JLabel("Password");
 		
@@ -59,9 +65,27 @@ public class AuthentificationWindow extends JFrame {
 		txtfieldLogin.setColumns(10);
 		
 		txtfieldPassword = new JTextField();
+		txtfieldPassword.addComponentListener(new ComponentAdapter() {
+		});
 		txtfieldPassword.setColumns(10);
 		
 		JButton btnLogin = new JButton("LogIn");
+		btnLogin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String login = txtfieldLogin.getText();
+				String password = txtfieldPassword.getText();
+				DatabaseDriver database = new DatabaseDriver();
+				if(database.isUser(login, password)) {
+					InterfaceHM mainWindow = new InterfaceHM();
+					mainWindow.start();
+				}
+				else {
+					LogInFailedWindow loginFailedWindow = new LogInFailedWindow();
+					loginFailedWindow.start();
+				}
+			}
+		});
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
