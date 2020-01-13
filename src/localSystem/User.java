@@ -10,8 +10,7 @@ import graphic.InterfaceHM;
 public class User extends Thread{
 	
 	//Attributes
-	private String firstName; //first name of the user
-	private String lastName; //last name of the user
+	private String name; //name of the user
 	private int id; //id of the user, use to find the user on the network
 	
 	/**
@@ -19,9 +18,8 @@ public class User extends Thread{
 	  * @param : none
 	  * @returns : none
 	 **/
-	public User (String firstName, String lastName, int id) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public User (String name, int id) {
+		this.name = name;
 		this.id = id;
 	}
 
@@ -32,8 +30,8 @@ public class User extends Thread{
 	 **/
 	public void run () {
 		try {
-			NetworkManager networkDriver = new NetworkManager();
-			networkDriver.connectToNetwork();
+			/*NetworkManager networkDriver = new NetworkManager();
+			networkDriver.connectToNetwork();*/
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());

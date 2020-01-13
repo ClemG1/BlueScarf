@@ -136,6 +136,31 @@ public class DatabaseDriver {
 	}
 	
 	/**
+	  * @brief : retrieve the name of a user using his login and password
+	  * @param : a login and password
+	  * @returns : the name
+	 **/
+	public String getNameByLoginPassword(String login, String password) {
+		try {
+			String name;
+			String query = "SELECT name FROM user WHERE login = '" + login + "' AND password = '" + password +"';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next() == false) {
+				name = null;
+			}
+			else {
+				name = result.getString(1);
+			}
+			return name;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
 	  * @brief : retrieve the id of a user using his name
 	  * @param : a name
 	  * @returns : the id

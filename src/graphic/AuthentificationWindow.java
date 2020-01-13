@@ -1,6 +1,7 @@
 package graphic;
 
 import database.DatabaseDriver;
+import localSystem.User;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -77,8 +78,14 @@ public class AuthentificationWindow extends JFrame {
 				String password = txtfieldPassword.getText();
 				DatabaseDriver database = new DatabaseDriver();
 				if(database.isUser(login, password)) {
-					InterfaceHM mainWindow = new InterfaceHM();
+					String name = database.getNameByLoginPassword(login, password);
+					int id = database.getIdByName(name);
+					User user = new User(name,id);
+					user.run();
+					MainWindow mainWindow = new MainWindow();
 					mainWindow.start();
+					/*InterfaceHM mainWindow = new InterfaceHM();
+					mainWindow.start();*/
 				}
 				else {
 					LogInFailedWindow loginFailedWindow = new LogInFailedWindow();

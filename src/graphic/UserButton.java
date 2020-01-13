@@ -67,7 +67,7 @@ public class UserButton extends JButton implements MouseInputListener {
     @Override
 	public void mouseClicked(MouseEvent e) {
     		this.setBackground(BackgroundColor);
-    		App.window.UpdateChatEditor(user);
+    		App.window.UpdateChatEditor(this.user);
 	}
 
 
