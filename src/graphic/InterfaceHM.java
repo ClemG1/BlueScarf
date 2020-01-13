@@ -2,8 +2,7 @@ package graphic;
 
 import localSystem.LocalFilesManager;
 import java.awt.*;
-//import java.awt.event.MouseListener;
-
+import appLauncher.App;
 import javax.swing.*;
 
 //import com.sun.glass.events.MouseEvent;
@@ -18,7 +17,7 @@ public class InterfaceHM {
 	JPanel filesSection; //section where available files are displayed
 	JMenuBar menuBar; //menu at the top of the interface
 	static JTextArea chatEditor;
-
+	public static String userWith; //user with whom you're in conversation
 	/**
 	  * @brief : class constructor
 	  * @param : none
@@ -57,21 +56,46 @@ public class InterfaceHM {
 	  * @note : use onlineUsers.txt file
 	 **/
 	private void displayOnlineUsers() {
-		LocalFilesManager onlineUsersFileDriver = new LocalFilesManager("onlineUsers.txt",LocalFilesManager.getPath());
-		String users = onlineUsersFileDriver.readAllFile();
-		String usersTab[] = users.split("-");
-		int numberOfUser = usersTab.length - 1;
-		this.usersSection = new JPanel(new GridLayout(numberOfUser,0,5,5));
-		int k = 0;
-		while (k  < numberOfUser) {
-			UserButton user = new UserButton(usersTab[k]) ;
-			user.setBackground(Color.gray);
-			
-			user.setHoverBackgroundColor(Color.cyan);
-			user.setPressedBackgroundColor(Color.darkGray);
-			this.usersSection.add(user);
-			k++;
+		try {
+			LocalFilesManager filesManager = new LocalFilesManager("onlineUsers.txt",LocalFilesManager.getPath());
+			String users = filesManager.readAllFile();
+			String usersTab[] = users.split("-");
+			int numberOfUser = usersTab.length - 1;
+			this.usersSection = new JPanel(new GridLayout(numberOfUser,0,5,5));
+			int k = 0;
+			while (k  < numberOfUser) {
+				UserButton user = new UserButton(usersTab[k]) ;
+				user.setBackground(Color.blue);
+				user.setHoverBackgroundColor(Color.cyan);
+				user.setPressedBackgroundColor(Color.darkGray);
+				this.usersSection.add(user);
+				k++;
+				
+			}
 		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void UpdateChatEditor(String user) {
+		App.window.ClearChatEditor();
+		App.window.displayMessage(user);			
+		App.window.chatingSection.validate();	
+		App.window.chatingSection.repaint();
+		this.userWith = user;
+	}
+	/**
+	  * @brief : retrieve all the message with a user
+	  * @param : none
+	  * @return : none
+	  * @note : use username.txt file, also add the text box to send message and the send button
+	 **/
+	private void ClearChatEditor() {
+
+		App.window.chatingSection.removeAll();
+		App.window.chatingSection.validate();		
 	}
 	
 	/**
@@ -80,32 +104,37 @@ public class InterfaceHM {
 	  * @return : none
 	  * @note : use username.txt file, also add the text box to send message and the send button
 	 **/
-	private void displayMessage() {
-		LocalFilesManager convFileDriver = new LocalFilesManager("conv/JohnMcDavid.txt",LocalFilesManager.getPath());
-		String messages = convFileDriver.readAllFile();
-		String messagesTab[] = messages.split("-");
-		int numberOfMessages = messagesTab.length - 1;
-		this.chatingSection = new JPanel(new GridLayout((numberOfMessages +  1),2,5,5));
-		int k = 0;
-		while (k  < numberOfMessages) {
-			String messageDriver[] = new String[2];
-			messageDriver[0] = messagesTab[k].substring(0, 5);
-			messageDriver[1] = messagesTab[k].substring(5);
-			if(messageDriver[0].equals("send:") ) { //decide if it's display left or right
-				JLabel message = new JLabel(messageDriver[1], SwingConstants.RIGHT) ;
-				message.setOpaque(true);
-				message.setBackground(Color.WHITE);
-				this.chatingSection.add(new JPanel()); //empty panel for display
-				this.chatingSection.add(message);
+	private void displayMessage(String UserConvFile) {
+		try {
+			LocalFilesManager filesManager = new LocalFilesManager("conv/" + UserConvFile + ".txt",LocalFilesManager.getPath());
+			String messages = filesManager.readAllFile();
+			String messagesTab[] = messages.split("-");
+			int numberOfMessages = messagesTab.length-1;
+			System.out.println("length message "+messagesTab.length+"numberOfMessages: "+numberOfMessages+" " +messagesTab[numberOfMessages]);
+			JPanel grid =  new JPanel(new GridLayout((numberOfMessages +  1),2,5,5));
+			this.chatingSection.add(grid);
+			int k = 0;
+			while (k  < numberOfMessages) {
+				System.out.println("numero k : "+k+" "+ messagesTab[k]+"  "+messagesTab[k].substring(0, 5));
+				String messageDriver[] = new String[2];
+				messageDriver[0] = messagesTab[k].substring(0, 5);
+				messageDriver[1] = messagesTab[k].substring(5);
+				if(messageDriver[0].equals("send:") ) { //decide if it's display left or right
+					JLabel message = new JLabel(messageDriver[1], SwingConstants.RIGHT) ;
+					message.setOpaque(true);
+					message.setBackground(Color.WHITE);
+					this.chatingSection.add(message);
+					this.chatingSection.add(new JPanel()); //empty panel for display
+
+				}
+				else {
+					JLabel message = new JLabel(messageDriver[1], SwingConstants.LEFT) ;
+					message.setBackground(Color.WHITE);
+					this.chatingSection.add(message);
+					this.chatingSection.add(new JPanel()); //empty panel for display
+				}
+				k++;
 			}
-			else {
-				JLabel message = new JLabel(messageDriver[1], SwingConstants.LEFT) ;
-				message.setBackground(Color.WHITE);
-				this.chatingSection.add(message);
-				this.chatingSection.add(new JPanel()); //empty panel for display
-			}
-			k++;
-		}
 			
 			//create JTextArea
 			chatEditor = new JTextArea(1,50);
@@ -113,9 +142,15 @@ public class InterfaceHM {
 			//create SendButton
 			SendButton sendButton = new SendButton("Send");
 			
+			
 			//add to the sending message panel
 			this.chatingSection.add(chatEditor);
 			this.chatingSection.add(sendButton);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -171,7 +206,8 @@ public class InterfaceHM {
 		/*************End OF Online user Management**************/
 		
 		/*******************Chat box Management******************/
-		displayMessage();
+		this.chatingSection = new JPanel();
+		//displayMessage("DanyBrown");
 		
 		//set borders
 		this.chatingSection.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -209,9 +245,9 @@ public class InterfaceHM {
 		/********************End of Relative Panel Management**************/
 	}
 	
-	/*
-	 * 
-	 */
+	/**
+	  * @brief : return text written in ChatEditor
+	 **/
 	public static String getTextChatEditor() {
 		return chatEditor.getText();
 	}

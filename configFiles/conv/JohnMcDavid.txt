@@ -1,1 +1,1 @@
-send:Hi bro-recv:Hi what's up?-send:I'm starving wanna grab some food?-recv:Yeah, I'm comming-
+send:Hi bro-recv:Hi what's up?-send:I'm starving wanna grab some food?-recv:Yeah, I'm comming-send:coucou-send:bonjour-send:ça va?-send:jesuis-send: -send: -send: bien-send: -
