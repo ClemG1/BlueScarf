@@ -31,7 +31,7 @@ public class AuthentificationWindow extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public void start() {
+	public static void start() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -81,12 +81,11 @@ public class AuthentificationWindow extends JFrame {
 					int id = database.getIdByName(name);
 					User user = new User(name,id);
 					user.run();
-					InterfaceHM mainWindow = new InterfaceHM();
-					mainWindow.start();
+					/*InterfaceHM mainWindow = new InterfaceHM();
+					mainWindow.start();*/
 				}
 				else {
-					LogInFailedWindow loginFailedWindow = new LogInFailedWindow();
-					loginFailedWindow.start();
+					LogInFailedWindow.start();
 				}
 			}
 		});
