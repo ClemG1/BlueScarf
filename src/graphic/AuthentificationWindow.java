@@ -72,7 +72,6 @@ public class AuthentificationWindow extends JFrame {
 		
 		JButton btnLogin = new JButton("LogIn");
 		btnLogin.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				String login = txtfieldLogin.getText();
 				String password = txtfieldPassword.getText();
@@ -82,10 +81,8 @@ public class AuthentificationWindow extends JFrame {
 					int id = database.getIdByName(name);
 					User user = new User(name,id);
 					user.run();
-					MainWindow mainWindow = new MainWindow();
+					InterfaceHM mainWindow = new InterfaceHM();
 					mainWindow.start();
-					/*InterfaceHM mainWindow = new InterfaceHM();
-					mainWindow.start();*/
 				}
 				else {
 					LogInFailedWindow loginFailedWindow = new LogInFailedWindow();

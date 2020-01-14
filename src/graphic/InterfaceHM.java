@@ -2,20 +2,21 @@ package graphic;
 
 import localSystem.LocalFilesManager;
 import java.awt.*;
-import appLauncher.App;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 //import com.sun.glass.events.MouseEvent;
 
-public class InterfaceHM {
+public class InterfaceHM extends JFrame{
 	
 	//Attributes
-	JFrame mainWindow; //main window of the app
-	JPanel relativePanel; //this is a panel that has the same size than the main window to make it responsive
-	JPanel usersSection; //section where online users are displayed
-	JPanel chatingSection; //section for chat with your friend ;)
-	JPanel filesSection; //section where available files are displayed
-	JMenuBar menuBar; //menu at the top of the interface
+	public static JFrame mainWindow; //main window of the app
+	public static JPanel relativePanel; //this is a panel that has the same size than the main window to make it responsive
+	public static JPanel usersSection; //section where online users are displayed
+	public static JPanel chatingSection; //section for chat with your friend ;)
+	public static JPanel filesSection; //section where available files are displayed
+	public static JMenuBar menuBar; //menu at the top of the interface
 	static JTextArea chatEditor;
 	public static String userWith; //user with whom you're in conversation
 	/**
@@ -26,26 +27,26 @@ public class InterfaceHM {
 	public InterfaceHM () {
 		
 		//create the main window
-		this.mainWindow = new JFrame("BlueScarf");
+		mainWindow = new JFrame("BlueScarf");
 		
 		//create a relative panel for responsive
 		RelativeLayout rl = new RelativeLayout(RelativeLayout.X_AXIS,10);
-		this.relativePanel = new JPanel(rl);
-		this.relativePanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		relativePanel = new JPanel(rl);
+		relativePanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
 		//create the menu bar
-		this.menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		
 		//set the gap between each component of the menu bar
-		this.menuBar.setMargin(new Insets(10,20,5,20));
+		menuBar.setMargin(new Insets(10,20,5,20));
 		
 		//set the background color of the menu bar
 		Color menuBarColor = new Color(19, 73, 107);
-		this.menuBar.setBackground(menuBarColor);
+		menuBar.setBackground(menuBarColor);
 		
 		//create the different panel for each section
 		//this.chatingSection = new JPanel();
-		this.filesSection = new JPanel();
+		filesSection = new JPanel();
 		
 	}
 	
@@ -61,14 +62,33 @@ public class InterfaceHM {
 			String users = filesManager.readAllFile();
 			String usersTab[] = users.split("-");
 			int numberOfUser = usersTab.length - 1;
-			this.usersSection = new JPanel(new GridLayout(numberOfUser,0,5,5));
+			usersSection = new JPanel(new GridLayout(numberOfUser,0,5,5));
 			int k = 0;
 			while (k  < numberOfUser) {
-				UserButton user = new UserButton(usersTab[k]) ;
+				/*UserButton user = new UserButton(usersTab[k]) ;
 				user.setBackground(Color.blue);
 				user.setHoverBackgroundColor(Color.cyan);
 				user.setPressedBackgroundColor(Color.darkGray);
-				this.usersSection.add(user);
+				this.usersSection.add(user);*/
+				
+				final JButton userButton = new JButton(usersTab[k]);
+				usersSection.add(userButton);
+				
+				userButton.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {
+						InterfaceHM.chatingSection.removeAll();
+						InterfaceHM.chatingSection.validate();
+						String userParts[] = userButton.getText().split(" ");
+						String userName = "";
+						for( int i = 0; i < userParts.length; i++) {
+							userName += userParts[i];
+						}
+						displayMessage(userName);
+						chatingSection.validate();	
+						chatingSection.repaint();
+					}
+				});
+				
 				k++;
 				
 			}
@@ -77,25 +97,6 @@ public class InterfaceHM {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
-	}
-	
-	public void UpdateChatEditor(String user) {
-		App.window.ClearChatEditor();
-		App.window.displayMessage(user);			
-		App.window.chatingSection.validate();	
-		App.window.chatingSection.repaint();
-		this.userWith = user;
-	}
-	/**
-	  * @brief : retrieve all the message with a user
-	  * @param : none
-	  * @return : none
-	  * @note : use username.txt file, also add the text box to send message and the send button
-	 **/
-	private void ClearChatEditor() {
-
-		App.window.chatingSection.removeAll();
-		App.window.chatingSection.validate();		
 	}
 	
 	/**
@@ -109,29 +110,37 @@ public class InterfaceHM {
 			LocalFilesManager filesManager = new LocalFilesManager("conv/" + UserConvFile + ".txt",LocalFilesManager.getPath());
 			String messages = filesManager.readAllFile();
 			String messagesTab[] = messages.split("-");
-			int numberOfMessages = messagesTab.length-1;
-			System.out.println("length message "+messagesTab.length+"numberOfMessages: "+numberOfMessages+" " +messagesTab[numberOfMessages]);
-			JPanel grid =  new JPanel(new GridLayout((numberOfMessages +  1),2,5,5));
-			this.chatingSection.add(grid);
+			int numberOfMessages = messagesTab.length;
+			//System.out.println("length message "+messagesTab.length+"numberOfMessages: "+numberOfMessages+" " +messagesTab[numberOfMessages]);
+			JPanel grid =  new JPanel();
+			grid.setLayout(new GridLayout(numberOfMessages+1,2,5,5));
+			chatingSection.add(grid);
 			int k = 0;
 			while (k  < numberOfMessages) {
-				System.out.println("numero k : "+k+" "+ messagesTab[k]+"  "+messagesTab[k].substring(0, 5));
+				//System.out.println("numero k : "+k+" "+ messagesTab[k]+"  "+messagesTab[k].substring(0, 5));
 				String messageDriver[] = new String[2];
 				messageDriver[0] = messagesTab[k].substring(0, 5);
 				messageDriver[1] = messagesTab[k].substring(5);
 				if(messageDriver[0].equals("send:") ) { //decide if it's display left or right
-					JLabel message = new JLabel(messageDriver[1], SwingConstants.RIGHT) ;
+					//JSplitPane messageSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+					JTextArea message = new JTextArea(messageDriver[1]);
+					message.setLineWrap(true);
 					message.setOpaque(true);
-					message.setBackground(Color.WHITE);
-					this.chatingSection.add(message);
-					this.chatingSection.add(new JPanel()); //empty panel for display
-
+					message.setBackground(new Color(36,223,225));
+					/*messageSplit.add(message, JSplitPane.RIGHT);
+					messageSplit.add(new JPanel(),JSplitPane.LEFT); //empty panel for display*/
+					grid.add(new JPanel());
+					grid.add(message);
 				}
 				else {
-					JLabel message = new JLabel(messageDriver[1], SwingConstants.LEFT) ;
-					message.setBackground(Color.WHITE);
-					this.chatingSection.add(message);
-					this.chatingSection.add(new JPanel()); //empty panel for display
+					//JSplitPane messageSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+					JTextArea message = new JTextArea(messageDriver[1]) ;
+					message.setLineWrap(true);
+					message.setBackground(new Color(210,165,52));;
+					/*messageSplit.add(message, JSplitPane.LEFT);
+					messageSplit.add(new JPanel(),JSplitPane.RIGHT);*/
+					grid.add(message);
+					grid.add(new JPanel());
 				}
 				k++;
 			}
@@ -140,12 +149,12 @@ public class InterfaceHM {
 			chatEditor = new JTextArea(1,50);
 			
 			//create SendButton
-			SendButton sendButton = new SendButton("Send");
+			JButton sendButton = new JButton("Send");
 			
 			
 			//add to the sending message panel
-			this.chatingSection.add(chatEditor);
-			this.chatingSection.add(sendButton);
+			grid.add(chatEditor);
+			grid.add(sendButton);
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -188,8 +197,8 @@ public class InterfaceHM {
 		helpMenuItem.setBorderPainted(true);
 		
 		//add menus to the menu bar
-		this.menuBar.add(customizeMenu);
-		this.menuBar.add(helpMenu);
+		menuBar.add(customizeMenu);
+		menuBar.add(helpMenu);
 		
 		//add menu items to the menu
 		customizeMenu.add(profilMenuItem);
@@ -201,16 +210,16 @@ public class InterfaceHM {
 		displayOnlineUsers();
 		
 		//set the panel's size when you open the app
-		this.usersSection.setPreferredSize(new Dimension(200, 800));
+		usersSection.setPreferredSize(new Dimension(200, 800));
 		
 		/*************End OF Online user Management**************/
 		
 		/*******************Chat box Management******************/
-		this.chatingSection = new JPanel();
-		//displayMessage("DanyBrown");
+		chatingSection = new JPanel();
+		chatingSection.setLayout(new GridLayout(0,1));
 		
 		//set borders
-		this.chatingSection.setBorder(BorderFactory.createLineBorder(Color.black));
+		chatingSection.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		/***************End of chat box management***************/
 		
@@ -223,14 +232,14 @@ public class InterfaceHM {
 
 		
 		//add the labels and Editor Pane to the panels
-		this.filesSection.add(filesLabel);
+		filesSection.add(filesLabel);
 		
 		//set the panels' size when you open the app
-		this.chatingSection.setPreferredSize(new Dimension(400, 800));
-		this.filesSection.setPreferredSize(new Dimension(200, 800));
+		chatingSection.setPreferredSize(new Dimension(400, 800));
+		filesSection.setPreferredSize(new Dimension(200, 800));
 		
 		//set borders around panels
-		this.filesSection.setBorder(BorderFactory.createLineBorder(Color.black));
+		filesSection.setBorder(BorderFactory.createLineBorder(Color.black));
 		/**************************End To Modify*********************************/
 		
 		/************************Relative Panel Management**************/
@@ -239,9 +248,9 @@ public class InterfaceHM {
 		float sizeMiddleSection = 3; //chating section
 		
 		//add the sections at the relative panel
-		this.relativePanel.add(this.usersSection,sizeBorderSection);
-		this.relativePanel.add(this.chatingSection,sizeMiddleSection);
-		this.relativePanel.add(this.filesSection,sizeBorderSection);
+		relativePanel.add(usersSection,sizeBorderSection);
+		relativePanel.add(chatingSection,sizeMiddleSection);
+		relativePanel.add(filesSection,sizeBorderSection);
 		/********************End of Relative Panel Management**************/
 	}
 	
@@ -266,20 +275,20 @@ public class InterfaceHM {
 			JFrame.setDefaultLookAndFeelDecorated(true);
 	        
 	        //set up the  main window.
-	        this.mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+	        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	        
 	        //creates the components of the window
 	        addWidgets();
 	        
 	        //add the menu bar to the main window
-	        this.mainWindow.setJMenuBar(this.menuBar);
+	        mainWindow.setJMenuBar(menuBar);
 	        
 	        //add the relative panel to the window
-	        this.mainWindow.getContentPane().add(this.relativePanel);
-	        this.mainWindow.pack();
+	        mainWindow.getContentPane().add(relativePanel);
+	        mainWindow.pack();
 	        
 	        //Display the window.
-	        this.mainWindow.setVisible(true);
+	        mainWindow.setVisible(true);
 		}
 		
 		/*********Exceptions handling*****************/
