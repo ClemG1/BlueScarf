@@ -5,12 +5,11 @@ import network.NetworkManager;
 import java.net.InetAddress;
 
 import database.DatabaseDriver;
-import graphic.InterfaceHM;
 
 public class User extends Thread{
 	
 	//Attributes
-	private String name; //name of the user
+	public static String localUserName; //name of the user
 	private int id; //id of the user, use to find the user on the network
 	
 	/**
@@ -19,7 +18,7 @@ public class User extends Thread{
 	  * @returns : none
 	 **/
 	public User (String name, int id) {
-		this.name = name;
+		localUserName = name;
 		this.id = id;
 	}
 
@@ -30,8 +29,8 @@ public class User extends Thread{
 	 **/
 	public void run () {
 		try {
-			/*NetworkManager networkDriver = new NetworkManager();
-			networkDriver.connectToNetwork();*/
+			NetworkManager networkDriver = new NetworkManager();
+			networkDriver.connectToNetwork();
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());

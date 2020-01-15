@@ -1,1 +1,0 @@
-send:Hi Boss-recv:Hi, did you finished your essay?-send:I'm currently working on it-recv:ok be quick I want it before noon on my desk-send:Sure ASAP-

@@ -1,7 +1,8 @@
 package network;
 
 import database.DatabaseDriver;
-import localSystem.LocalFilesManager;
+import graphic.MainWindow;
+import localSystem.*;
 
 import java.net.*;
 import java.util.*;
@@ -59,9 +60,13 @@ public class NetworkManager {
 	public void connectToNetwork ( ) {
 		try {
 			
-			//add our ip to contact.txt file
+			//add our user name to onlineUsers file and refresh the main window
+			LocalFilesManager onlineUsers = new LocalFilesManager("onlineUsers.txt", LocalFilesManager.getPath());
+			onlineUsers.write(User.localUserName, '-');
+			
+			//add our ip to contact.txt file matching our user name
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
-			contact.write(ipAddress.toString(), '-');
+			contact.write(User.localUserName + ":" + ipAddress.toString(), '-');
 			
 			DatabaseDriver database = new DatabaseDriver();
 			String ipToConnect = database.getIpToConnect();

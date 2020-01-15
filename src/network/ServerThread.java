@@ -53,11 +53,6 @@ public class ServerThread extends Thread{
 					case "-m:" :
 						System.out.println(msgData);
 						break;
-					case "-r:" :
-						System.out.println("response received.");
-						contact.deleteFile();
-						contact.write(msgData, '\0');
-						break;
 					case "-u:" :
 						System.out.println("update received.");
 						contact.deleteFile();

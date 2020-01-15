@@ -81,8 +81,7 @@ public class AuthentificationWindow extends JFrame {
 					int id = database.getIdByName(name);
 					User user = new User(name,id);
 					user.run();
-					/*InterfaceHM mainWindow = new InterfaceHM();
-					mainWindow.start();*/
+					MainWindow.start();
 				}
 				else {
 					LogInFailedWindow.start();
