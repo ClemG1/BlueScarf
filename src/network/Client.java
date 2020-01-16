@@ -68,7 +68,7 @@ public class Client extends Thread {
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 			contact.write(User.localUserName + ":" + NetworkManager.ipAddress.toString(), '-');
 			
-			String myContact = "-c:" + NetworkManager.ipAddress.toString();
+			String myContact = "-c:" + User.localUserName + ":" + NetworkManager.ipAddress.toString();
 			System.out.println("contact to send : " + myContact);
 			bufferOut.write(myContact);
 			bufferOut.newLine();
