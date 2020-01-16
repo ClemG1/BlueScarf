@@ -155,8 +155,7 @@ public class MainWindow extends JFrame {
 			if(startIndex < numberOfUser) { //update only if the start index match with at least one user
 				//clear old list that might be display
 				onlineUsersPanel.removeAll();
-				onlineUsersPanel.revalidate();
-				
+
 				//define the layout for onlineUsersPanel
 				GridBagLayout onlineUsersGridBag = new GridBagLayout();
 				onlineUsersPanel.setLayout(onlineUsersGridBag);
@@ -197,7 +196,8 @@ public class MainWindow extends JFrame {
 				JButton scrollUpButton = new JButton("^");
 				onlineUsersGridBag.setConstraints(scrollUpButton, onlineUsersConstraints);
 				onlineUsersPanel.add(scrollUpButton);
-				
+				onlineUsersPanel.revalidate();
+				onlineUsersPanel.repaint();
 			
 				//event listener for the scroll down button
 				scrollDownButton.addMouseListener(new MouseAdapter() {

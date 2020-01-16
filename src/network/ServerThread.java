@@ -42,6 +42,11 @@ public class ServerThread extends Thread{
 						System.out.println("Contact received.");
 						contact.write(msgData, '-');
 						String allOnlineUsers = contact.readAllFile();
+						String contactEntriesOnConnection[] = msgData.split("-");
+						for (int i = 0; i < contactEntriesOnConnection.length; i++) {
+							String contactData[] = contactEntriesOnConnection[i].split(":");
+							onlineUsersFile.write(contactData[0], '-');
+						}
 						String onlineUsers[] = allOnlineUsers.split("-");
 						for(int i = 0; i < onlineUsers.length; i++) {
 							String detailsUser[] = onlineUsers[i].split(":"); //index 0 = name, index 1 = ip address
@@ -62,9 +67,9 @@ public class ServerThread extends Thread{
 						
 						//update online user from contact
 						onlineUsersFile.overwrite("\0",'\0');
-						String contactEntries[] = msgData.split("-");
-						for (int i = 0; i < contactEntries.length; i++) {
-							String contactData[] = contactEntries[i].split(":");
+						String contactEntriesOnUpdate[] = msgData.split("-");
+						for (int i = 0; i < contactEntriesOnUpdate.length; i++) {
+							String contactData[] = contactEntriesOnUpdate[i].split(":");
 							onlineUsersFile.write(contactData[0], '-');
 						}
 						break;
