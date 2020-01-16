@@ -3,17 +3,21 @@ package graphic;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import localSystem.LocalFilesManager;
+import database.DatabaseDriver;
+import localSystem.*;
 
-public class MainWindow extends JFrame{
+public class MainWindow extends JFrame {
 	
 	private JPanel contentPanel;
 	private static JPanel onlineUsersPanel;
-	private static int currentIndex; //use to update the online user list
+	public static int currentIndex; //use to update the online user list
 	private static JPanel chatPanel;
 	private JPanel filesPanel;
 
@@ -43,6 +47,26 @@ public class MainWindow extends JFrame{
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 1000, 650);
 			
+			//action performed when the user close the main window
+			addWindowListener(new WindowAdapter() {
+				public void windowClosing (WindowEvent e) {
+					DatabaseDriver database = new DatabaseDriver();
+					database.setIpToConnectToNULL();
+				}
+			});
+			
+			//create the menu bar and add the components
+			JMenuBar menuBar = new JMenuBar();
+			JMenu adminMenu = new JMenu("Admin");
+			JMenuItem addUserItem = new JMenuItem(new AbstractAction("Add User") {
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("clicked");
+				}
+			});
+			adminMenu.add(addUserItem);
+			menuBar.add(adminMenu);
+			setJMenuBar(menuBar);
+			
 			//create a content panel for the frame
 			contentPanel = new JPanel();
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -58,6 +82,8 @@ public class MainWindow extends JFrame{
 			addOnlineUsers(0); //start at the first user by default	
 			contentPanelGridBag.setConstraints(onlineUsersPanel, contentPanelConstraints);
 			contentPanel.add(onlineUsersPanel);
+			OnlineUserWatchdog onlineUserWatchdog = new OnlineUserWatchdog(LocalFilesManager.getPath() + "onlineUsers.txt");
+			onlineUserWatchdog.start();
 			
 			//create a panel for chat
 			chatPanel = new JPanel();
@@ -86,7 +112,7 @@ public class MainWindow extends JFrame{
 			LocalFilesManager filesManager = new LocalFilesManager("onlineUsers.txt",LocalFilesManager.getPath());
 			String users = filesManager.readAllFile();
 			String usersTab[] = users.split("-");
-			int numberOfUser = usersTab.length - 1;
+			int numberOfUser = usersTab.length;
 			
 			if(startIndex < numberOfUser) { //update only if the start index match with at least one user
 				//clear old list that might be display

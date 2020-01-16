@@ -48,7 +48,7 @@ public class AuthentificationWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public AuthentificationWindow() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("BlueScarf");
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -79,9 +79,18 @@ public class AuthentificationWindow extends JFrame {
 				if(database.isUser(login, password)) {
 					String name = database.getNameByLoginPassword(login, password);
 					int id = database.getIdByName(name);
-					User user = new User(name,id);
+					User user = new User(name,id,false);
 					user.run();
 					MainWindow.start();
+					dispose();
+				}
+				else if (database.isAdmin(login, password)) {
+					String name = database.getAdminNameByLoginPassword(login, password);
+					int id = database.getAdminIdByName(name);
+					User user = new User(name,id,true);
+					user.run();
+					MainWindow.start();
+					dispose();
 				}
 				else {
 					LogInFailedWindow.start();

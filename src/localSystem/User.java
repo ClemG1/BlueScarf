@@ -10,6 +10,7 @@ public class User extends Thread{
 	
 	//Attributes
 	public static String localUserName; //name of the user
+	public static boolean isAdmin;
 	private int id; //id of the user, use to find the user on the network
 	
 	/**
@@ -17,9 +18,10 @@ public class User extends Thread{
 	  * @param : none
 	  * @returns : none
 	 **/
-	public User (String name, int id) {
+	public User (String name, int id, boolean adminRight) {
 		localUserName = name;
 		this.id = id;
+		isAdmin = adminRight;
 	}
 
 	/**

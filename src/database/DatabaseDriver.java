@@ -161,6 +161,31 @@ public class DatabaseDriver {
 	}
 	
 	/**
+	  * @brief : retrieve the name of a admin using his login and password
+	  * @param : a login and password
+	  * @returns : the name
+	 **/
+	public String getAdminNameByLoginPassword(String login, String password) {
+		try {
+			String name;
+			String query = "SELECT name FROM admin WHERE login = '" + login + "' AND password = '" + password +"';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next() == false) {
+				name = null;
+			}
+			else {
+				name = result.getString(1);
+			}
+			return name;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
 	  * @brief : retrieve the id of a user using his name
 	  * @param : a name
 	  * @returns : the id
@@ -169,6 +194,31 @@ public class DatabaseDriver {
 		try {
 			int id;
 			String query = "SELECT id FROM user WHERE name = '" + name + "';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next() == false) {
+				id = -1;
+			}
+			else {
+				id = result.getInt(1);
+			}
+			return id;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	/**
+	  * @brief : retrieve the id of a admin using his name
+	  * @param : a name
+	  * @returns : the id
+	 **/
+	public int getAdminIdByName (String name) {
+		try {
+			int id;
+			String query = "SELECT id FROM admin WHERE name = '" + name + "';";
 			ResultSet result = this.statement.executeQuery(query);
 			if (result.next() == false) {
 				id = -1;
@@ -227,6 +277,20 @@ public class DatabaseDriver {
 			int result = this.statement.executeUpdate(query);
 			if ( result == 1) {
 				System.out.println("Ip reset to null.");
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void createHistory(int id, String name) {
+		try {
+			String query = "INSERT INTO history (id,name) VALUES (" + id + ",'" + name +"');";
+			int result  = this.statement.executeUpdate(query);
+			if(result == id) {
+				System.out.println("New user added");
 			}
 		}
 		catch (Exception e) {

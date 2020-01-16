@@ -12,6 +12,9 @@ import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 
 public class LogInFailedWindow extends JFrame {
@@ -38,7 +41,6 @@ public class LogInFailedWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public LogInFailedWindow() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 404, 170);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -54,5 +56,11 @@ public class LogInFailedWindow extends JFrame {
 		JButton btnOk = new JButton("OK");
 		btnOk.setBounds(140, 84, 114, 25);
 		contentPane.add(btnOk);
+		
+		btnOk.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+			}
+		});
 	}
 }

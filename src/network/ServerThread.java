@@ -32,6 +32,7 @@ public class ServerThread extends Thread{
 			BufferedReader bufferIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String msg = "";
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
+			LocalFilesManager onlineUser = new LocalFilesManager("onlineUser.txt", LocalFilesManager.getPath());
 			while ((msg = bufferIn.readLine()) != null) { //until the client end the connection
 				System.out.println(msg);
 				String msgHeader = msg.subSequence(0, 3).toString();
@@ -57,6 +58,13 @@ public class ServerThread extends Thread{
 						System.out.println("update received.");
 						contact.deleteFile();
 						contact.write(msgData, '\0');
+						
+						//update online user from contact
+						String contactEntries[] = msgData.split("-");
+						for (int i = 0; i < contactEntries.length; i++) {
+							String contactData[] = contactEntries[i].split(":");
+							onlineUser.write(contactData[0], '-');
+						}
 						break;
 					default :
 						System.out.println("Incorrect message header.");
