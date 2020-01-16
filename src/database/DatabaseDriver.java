@@ -285,13 +285,69 @@ public class DatabaseDriver {
 		}
 	}
 	
+	public void createUser(String name, String login, String password, String email) {
+		try {
+			if (email == null) {
+				String query = "INSERT INTO user (name,login,password,email) VALUES ('" + name + "','" + login + "','" + password + "',NULL);";
+				int result = this.statement.executeUpdate(query);
+			}
+			else {
+				String query = "INSERT INTO user (name,login,password,email) VALUES ('" + name + "','" + login + "','" + password + "','" + email + "');";
+				int result = this.statement.executeUpdate(query);
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void createAdmin(String name, String login, String password, String email) {
+		try {
+			if (email == null) {
+				String query = "INSERT INTO admin (name,login,password,email) VALUES ('" + name + "','" + login + "','" + password + "',NULL);";
+				int result = this.statement.executeUpdate(query);
+			}
+			else {
+				String query = "INSERT INTO admin (name,login,password,email) VALUES ('" + name + "','" + login + "','" + password + "','" + email + "');";
+				int result = this.statement.executeUpdate(query);
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
 	public void createHistory(int id, String name) {
 		try {
-			String query = "INSERT INTO history (id,name) VALUES (" + id + ",'" + name +"');";
+			String query = "INSERT INTO history (id,name,messages) VALUES (" + id + ",'" + name +"','recv:Welcome on BlueScraf let's talk!');";
 			int result  = this.statement.executeUpdate(query);
 			if(result == id) {
-				System.out.println("New user added");
+				System.out.println("New history added");
 			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteUser(String name, String login, String password) {
+		try {
+			String query = "DELETE FROM user WHERE name = '" + name + "' AND login = '" + login + "' AND password = '" + password + "';";
+			int result = this.statement.executeUpdate(query);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteAdmin(String name, String login, String password) {
+		try {
+			String query = "DELETE FROM admin WHERE name = '" + name + "' AND login = '" + login + "' AND password = '" + password + "';";
+			int result = this.statement.executeUpdate(query);
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());

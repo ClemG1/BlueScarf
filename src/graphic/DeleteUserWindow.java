@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import database.DatabaseDriver;
 
-public class AddUserWindow extends JFrame{
+public class DeleteUserWindow extends JFrame{
 	
 	private JPanel contentPanel; 
 
@@ -32,7 +32,7 @@ public class AddUserWindow extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddUserWindow frame = new AddUserWindow();
+					DeleteUserWindow frame = new DeleteUserWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class AddUserWindow extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public AddUserWindow() {
+	public DeleteUserWindow() {
 		
 		//create and configure the frame
 		setTitle("BlueScarf");
@@ -91,17 +91,7 @@ public class AddUserWindow extends JFrame{
 		contentGridBag.setConstraints(passwordArea, contentConstraints);
 		contentPanel.add(passwordArea);
 		
-		JLabel email = new JLabel("Email");
-		contentConstraints.gridwidth = 1; //reset to default
-		contentGridBag.setConstraints(email, contentConstraints);
-		contentPanel.add(email);
-		final JTextField emailArea = new JTextField();
-		emailArea.setPreferredSize(new Dimension (200,24));
-		contentConstraints.gridwidth = GridBagConstraints.REMAINDER;
-		contentGridBag.setConstraints(emailArea, contentConstraints);
-		contentPanel.add(emailArea);
-		
-		JButton createButton = new JButton("Create");
+		JButton createButton = new JButton("Delete");
 		contentGridBag.setConstraints(createButton, contentConstraints);
 		contentPanel.add(createButton);
 		
@@ -110,17 +100,12 @@ public class AddUserWindow extends JFrame{
 				String name =  nameArea.getText();
 				String login = loginArea.getText();
 				String password = passwordArea.getText();
-				String email = emailArea.getText();
 				if( name.equals("") || login.equals("") || password.equals("")) {
 					FieldMissingWindow.start();
 				}
 				else {
-					if (email.equals("")) {
-						email = null;
-					}
 					DatabaseDriver database = new DatabaseDriver();
-					database.createUser(name, login, password, email);
-					database.createHistory(database.getIdByName(name), name);
+					database.deleteUser(name, login, password);
 				}
 			}
 		});

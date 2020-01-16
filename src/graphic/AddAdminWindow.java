@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import database.DatabaseDriver;
 
-public class AddUserWindow extends JFrame{
+public class AddAdminWindow extends JFrame{
 	
 	private JPanel contentPanel; 
 
@@ -32,7 +32,7 @@ public class AddUserWindow extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddUserWindow frame = new AddUserWindow();
+					AddAdminWindow frame = new AddAdminWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class AddUserWindow extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public AddUserWindow() {
+	public AddAdminWindow() {
 		
 		//create and configure the frame
 		setTitle("BlueScarf");
@@ -119,8 +119,7 @@ public class AddUserWindow extends JFrame{
 						email = null;
 					}
 					DatabaseDriver database = new DatabaseDriver();
-					database.createUser(name, login, password, email);
-					database.createHistory(database.getIdByName(name), name);
+					database.createAdmin(name, login, password, email);
 				}
 			}
 		});

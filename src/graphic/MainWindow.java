@@ -60,10 +60,48 @@ public class MainWindow extends JFrame {
 			JMenu adminMenu = new JMenu("Admin");
 			JMenuItem addUserItem = new JMenuItem(new AbstractAction("Add User") {
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("clicked");
+					if(User.isAdmin) {
+						AddUserWindow.start();
+					}
+					else {
+						NotAdminErrorWindow.start();
+					}
+				}
+			});
+			JMenuItem addAdminItem = new JMenuItem(new AbstractAction("Add Admin") {
+				public void actionPerformed(ActionEvent e) {
+					if(User.isAdmin) {
+						AddAdminWindow.start();
+					}
+					else {
+						NotAdminErrorWindow.start();
+					}
+				}
+			});
+			JMenuItem deleteUserItem = new JMenuItem(new AbstractAction("Delete User") {
+				public void actionPerformed(ActionEvent e) {
+					if(User.isAdmin) {
+						DeleteUserWindow.start();
+					}
+					else {
+						NotAdminErrorWindow.start();
+					}
+				}
+			});
+			JMenuItem deleteAdminItem = new JMenuItem(new AbstractAction("Delete Admin") {
+				public void actionPerformed(ActionEvent e) {
+					if(User.isAdmin) {
+						DeleteAdminWindow.start();
+					}
+					else {
+						NotAdminErrorWindow.start();
+					}
 				}
 			});
 			adminMenu.add(addUserItem);
+			adminMenu.add(addAdminItem);
+			adminMenu.add(deleteUserItem);
+			adminMenu.add(deleteAdminItem);
 			menuBar.add(adminMenu);
 			setJMenuBar(menuBar);
 			
