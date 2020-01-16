@@ -92,6 +92,23 @@ public class LocalFilesManager {
 		}
 	}
 	
+	public void overwrite (String toWrite , char separator) {
+		if (!this.localFile.exists()) {
+			createFile();
+		}
+		manageWritePermission();
+		try {
+			FileWriter bufferOut = new FileWriter(this.localFile,false);
+			bufferOut.write(toWrite + separator);
+			bufferOut.flush();
+			bufferOut.close();
+		}
+		catch (IOException ioe) {
+			System.out.println(ioe.toString());
+			ioe.printStackTrace();
+		}
+	}
+	
 	/**
 	  * @brief : checkout if the file is writable, otherwise the file is set writable
 	  * @param : a file

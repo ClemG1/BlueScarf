@@ -32,7 +32,7 @@ public class ServerThread extends Thread{
 			BufferedReader bufferIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String msg = "";
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
-			LocalFilesManager onlineUser = new LocalFilesManager("onlineUsers.txt", LocalFilesManager.getPath());
+			LocalFilesManager onlineUsersFile = new LocalFilesManager("onlineUsers.txt", LocalFilesManager.getPath());
 			while ((msg = bufferIn.readLine()) != null) { //until the client end the connection
 				System.out.println(msg);
 				String msgHeader = msg.subSequence(0, 3).toString();
@@ -61,10 +61,11 @@ public class ServerThread extends Thread{
 						contact.write(msgData, '\0');
 						
 						//update online user from contact
+						onlineUsersFile.overwrite("\0",'\0');
 						String contactEntries[] = msgData.split("-");
 						for (int i = 0; i < contactEntries.length; i++) {
 							String contactData[] = contactEntries[i].split(":");
-							onlineUser.write(contactData[0], '-');
+							onlineUsersFile.write(contactData[0], '-');
 						}
 						break;
 					default :
