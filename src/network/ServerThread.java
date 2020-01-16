@@ -44,9 +44,10 @@ public class ServerThread extends Thread{
 						String allOnlineUsers = contact.readAllFile();
 						String onlineUsers[] = allOnlineUsers.split("-");
 						for(int i = 0; i < onlineUsers.length; i++) {
-							if(! onlineUsers[i].equals(NetworkManager.ipAddress.toString())) {
-								System.out.println("ip to connect : (" + onlineUsers[i] + ")");
-								Client client = new Client(InetAddress.getByName(onlineUsers[i].substring(1)),"-u:");
+							String detailsUser[] = onlineUsers[i].split(":"); //index 0 = name, index 1 = ip address
+							if(! detailsUser[1].equals(NetworkManager.ipAddress.toString())) {
+								System.out.println("ip to connect : (" + detailsUser[1] + ")");
+								Client client = new Client(InetAddress.getByName(detailsUser[1].substring(1)),"-u:");
 								client.start();
 							}
 						}
