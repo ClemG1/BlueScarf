@@ -55,20 +55,39 @@ public class MainWindow extends JFrame {
 				public void windowClosing (WindowEvent e) {
 					try {
 						DatabaseDriver database = new DatabaseDriver();
-						database.setIpToConnectToNULL();
-						
 						LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 						LocalFilesManager onlineUsersFile = new LocalFilesManager("onlineUsers.txt", LocalFilesManager.getPath());
 						
 						String allOnlineUsers = onlineUsersFile.readAllFile();
 						String onlineUsers[] = allOnlineUsers.split("-");
-						System.out.println("Online user number : " + onlineUsers.length);
+						String allContacts = contact.readAllFile();
+						String contacts[] = allContacts.split("-");
+						
+						//ip to connect management
+						if(onlineUsers.length == 2) { //I'm the last one on the network
+							database.setIpToConnectToNULL();
+						}
+						else { //I need to check if I'm not the one to be contacted
+							String ipToConnect = database.getIpToConnect();
+							if (ipToConnect.equals(NetworkManager.localIpAddress.toString().substring(1))) {
+								int userIndex = 0;
+								boolean found = false;
+								while(! found) { //stop when we find an other user than us
+									String detailsUserToConnect[] = contacts[userIndex].split(":"); //index 0 = name, index 1 = ip address
+									if(detailsUserToConnect[1].equals(NetworkManager.localIpAddress.toString())) {
+										found = true;
+										database.updateIpToConnect(detailsUserToConnect[1].substring(1));
+									}
+									else {
+										userIndex++;
+									}
+								}
+							}
+						}
 						
 						onlineUsersFile.overwrite("\0", '\0'); //reset the file
 						contact.deleteInFile(User.localUserName + ":" + NetworkManager.localIpAddress.toString(), '-');
 						
-						String allContacts = contact.readAllFile();
-						String contacts[] = allContacts.split("-");
 						for(int i = 0; i < contacts.length; i++) {
 							String detailsUser[] = contacts[i].split(":"); //index 0 = name, index 1 = ip address
 							if(! detailsUser[1].equals(NetworkManager.localIpAddress.toString())) {
