@@ -174,7 +174,7 @@ public class LocalFilesManager {
 	  * @param : the file, the string to delete, the separator in the file
 	  * @returns : none
 	 **/
-	public void deleteInFile (File file, String toDelete, char separator) {
+	public void deleteInFile (String toDelete, char separator) {
 		manageReadPermission();
 		File tempFile = new File(this.path + "temp" + this.name);
 		//createFile(tempFile);

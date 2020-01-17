@@ -50,7 +50,7 @@ public class ServerThread extends Thread{
 						String onlineUsers[] = allOnlineUsers.split("-");
 						for(int i = 0; i < onlineUsers.length; i++) {
 							String detailsUser[] = onlineUsers[i].split(":"); //index 0 = name, index 1 = ip address
-							if(! detailsUser[1].equals(NetworkManager.ipAddress.toString())) {
+							if(! detailsUser[1].equals(NetworkManager.localIpAddress.toString())) {
 								System.out.println("ip to connect : (" + detailsUser[1] + ")");
 								Client client = new Client(InetAddress.getByName(detailsUser[1].substring(1)),"-u:");
 								client.start();

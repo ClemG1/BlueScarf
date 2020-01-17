@@ -66,9 +66,9 @@ public class Client extends Thread {
 			
 			//add our ip to contact.txt file matching our user name
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
-			contact.write(User.localUserName + ":" + NetworkManager.ipAddress.toString(), '-');
+			contact.write(User.localUserName + ":" + NetworkManager.localIpAddress.toString(), '-');
 			
-			String myContact = "-c:" + User.localUserName + ":" + NetworkManager.ipAddress.toString();
+			String myContact = "-c:" + User.localUserName + ":" + NetworkManager.localIpAddress.toString();
 			System.out.println("contact to send : " + myContact);
 			bufferOut.write(myContact);
 			bufferOut.newLine();
@@ -108,6 +108,11 @@ public class Client extends Thread {
 			send();
 			break;
 		case "-d:" : 
+			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
+			LocalFilesManager onlineUsersFile = new LocalFilesManager("onlineUsers.txt", LocalFilesManager.getPath());
+			
+			onlineUsersFile.overwrite("\0", '\0'); //reset the file
+			contact.deleteInFile(User.localUserName + ":" + NetworkManager.localIpAddress.toString(), '-');
 			break;
 		case "-m:" :
 			send ();

@@ -11,7 +11,7 @@ public class NetworkManager {
 	
 	//Attributes
 	public static int portServer = 6969;
-	public static InetAddress ipAddress;
+	public static InetAddress localIpAddress;
 	
 	/**
 	  * @brief : class constructor
@@ -33,11 +33,11 @@ public class NetworkManager {
 			        String addressPart[] = address.getHostAddress().split("\\.");
 			        if ((addressPart.length == 4) && (!addressPart[0].equals("127")) /*&& (!addressPart[0].equals("192"))*/) { //a suitable address has been found
 			        	found = true;
-			        	ipAddress = address;
+			        	localIpAddress = address;
 			        }
 			    }
 			}
-			System.out.println("my ip is : " + ipAddress);
+			System.out.println("my ip is : " + localIpAddress);
 			
 		}
 		catch (Exception e) {
@@ -66,11 +66,11 @@ public class NetworkManager {
 			
 			//add our ip to contact.txt file matching our user name
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
-			contact.write(User.localUserName + ":" + ipAddress.toString(), '-');
+			contact.write(User.localUserName + ":" + localIpAddress.toString(), '-');
 			
 			DatabaseDriver database = new DatabaseDriver();
 			String ipToConnect = database.getIpToConnect();
-			String localIp = ipAddress.toString().substring(1);
+			String localIp = localIpAddress.toString().substring(1);
 			if (ipToConnect == null) { //nobody is connected
 				startServer();
 				database.updateIpToConnect(localIp);
