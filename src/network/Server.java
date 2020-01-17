@@ -17,7 +17,6 @@ public class Server extends Thread {
 	public Server() {
 		try {
 			this.serverSocket = new ServerSocket(NetworkManager.portServer);
-			System.out.println("server up");
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
