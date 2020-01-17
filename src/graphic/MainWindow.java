@@ -86,15 +86,12 @@ public class MainWindow extends JFrame {
 						}
 						
 						onlineUsersFile.overwrite("\0", '\0'); //reset the file
-						contact.deleteInFile(User.localUserName + ":" + NetworkManager.localIpAddress.toString(), '-');
-						System.out.println(User.localUserName + ":" + NetworkManager.localIpAddress.toString());
-						System.out.println("After delete in file : " + contact.readAllFile());
 						
 						for(int i = 0; i < contacts.length; i++) {
 							String detailsUser[] = contacts[i].split(":"); //index 0 = name, index 1 = ip address
 							if(detailsUser.length == 2 && ! detailsUser[1].equals(NetworkManager.localIpAddress.toString())) {
 								System.out.println("ip to connect : (" + detailsUser[1] + ")");
-								Client client = new Client(InetAddress.getByName(detailsUser[1].substring(1)),"-u:");
+								Client client = new Client(InetAddress.getByName(detailsUser[1].substring(1)),"-d:");
 								client.start();
 								client.join();
 							}

@@ -10,6 +10,7 @@ public class ServerThread extends Thread{
 	
 	//Attributes
 	private Socket socket;
+	public static String newUserData;
 	
 	/**
 	  * @brief : class constructor
@@ -39,19 +40,26 @@ public class ServerThread extends Thread{
 				String msgData = msg.substring(3).toString();
 				switch (msgHeader) {
 					case "-c:" :
-						System.out.println("Contact received.");
-						contact.write(msgData, '-');
+						
+						//update the new user information
+						newUserData = msgData;
+						
+						//Retrieve the information on all current online user 
 						String allOnlineUsers = contact.readAllFile();
-						String contactEntriesOnConnection[] = msgData.split("-");
-						for (int i = 0; i < contactEntriesOnConnection.length; i++) {
-							String contactData[] = contactEntriesOnConnection[i].split(":");
-							onlineUsersFile.write(contactData[0], '-');
-						}
 						String onlineUsers[] = allOnlineUsers.split("-");
+						
+						//send to the newcomer all the other user
+						String newContactData[] = msgData.split(":"); //index 0 = name, index 1 = ip address
+						Client responseClient = new Client(InetAddress.getByName(newContactData[1].substring(1)),"-r:");
+						responseClient.start();
+						responseClient.join();
+						
+						contact.write(msgData, '-'); //update our contact file
+						
+						//inform the others about the newcomer
 						for(int i = 0; i < onlineUsers.length; i++) {
 							String detailsUser[] = onlineUsers[i].split(":"); //index 0 = name, index 1 = ip address
 							if(! detailsUser[1].equals(NetworkManager.localIpAddress.toString())) {
-								System.out.println("ip to connect : (" + detailsUser[1] + ")");
 								Client client = new Client(InetAddress.getByName(detailsUser[1].substring(1)),"-u:");
 								client.start();
 							}
@@ -62,7 +70,7 @@ public class ServerThread extends Thread{
 						break;
 					case "-u:" :
 						System.out.println("update received : " + msgData);
-						contact.overwrite(msgData, '\0');
+						contact.write(msgData, '\0');
 						
 						//update online user from contact
 						onlineUsersFile.overwrite("\0",'\0');
@@ -71,6 +79,10 @@ public class ServerThread extends Thread{
 							String contactData[] = contactEntriesOnUpdate[i].split(":");
 							onlineUsersFile.write(contactData[0], '-');
 						}
+						break;
+					case "-d:" :
+						System.out.println("deconection received : " + msgData);
+						contact.deleteInFile(msgData);
 						break;
 					default :
 						System.out.println("Incorrect message header.");

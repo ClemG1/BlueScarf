@@ -80,7 +80,7 @@ public class Client extends Thread {
 		}
 	}
 	
-	private void updateUserMessage() {
+	private void responseMessage() {
 		try {
 			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
@@ -88,6 +88,37 @@ public class Client extends Thread {
 			bufferOut.write(myContacts);
 			bufferOut.newLine();
 			bufferOut.flush();
+			bufferOut.close();
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	private void updateUserMessage() {
+		try {
+			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+			bufferOut.write(ServerThread.newUserData);
+			bufferOut.newLine();
+			bufferOut.flush();
+			bufferOut.close();
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	private void deconnectionMessage() {
+		try {
+			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
+			String deconnectionMessage = "-d:" + User.localUserName + ":" + NetworkManager.localIpAddress.toString();
+			bufferOut.write(deconnectionMessage);
+			bufferOut.newLine();
+			bufferOut.flush();
+			bufferOut.close();
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -108,12 +139,18 @@ public class Client extends Thread {
 				socket.close();
 				break;
 			case "-d:" : 
+				deconnectionMessage();
+				socket.close();
 				break;
 			case "-m:" :
 				send ();
 				break;
 			case "-u:" :
 				updateUserMessage();
+				socket.close();
+				break;
+			case "-r" :
+				responseMessage();
 				socket.close();
 				break;
 			default :
