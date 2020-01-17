@@ -35,7 +35,6 @@ public class ServerThread extends Thread{
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 			LocalFilesManager onlineUsersFile = new LocalFilesManager("onlineUsers.txt", LocalFilesManager.getPath());
 			while ((msg = bufferIn.readLine()) != null) { //until the client end the connection
-				System.out.println(msg);
 				String msgHeader = msg.subSequence(0, 3).toString();
 				String msgData = msg.substring(3).toString();
 				switch (msgHeader) {
@@ -91,6 +90,14 @@ public class ServerThread extends Thread{
 					case "-d:" :
 						System.out.println("deconection received : " + msgData);
 						contact.deleteInFile(msgData);
+						
+						//update online user from contact
+						onlineUsersFile.overwrite("\0",'\0');
+						String contactEntriesOnDeconnection[] = contact.readAllFile().split("-");
+						for (int i = 0; i < contactEntriesOnDeconnection.length; i++) {
+							String contactData[] = contactEntriesOnDeconnection[i].split(":");
+							onlineUsersFile.write(contactData[0], '-');
+						}
 						break;
 					default :
 						System.out.println("Incorrect message header.");
