@@ -6,7 +6,7 @@ public class OnlineUserWatchdog extends FileWatchdog {
 
 	public OnlineUserWatchdog (String fileName) {
 		super(fileName);
-		setDelay(5000);
+		setDelay(1000);
 	}
 	
 	protected void doOnChange() {

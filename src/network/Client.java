@@ -24,7 +24,6 @@ public class Client extends Thread {
 		try {
 			this.socket = new Socket(ipAddress,NetworkManager.portServer);
 			this.messageType = messageType;
-			System.out.println("Connection established");
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
