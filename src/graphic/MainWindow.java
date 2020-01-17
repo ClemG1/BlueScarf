@@ -75,11 +75,11 @@ public class MainWindow extends JFrame {
 								while(userIndex < contacts.length && ! found) { //stop when we find an other user than us
 									String detailsUserToConnect[] = contacts[userIndex].split(":"); //index 0 = name, index 1 = ip address
 									if(detailsUserToConnect[1].equals(NetworkManager.localIpAddress.toString())) {
-										found = true;
-										database.updateIpToConnect(detailsUserToConnect[1].substring(1));
+										userIndex++;
 									}
 									else {
-										userIndex++;
+										found = true;
+										database.updateIpToConnect(detailsUserToConnect[1].substring(1));
 									}
 								}
 							}
@@ -88,7 +88,7 @@ public class MainWindow extends JFrame {
 						onlineUsersFile.overwrite("\0", '\0'); //reset the file
 						contact.deleteInFile(User.localUserName + ":" + NetworkManager.localIpAddress.toString(), '-');
 						
-						for(int i = 0; i < contacts.length; i++) {
+						for(int i = 0; i < contacts.length-1; i++) {
 							String detailsUser[] = contacts[i].split(":"); //index 0 = name, index 1 = ip address
 							if(! detailsUser[1].equals(NetworkManager.localIpAddress.toString())) {
 								System.out.println("ip to connect : (" + detailsUser[1] + ")");

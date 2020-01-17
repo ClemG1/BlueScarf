@@ -48,7 +48,7 @@ public class ServerThread extends Thread{
 							onlineUsersFile.write(contactData[0], '-');
 						}
 						String onlineUsers[] = allOnlineUsers.split("-");
-						for(int i = 0; i < onlineUsers.length-1; i++) {
+						for(int i = 0; i < onlineUsers.length; i++) {
 							String detailsUser[] = onlineUsers[i].split(":"); //index 0 = name, index 1 = ip address
 							if(! detailsUser[1].equals(NetworkManager.localIpAddress.toString())) {
 								System.out.println("ip to connect : (" + detailsUser[1] + ")");
@@ -61,7 +61,7 @@ public class ServerThread extends Thread{
 						System.out.println(msgData);
 						break;
 					case "-u:" :
-						System.out.println("update received.");
+						System.out.println("update received : " + msgData);
 						contact.deleteFile();
 						contact.write(msgData, '\0');
 						
