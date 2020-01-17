@@ -79,7 +79,7 @@ public class MainWindow extends JFrame {
 									}
 									else {
 										found = true;
-										database.updateIpToConnect(detailsUserToConnect[1].substring(1));
+										database.updateIpToConnect(detailsUserToConnect[1].substring(1)); 
 									}
 								}
 							}

@@ -175,41 +175,24 @@ public class LocalFilesManager {
 	  * @returns : none
 	 **/
 	public void deleteInFile (String toDelete, char separator) {
-		manageReadPermission();
-		File tempFile = new File(this.path + "temp" + this.name);
-		//createFile(tempFile);
+		
 		try {
+			manageReadPermission();
 			FileReader bufferIn = new FileReader(this.localFile);
-			String currentMessage = "";
-			//reading loop
-			int character;
-			while ( (character = (bufferIn.read())) != -1) { //for all the file
-				
-				if(character != separator) { //if the current char isn't a char
-					currentMessage = currentMessage + (char) character;
-				}
-				else { //we reached the end of the message
-					if (! currentMessage.equals(toDelete)) {
-						writeTempFile(tempFile,currentMessage,separator);
-					}
-					currentMessage = "";
+			String toModify = readAllFile();
+			String newData = "";
+			String dataParts[] = toModify.split("-");
+			for(int k =  0; k < dataParts.length-1; k++) {
+				if(! dataParts[k].equals(toDelete)) {
+					newData += dataParts[k] + "-";
 				}
 			}
-			
+			overwrite(newData, '\0');
 			bufferIn.close();
-			deleteFile();
-			if (! tempFile.renameTo(this.localFile)) {
-				System.out.println("The file hasn't been renamed");
-			}
-			
 		}
-		catch (FileNotFoundException fnfe) {
-			System.out.println(fnfe.toString());
-			fnfe.printStackTrace();
-		}
-		catch (IOException ioe) {
-			System.out.println(ioe.toString());
-			ioe.printStackTrace();
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
 		}
 	}
 

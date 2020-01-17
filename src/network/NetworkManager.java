@@ -66,7 +66,7 @@ public class NetworkManager {
 			
 			//add our ip to contact.txt file matching our user name
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
-			contact.write(User.localUserName + ":" + localIpAddress.toString(), '-');
+			contact.write(User.localUserName + ":" + localIpAddress.toString(), '-'); 
 			
 			DatabaseDriver database = new DatabaseDriver();
 			String ipToConnect = database.getIpToConnect();

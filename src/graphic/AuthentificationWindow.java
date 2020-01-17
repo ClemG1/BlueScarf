@@ -41,7 +41,7 @@ public class AuthentificationWindow extends JFrame {
 					e.printStackTrace();
 				}
 			}
-		});
+		}); 
 	}
 
 	/**
