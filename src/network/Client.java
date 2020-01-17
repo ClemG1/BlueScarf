@@ -106,6 +106,7 @@ public class Client extends Thread {
 			switch (this.messageType) {
 			case "-c:" :
 				sendConnectionMsg();
+				socket.close();
 				break;
 			case "-d:" : 
 				break;
@@ -114,6 +115,7 @@ public class Client extends Thread {
 				break;
 			case "-u:" :
 				updateUserMessage();
+				socket.close();
 				break;
 			default :
 				System.out.println("Message type unkown.");
