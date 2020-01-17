@@ -63,7 +63,15 @@ public class ServerThread extends Thread{
 								Client client = new Client(InetAddress.getByName(detailsUser[1].substring(1)),"-u:");
 								client.start();
 							}
-						} 
+						}
+						
+						//update online user from contact
+						onlineUsersFile.overwrite("\0",'\0');
+						String contactEntriesOnConnection[] = contact.readAllFile().split("-");
+						for (int i = 0; i < contactEntriesOnConnection.length; i++) {
+							String contactData[] = contactEntriesOnConnection[i].split(":");
+							onlineUsersFile.write(contactData[0], '-');
+						}
 						break;
 					case "-m:" :
 						System.out.println(msgData);
