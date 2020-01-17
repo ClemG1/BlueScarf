@@ -62,8 +62,7 @@ public class ServerThread extends Thread{
 						break;
 					case "-u:" :
 						System.out.println("update received : " + msgData);
-						contact.deleteFile();
-						contact.write(msgData, '\0');
+						contact.overwrite(msgData, '\0');
 						
 						//update online user from contact
 						onlineUsersFile.overwrite("\0",'\0');
