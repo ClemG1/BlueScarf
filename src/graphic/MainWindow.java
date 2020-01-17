@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.InetAddress;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
@@ -12,6 +13,8 @@ import javax.swing.border.EmptyBorder;
 
 import database.DatabaseDriver;
 import localSystem.*;
+import network.Client;
+import network.NetworkManager;
 
 public class MainWindow extends JFrame {
 	
@@ -50,8 +53,38 @@ public class MainWindow extends JFrame {
 			//action performed when the user close the main window
 			addWindowListener(new WindowAdapter() {
 				public void windowClosing (WindowEvent e) {
-					DatabaseDriver database = new DatabaseDriver();
-					database.setIpToConnectToNULL();
+					try {
+						DatabaseDriver database = new DatabaseDriver();
+						database.setIpToConnectToNULL();
+						
+						LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
+						LocalFilesManager onlineUsersFile = new LocalFilesManager("onlineUsers.txt", LocalFilesManager.getPath());
+						
+						String allOnlineUsers = onlineUsersFile.readAllFile();
+						String onlineUsers[] = allOnlineUsers.split("-");
+						System.out.println("Online user number : " + onlineUsers.length);
+						
+						onlineUsersFile.overwrite("\0", '\0'); //reset the file
+						contact.deleteInFile(User.localUserName + ":" + NetworkManager.localIpAddress.toString(), '-');
+						
+						String allContacts = contact.readAllFile();
+						String contacts[] = allContacts.split("-");
+						for(int i = 0; i < contacts.length; i++) {
+							String detailsUser[] = contacts[i].split(":"); //index 0 = name, index 1 = ip address
+							if(! detailsUser[1].equals(NetworkManager.localIpAddress.toString())) {
+								System.out.println("ip to connect : (" + detailsUser[1] + ")");
+								Client client = new Client(InetAddress.getByName(detailsUser[1].substring(1)),"-u:");
+								client.start();
+								client.join();
+							}
+						}
+						
+						contact.overwrite("\0", '-');
+					}
+					catch (Exception ex) {
+						System.out.println(ex.toString());
+						ex.printStackTrace();
+					}
 				}
 			});
 			

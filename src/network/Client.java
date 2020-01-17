@@ -102,27 +102,26 @@ public class Client extends Thread {
 	  * @returns: none
 	 **/
 	public void run() {
-		switch (this.messageType) {
-		case "-c:" :
-			sendConnectionMsg();
-			send();
-			break;
-		case "-d:" : 
-			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
-			LocalFilesManager onlineUsersFile = new LocalFilesManager("onlineUsers.txt", LocalFilesManager.getPath());
-			
-			onlineUsersFile.overwrite("\0", '\0'); //reset the file
-			contact.deleteInFile(User.localUserName + ":" + NetworkManager.localIpAddress.toString(), '-');
-			break;
-		case "-m:" :
-			send ();
-			break;
-		case "-u:" :
-			updateUserMessage();
-			send();
-			break;
-		default :
-			System.out.println("Message type unkown.");
+		try {
+			switch (this.messageType) {
+			case "-c:" :
+				sendConnectionMsg();
+				break;
+			case "-d:" : 
+				break;
+			case "-m:" :
+				send ();
+				break;
+			case "-u:" :
+				updateUserMessage();
+				break;
+			default :
+				System.out.println("Message type unkown.");
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
 		}
 	}
 	
