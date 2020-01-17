@@ -74,7 +74,7 @@ public class ServerThread extends Thread{
 						
 						//update online user from contact
 						onlineUsersFile.overwrite("\0",'\0');
-						String contactEntriesOnUpdate[] = msgData.split("-");
+						String contactEntriesOnUpdate[] = contact.readAllFile().split("-");
 						for (int i = 0; i < contactEntriesOnUpdate.length; i++) {
 							String contactData[] = contactEntriesOnUpdate[i].split(":");
 							onlineUsersFile.write(contactData[0], '-');

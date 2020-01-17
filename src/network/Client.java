@@ -99,7 +99,7 @@ public class Client extends Thread {
 	private void updateUserMessage() {
 		try {
 			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-			bufferOut.write(ServerThread.newUserData);
+			bufferOut.write("-u:" + ServerThread.newUserData);
 			bufferOut.newLine();
 			bufferOut.flush();
 			bufferOut.close();
@@ -149,7 +149,7 @@ public class Client extends Thread {
 				updateUserMessage();
 				socket.close();
 				break;
-			case "-r" :
+			case "-r:" :
 				responseMessage();
 				socket.close();
 				break;
