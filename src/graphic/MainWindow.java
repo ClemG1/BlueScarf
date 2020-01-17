@@ -64,7 +64,7 @@ public class MainWindow extends JFrame {
 						String contacts[] = allContacts.split("-");
 						
 						//ip to connect management
-						if(onlineUsers.length == 2) { //I'm the last one on the network
+						if(onlineUsers.length == 1) { //I'm the last one on the network
 							database.setIpToConnectToNULL();
 						}
 						else { //I need to check if I'm not the one to be contacted
@@ -72,7 +72,7 @@ public class MainWindow extends JFrame {
 							if (ipToConnect.equals(NetworkManager.localIpAddress.toString().substring(1))) {
 								int userIndex = 0;
 								boolean found = false;
-								while(! found) { //stop when we find an other user than us
+								while(userIndex < contacts.length && ! found) { //stop when we find an other user than us
 									String detailsUserToConnect[] = contacts[userIndex].split(":"); //index 0 = name, index 1 = ip address
 									if(detailsUserToConnect[1].equals(NetworkManager.localIpAddress.toString())) {
 										found = true;
