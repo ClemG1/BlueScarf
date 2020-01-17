@@ -98,7 +98,7 @@ public class MainWindow extends JFrame {
 							}
 						}
 						
-						contact.overwrite("\0", '-');
+						contact.overwrite("\0", '\0');
 					}
 					catch (Exception ex) {
 						System.out.println(ex.toString());
