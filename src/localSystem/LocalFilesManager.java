@@ -182,11 +182,14 @@ public class LocalFilesManager {
 			String toModify = readAllFile();
 			String newData = "";
 			String dataParts[] = toModify.split("-");
-			for(int k =  0; k < dataParts.length-1; k++) {
+			for(int k =  0; k < dataParts.length; k++) {
+				System.out.println("dataParts : " + dataParts[k] + " toDelete : " + toDelete);
 				if(! dataParts[k].equals(toDelete)) {
+					System.out.println("I'm in the if");
 					newData += dataParts[k] + "-";
 				}
 			}
+			System.out.println("new data to write : " + newData);
 			overwrite(newData, '\0');
 			bufferIn.close();
 		}
