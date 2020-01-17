@@ -84,7 +84,7 @@ public class ServerThread extends Thread{
 						String contactEntriesOnUpdate[] = contact.readAllFile().split("-");
 						for (int i = 0; i < contactEntriesOnUpdate.length; i++) {
 							String contactData[] = contactEntriesOnUpdate[i].split(":");
-							onlineUsersFile.write(contactData[0], '-');
+							onlineUsersFile.write(contactData[0], '\0');
 						}
 						break;
 					case "-d:" :
@@ -96,7 +96,7 @@ public class ServerThread extends Thread{
 						String contactEntriesOnDeconnection[] = contact.readAllFile().split("-");
 						for (int i = 0; i < contactEntriesOnDeconnection.length; i++) {
 							String contactData[] = contactEntriesOnDeconnection[i].split(":");
-							onlineUsersFile.write(contactData[0], '-');
+							onlineUsersFile.write(contactData[0], '\0');
 						}
 						break;
 					default :
