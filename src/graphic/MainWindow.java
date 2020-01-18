@@ -174,9 +174,10 @@ public class MainWindow extends JFrame {
 			OnlineUserWatchdog onlineUserWatchdog = new OnlineUserWatchdog(LocalFilesManager.getPath() + "onlineUsers.txt");
 			onlineUserWatchdog.start();
 			
-			//create a panel for chat
+			//create a panel for chat and create a empty area by default
 			chatPanel = new JPanel();
 			chatPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+			addEmptyChatPanel();
 			contentPanelGridBag.setConstraints(chatPanel, contentPanelConstraints);
 			contentPanel.add(chatPanel);
 			
@@ -237,6 +238,15 @@ public class MainWindow extends JFrame {
 					index++;
 				}
 				
+				//add empty button to complete the display
+				if(index < (startIndex + 20)) {
+					for(int k = index; k < (startIndex + 20); k++) {
+						JButton emptyButton = new JButton("Not Connected");
+						onlineUsersGridBag.setConstraints(emptyButton, onlineUsersConstraints);
+						onlineUsersPanel.add(emptyButton);
+					}
+				}
+				
 				//add scroll button at the bottom
 				onlineUsersConstraints.gridwidth = 1; //reset to default
 				onlineUsersConstraints.weightx = 1.0; //same size for both button
@@ -281,8 +291,6 @@ public class MainWindow extends JFrame {
 			
 			//clear the panel
 			chatPanel.removeAll();
-			chatPanel.revalidate();
-			chatPanel.repaint();
 			
 			//gets all the message with the user given in parameter
 			final String chatWith = userName;
@@ -349,10 +357,24 @@ public class MainWindow extends JFrame {
 				}
 			});
 			
+			chatPanel.revalidate();
+			chatPanel.repaint();
+			
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
 	}
+
+	private void addEmptyChatPanel() {
+		
+		JPanel emptyChatPanel = new JPanel();
+		emptyChatPanel.setBorder(new EmptyBorder(10,10,10,10));
+		emptyChatPanel.setBackground(Color.WHITE);
+		emptyChatPanel.setPreferredSize(new Dimension(600,525));
+		chatPanel.add(emptyChatPanel);
+		
+	}
+	
 }
