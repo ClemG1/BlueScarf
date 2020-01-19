@@ -319,13 +319,10 @@ public class DatabaseDriver {
 		}
 	}
 	
-	public void createHistory(int id, String name) {
+	public void createHistory(String name1, String name2) {
 		try {
-			String query = "INSERT INTO history (id,name,messages) VALUES (" + id + ",'" + name +"','recv:Welcome on BlueScraf let's talk!');";
+			String query = "INSERT INTO history (name1,name2,messages) VALUES ('" + name1 + "','" + name2 +"','recv:Welcome on BlueScraf let's talk!');";
 			int result  = this.statement.executeUpdate(query);
-			if(result == id) {
-				System.out.println("New history added");
-			}
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());

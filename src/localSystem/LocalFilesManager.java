@@ -5,8 +5,6 @@ import java.io.*;
 public class LocalFilesManager {
 	
 	//Attributes
-	private String path; //path to the file
-	private String name; //name of the file
 	private File localFile; //use to stock the File that this class creates
 	
 	/**
@@ -15,8 +13,6 @@ public class LocalFilesManager {
 	  * @returns : none
 	 **/
 	public LocalFilesManager (String name, String path) {
-		this.path = path;
-		this.name = name;
 		File file = new File(path + name);
 		this.localFile = file;
 	}
@@ -35,7 +31,7 @@ public class LocalFilesManager {
 	  * @param : none
 	  * @returns : none
 	 **/
-	private void createFile() {
+	public void createFile() {
 		try {
 			if(! localFile.createNewFile()) {
 				System.out.println("The file name is already used.");
@@ -143,29 +139,6 @@ public class LocalFilesManager {
 			System.out.println(e.toString());
 			e.printStackTrace();
 			return null;
-		}
-	}
-	
-	/**
-	  * @brief : write a string into a temporary file
-	  * @param : the temporary file, the string to write, a separator
-	  * @returns : none
-	  * @note : if the file doesn't exist it is created
-	 **/
-	private void writeTempFile (File file, String toWrite , char separator) {
-		if (!file.exists()) {
-			createFile();
-		}
-		manageWritePermission();
-		try {
-			FileWriter bufferOut = new FileWriter(file,true);
-			bufferOut.write(toWrite + separator);
-			bufferOut.flush();
-			bufferOut.close();
-		}
-		catch (IOException ioe) {
-			System.out.println(ioe.toString());
-			ioe.printStackTrace();
 		}
 	}
 	
