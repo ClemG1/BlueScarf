@@ -120,6 +120,7 @@ public class AddUserWindow extends JFrame{
 					}
 					DatabaseDriver database = new DatabaseDriver();
 					database.createUser(name, login, password, email);
+					dispose();
 				}
 			}
 		});

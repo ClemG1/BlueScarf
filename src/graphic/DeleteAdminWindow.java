@@ -106,6 +106,7 @@ public class DeleteAdminWindow extends JFrame{
 				else {
 					DatabaseDriver database = new DatabaseDriver();
 					database.deleteAdmin(name, login, password);
+					dispose();
 				}
 			}
 		});

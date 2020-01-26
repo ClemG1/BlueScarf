@@ -106,6 +106,7 @@ public class DeleteUserWindow extends JFrame{
 				else {
 					DatabaseDriver database = new DatabaseDriver();
 					database.deleteUser(name, login, password);
+					dispose();
 				}
 			}
 		});

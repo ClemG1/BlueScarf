@@ -120,6 +120,7 @@ public class AddAdminWindow extends JFrame{
 					}
 					DatabaseDriver database = new DatabaseDriver();
 					database.createAdmin(name, login, password, email);
+					dispose();
 				}
 			}
 		});

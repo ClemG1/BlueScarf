@@ -63,10 +63,6 @@ public class Client extends Thread {
 		try {
 			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 			
-			//add our ip to contact.txt file matching our user name
-			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
-			contact.write(User.localUserName + ":" + NetworkManager.localIpAddress.toString(), '-');
-			
 			String myContact = "-c:" + User.localUserName + ":" + NetworkManager.localIpAddress.toString();
 			System.out.println("contact to send : " + myContact);
 			bufferOut.write(myContact);
