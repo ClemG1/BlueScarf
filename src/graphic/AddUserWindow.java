@@ -119,8 +119,13 @@ public class AddUserWindow extends JFrame{
 						email = null;
 					}
 					DatabaseDriver database = new DatabaseDriver();
-					database.createUser(name, login, password, email);
-					dispose();
+					if(database.loginIsFree(login)) {
+						database.createUser(name, login, password, email);
+						dispose();
+					}
+					else {
+						LoginNotFreeWindow.start();
+					}
 				}
 			}
 		});

@@ -351,5 +351,101 @@ public class DatabaseDriver {
 			e.printStackTrace();
 		}
 	}
+	
+	public int getIdByLoginPassword(String login, String password) {
+		try {
+			int id;
+			String query = "SELECT id FROM user WHERE login = '" + login + "' AND password = '" + password + "';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next() == false) {
+				id = -1;
+			}
+			else {
+				id = result.getInt(1);
+			}
+			return id;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	public int getAdminIdByLoginPassword(String login, String password) {
+		try {
+			int id;
+			String query = "SELECT id FROM admin WHERE login = '" + login + "' AND password = '" + password + "';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next() == false) {
+				id = -1;
+			}
+			else {
+				id = result.getInt(1);
+			}
+			return id;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	public boolean loginIsFree(String login) {
+		try {
+			boolean isFree = false;
+			String query = "Select id FROM user WHERE login = '" + login + "';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next() == false) {
+				isFree = true;
+			}
+			return isFree;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean adminLoginIsFree(String login) {
+		try {
+			boolean isFree = false;
+			String query = "Select id FROM admin WHERE login = '" + login + "';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next() == false) {
+				isFree = true;
+			}
+			return isFree;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public void updateLogin(String login, int id) {
+		try {
+			String query = "UPDATE user SET login = '" + login + "' WHERE id = " + id + ";";
+			int result = this.statement.executeUpdate(query);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateAdminLogin(String login, int id) {
+		try {
+			String query = "UPDATE admin SET login = '" + login + "' WHERE id = " + id + ";";
+			int result = this.statement.executeUpdate(query);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
 
 }

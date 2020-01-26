@@ -109,6 +109,7 @@ public class MainWindow extends JFrame {
 			//create the menu bar and add the components
 			JMenuBar menuBar = new JMenuBar();
 			JMenu adminMenu = new JMenu("Admin");
+			JMenu userMenu = new JMenu("User");
 			JMenuItem addUserItem = new JMenuItem(new AbstractAction("Add User") {
 				public void actionPerformed(ActionEvent e) {
 					if(User.isAdmin) {
@@ -149,11 +150,34 @@ public class MainWindow extends JFrame {
 					}
 				}
 			});
+			JMenuItem changeLoginAdmin = new JMenuItem(new AbstractAction("Change Login") {
+				public void actionPerformed(ActionEvent e) {
+					if(User.isAdmin) {
+						ChangeLoginAdminWindow.start();
+					}
+					else {
+						NotAdminErrorWindow.start();
+					}
+				}
+			});
 			adminMenu.add(addUserItem);
 			adminMenu.add(addAdminItem);
 			adminMenu.add(deleteUserItem);
 			adminMenu.add(deleteAdminItem);
+			adminMenu.add(changeLoginAdmin);
+			JMenuItem changeLogin = new JMenuItem(new AbstractAction("Change Login") {
+				public void actionPerformed(ActionEvent e) {
+					if(!User.isAdmin) {
+						ChangeLoginWindow.start();
+					}
+					else {
+						NotUserErrorWindow.start();
+					}
+				}
+			});
+			userMenu.add(changeLogin);
 			menuBar.add(adminMenu);
+			menuBar.add(userMenu);
 			setJMenuBar(menuBar);
 			
 			//create a content panel for the frame

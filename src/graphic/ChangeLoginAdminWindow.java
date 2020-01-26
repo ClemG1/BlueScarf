@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import database.DatabaseDriver;
 
-public class AddAdminWindow extends JFrame{
+public class ChangeLoginAdminWindow extends JFrame{
 	
 	private JPanel contentPanel; 
 
@@ -32,7 +32,7 @@ public class AddAdminWindow extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddAdminWindow frame = new AddAdminWindow();
+					ChangeLoginAdminWindow frame = new ChangeLoginAdminWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class AddAdminWindow extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public AddAdminWindow() {
+	public ChangeLoginAdminWindow() {
 		
 		//create and configure the frame
 		setTitle("BlueScarf");
@@ -62,66 +62,58 @@ public class AddAdminWindow extends JFrame{
 		contentConstraints.insets = new Insets(10,10,10,10);
 		
 		//add the component to fill for create a user
-		JLabel name = new JLabel("Name");
-		contentGridBag.setConstraints(name, contentConstraints);
-		contentPanel.add(name);
-		final JTextField nameArea = new JTextField();
-		nameArea.setPreferredSize(new Dimension (200,24));
+		JLabel currentLogin = new JLabel("Current Login");
+		contentGridBag.setConstraints(currentLogin, contentConstraints);
+		contentPanel.add(currentLogin);
+		final JTextField currentLoginArea = new JTextField();
+		currentLoginArea.setPreferredSize(new Dimension (200,24));
 		contentConstraints.gridwidth = GridBagConstraints.REMAINDER;
-		contentGridBag.setConstraints(nameArea, contentConstraints);
-		contentPanel.add(nameArea);
+		contentGridBag.setConstraints(currentLoginArea, contentConstraints);
+		contentPanel.add(currentLoginArea);
 		
-		final JLabel login = new JLabel("Login");
+		final JLabel newLogin = new JLabel("New Login");
 		contentConstraints.gridwidth = 1; //reset to default
-		contentGridBag.setConstraints(login, contentConstraints);
-		contentPanel.add(login);
-		final JTextField loginArea = new JTextField();
-		loginArea.setPreferredSize(new Dimension (200,24));
+		contentGridBag.setConstraints(newLogin, contentConstraints);
+		contentPanel.add(newLogin);
+		final JTextField newLoginArea = new JTextField();
+		newLoginArea.setPreferredSize(new Dimension (200,24));
 		contentConstraints.gridwidth = GridBagConstraints.REMAINDER;
-		contentGridBag.setConstraints(loginArea, contentConstraints);
-		contentPanel.add(loginArea);
+		contentGridBag.setConstraints(newLoginArea, contentConstraints);
+		contentPanel.add(newLoginArea);
 		
 		JLabel password = new JLabel("Password");
 		contentConstraints.gridwidth = 1; //reset to default
 		contentGridBag.setConstraints(password, contentConstraints);
 		contentPanel.add(password);
 		final JTextField passwordArea = new JTextField();
-		loginArea.setPreferredSize(new Dimension (200,24));
+		newLoginArea.setPreferredSize(new Dimension (200,24));
 		contentConstraints.gridwidth = GridBagConstraints.REMAINDER;
 		contentGridBag.setConstraints(passwordArea, contentConstraints);
 		contentPanel.add(passwordArea);
 		
-		JLabel email = new JLabel("Email");
-		contentConstraints.gridwidth = 1; //reset to default
-		contentGridBag.setConstraints(email, contentConstraints);
-		contentPanel.add(email);
-		final JTextField emailArea = new JTextField();
-		emailArea.setPreferredSize(new Dimension (200,24));
-		contentConstraints.gridwidth = GridBagConstraints.REMAINDER;
-		contentGridBag.setConstraints(emailArea, contentConstraints);
-		contentPanel.add(emailArea);
+		JButton changeButton = new JButton("Change");
+		contentGridBag.setConstraints(changeButton, contentConstraints);
+		contentPanel.add(changeButton);
 		
-		JButton createButton = new JButton("Create");
-		contentGridBag.setConstraints(createButton, contentConstraints);
-		contentPanel.add(createButton);
-		
-		createButton.addMouseListener(new MouseAdapter() {
+		changeButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				String name =  nameArea.getText();
-				String login = loginArea.getText();
+				String currentLogin =  currentLoginArea.getText();
+				String newLogin = newLoginArea.getText();
 				String password = passwordArea.getText();
-				String email = emailArea.getText();
-				if( name.equals("") || login.equals("") || password.equals("")) {
+				DatabaseDriver database = new DatabaseDriver();
+				if( currentLogin.equals("") || newLogin.equals("") || password.equals("")) {
 					FieldMissingWindow.start();
 				}
 				else {
-					if (email.equals("")) {
-						email = null;
-					}
-					DatabaseDriver database = new DatabaseDriver();
-					if(database.adminLoginIsFree(login)) {
-						database.createAdmin(name, login, password, email);
-						dispose();
+					if(database.adminLoginIsFree(newLogin)) {
+						int id = database.getAdminIdByLoginPassword(currentLogin, password);
+						if(id == -1) {
+							UnknownAdminWindow.start();
+						}
+						else {
+							database.updateAdminLogin(newLogin, id);
+							dispose();
+						}
 					}
 					else {
 						LoginNotFreeWindow.start();
