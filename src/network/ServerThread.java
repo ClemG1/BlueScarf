@@ -97,7 +97,7 @@ public class ServerThread extends Thread{
 						for (int i = 0; i < contactEntriesOnDeconnection.length-1; i++) {
 							System.out.println("("+ contactEntriesOnDeconnection[i]+")");
 							String contactData[] = contactEntriesOnDeconnection[i].split(":");
-							onlineUsersFile.write(contactData[0], (char) 0);
+							onlineUsersFile.write(contactData[0], '-');
 						}
 						break;
 					default :
