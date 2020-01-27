@@ -65,9 +65,9 @@ public class ServerThread extends Thread{
 						}
 						
 						//update online user from contact
-						onlineUsersFile.overwrite("\0",'\0');
+						onlineUsersFile.overwrite(Character.toString((char) 0),(char) 0);
 						String contactEntriesOnConnection[] = contact.readAllFile().split("-");
-						for (int i = 0; i < contactEntriesOnConnection.length-1; i++) {
+						for (int i = 0; i < contactEntriesOnConnection.length; i++) {
 							String contactData[] = contactEntriesOnConnection[i].split(":");
 							onlineUsersFile.write(contactData[0], '-');
 						}
@@ -77,10 +77,10 @@ public class ServerThread extends Thread{
 						break;
 					case "-u:" :
 						System.out.println("update received : " + msgData);
-						contact.write(msgData, '\0');
+						contact.write(msgData, (char) 0);
 						
 						//update online user from contact
-						onlineUsersFile.overwrite("\0",'\0');
+						onlineUsersFile.overwrite(Character.toString((char) 0),(char) 0);
 						String contactEntriesOnUpdate[] = contact.readAllFile().split("-");
 						for (int i = 0; i < contactEntriesOnUpdate.length-1; i++) {
 							String contactData[] = contactEntriesOnUpdate[i].split(":");
@@ -92,12 +92,12 @@ public class ServerThread extends Thread{
 						contact.deleteInFile(msgData);
 						
 						//update online user from contact
-						onlineUsersFile.overwrite("\0",'\0');
+						onlineUsersFile.overwrite(Character.toString((char) 0),(char) 0);
 						String contactEntriesOnDeconnection[] = contact.readAllFile().split("-");
 						for (int i = 0; i < contactEntriesOnDeconnection.length-1; i++) {
 							System.out.println("("+ contactEntriesOnDeconnection[i]+")");
 							String contactData[] = contactEntriesOnDeconnection[i].split(":");
-							onlineUsersFile.write(contactData[0], '\0');
+							onlineUsersFile.write(contactData[0], (char) 0);
 						}
 						break;
 					default :
