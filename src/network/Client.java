@@ -109,7 +109,6 @@ public class Client extends Thread {
 	private void deconnectionMessage() {
 		try {
 			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 			String deconnectionMessage = "-d:" + User.localUserName + ":" + NetworkManager.localIpAddress.toString();
 			bufferOut.write(deconnectionMessage);
 			bufferOut.newLine();

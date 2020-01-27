@@ -56,7 +56,7 @@ public class ServerThread extends Thread{
 						contact.write(msgData, '-'); //update our contact file
 						
 						//inform the others about the newcomer
-						for(int i = 0; i < onlineUsers.length; i++) {
+						for(int i = 0; i < onlineUsers.length-1; i++) {
 							String detailsUser[] = onlineUsers[i].split(":"); //index 0 = name, index 1 = ip address
 							if(! detailsUser[1].equals(NetworkManager.localIpAddress.toString())) {
 								Client client = new Client(InetAddress.getByName(detailsUser[1].substring(1)),"-u:");
@@ -67,7 +67,7 @@ public class ServerThread extends Thread{
 						//update online user from contact
 						onlineUsersFile.overwrite("\0",'\0');
 						String contactEntriesOnConnection[] = contact.readAllFile().split("-");
-						for (int i = 0; i < contactEntriesOnConnection.length; i++) {
+						for (int i = 0; i < contactEntriesOnConnection.length-1; i++) {
 							String contactData[] = contactEntriesOnConnection[i].split(":");
 							onlineUsersFile.write(contactData[0], '-');
 						}
@@ -82,7 +82,7 @@ public class ServerThread extends Thread{
 						//update online user from contact
 						onlineUsersFile.overwrite("\0",'\0');
 						String contactEntriesOnUpdate[] = contact.readAllFile().split("-");
-						for (int i = 0; i < contactEntriesOnUpdate.length; i++) {
+						for (int i = 0; i < contactEntriesOnUpdate.length-1; i++) {
 							String contactData[] = contactEntriesOnUpdate[i].split(":");
 							onlineUsersFile.write(contactData[0], '-');
 						}
@@ -94,7 +94,8 @@ public class ServerThread extends Thread{
 						//update online user from contact
 						onlineUsersFile.overwrite("\0",'\0');
 						String contactEntriesOnDeconnection[] = contact.readAllFile().split("-");
-						for (int i = 0; i < contactEntriesOnDeconnection.length; i++) {
+						for (int i = 0; i < contactEntriesOnDeconnection.length-1; i++) {
+							System.out.println("("+ contactEntriesOnDeconnection[i]+")");
 							String contactData[] = contactEntriesOnDeconnection[i].split(":");
 							onlineUsersFile.write(contactData[0], '\0');
 						}
