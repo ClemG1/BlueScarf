@@ -76,7 +76,6 @@ public class ServerThread extends Thread{
 						System.out.println(msgData);
 						break;
 					case "-u:" :
-						System.out.println("update received : " + msgData);
 						contact.write(msgData, (char) 0);
 						
 						//update online user from contact
@@ -88,14 +87,12 @@ public class ServerThread extends Thread{
 						}
 						break;
 					case "-d:" :
-						System.out.println("deconection received : " + msgData);
 						contact.deleteInFile(msgData);
 						
 						//update online user from contact
 						onlineUsersFile.overwrite(Character.toString((char) 0),(char) 0);
 						String contactEntriesOnDeconnection[] = contact.readAllFile().split("-");
 						for (int i = 0; i < contactEntriesOnDeconnection.length-1; i++) {
-							System.out.println("("+ contactEntriesOnDeconnection[i]+")");
 							String contactData[] = contactEntriesOnDeconnection[i].split(":");
 							onlineUsersFile.write(contactData[0], '-');
 						}
@@ -108,7 +105,6 @@ public class ServerThread extends Thread{
 			//connection closed state
 			bufferIn.close();
 			this.socket.close();
-			System.out.println("Connection closed");
 			
 		}
 		catch (Exception e) {

@@ -64,11 +64,9 @@ public class Client extends Thread {
 			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 			
 			String myContact = "-c:" + User.localUserName + ":" + NetworkManager.localIpAddress.toString();
-			System.out.println("contact to send : " + myContact);
 			bufferOut.write(myContact);
 			bufferOut.newLine();
 			bufferOut.flush();
-			System.out.println("Contact.txt send.");
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());

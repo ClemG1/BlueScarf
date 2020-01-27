@@ -37,7 +37,6 @@ public class Server extends Thread {
 				
 				Socket socket = this.serverSocket.accept();
 				
-				System.out.println("Connection established");
 				ServerThread serverThread = new ServerThread(socket);
 				serverThread.start();
 
