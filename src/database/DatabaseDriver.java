@@ -20,7 +20,7 @@ public class DatabaseDriver {
 			this.jdbcDriver = "com.mysql.jdbc.Driver";
 			this.dbURL = "jdbc:mysql://srv-bdens.insa-toulouse.fr/tpservlet_01";
 			//this.dbURL = "jdbc:mysql://localhost/bluescarf";
-;			this.connection = null;
+			this.connection = null;
 			this.statement = null;
 
 			//register driver
