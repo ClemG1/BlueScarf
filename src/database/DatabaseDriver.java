@@ -2,6 +2,9 @@ package database;
 
 import java.sql.*;
 
+import graphic.UnknownDatabaseWindow;
+import localSystem.LocalFilesManager;
+
 public class DatabaseDriver {
 	
 	//Attributes
@@ -17,25 +20,32 @@ public class DatabaseDriver {
 	 **/
 	public DatabaseDriver() {
 		try {
-			this.jdbcDriver = "com.mysql.jdbc.Driver";
-			this.dbURL = "jdbc:mysql://srv-bdens.insa-toulouse.fr/tpservlet_01";
-			//this.dbURL = "jdbc:mysql://localhost/bluescarf";
-			this.connection = null;
-			this.statement = null;
-
-			//register driver
-			Class.forName(this.jdbcDriver);
+			LocalFilesManager databaseFile = new LocalFilesManager("databaseConf.txt",LocalFilesManager.getPath());
+			String databaseData[] = databaseFile.readAllFile().split("\\*"); //o = database, 1 = username, 2 = password
 			
-			//connect
-			this.connection = DriverManager.getConnection(this.dbURL,"tpservlet_01","simieNg0");
-			//this.connection = DriverManager.getConnection(this.dbURL,"root","E\"vkG6if");
-			
-			//create statement
-			this.statement = this.connection.createStatement();
+			if(databaseData[0].contains("none")) {
+				UnknownDatabaseWindow.start();
+			}
+			else {
+				this.jdbcDriver = "com.mysql.jdbc.Driver";
+				this.dbURL = "jdbc:mysql:" + databaseData[0];
+				this.connection = null;
+				this.statement = null;
+	
+				//register driver
+				Class.forName(this.jdbcDriver);
+				
+				//connect
+				this.connection = DriverManager.getConnection(this.dbURL,databaseData[1],databaseData[2]);
+				
+				//create statement
+				this.statement = this.connection.createStatement();
+			}
 		}
 		catch (Exception e) {
-			System.out.println(e.toString());
-			e.printStackTrace();
+			UnknownDatabaseWindow.start();
+			LocalFilesManager databaseFile = new LocalFilesManager("databaseConf.txt",LocalFilesManager.getPath());
+			databaseFile.overwrite("none", '-');
 		}
 	}
 	
@@ -78,6 +88,13 @@ public class DatabaseDriver {
 			if ( result == 1) {
 				System.out.println("ConnectTo initialized.");
 			}
+			
+			//create history table
+			query = "CREATE TABLE history (name1 VARCHAR(25), name2 VARCHAR(25), messages TEXT, PRIMARY KEY (name1,name2));";
+			result = this.statement.executeUpdate(query);
+			if ( result == 0) {
+				System.out.println("history table created.");
+			} 
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
