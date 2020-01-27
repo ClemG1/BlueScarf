@@ -90,7 +90,6 @@ public class MainWindow extends JFrame {
 						for(int i = 0; i < contacts.length; i++) {
 							String detailsUser[] = contacts[i].split(":"); //index 0 = name, index 1 = ip address
 							if(detailsUser.length == 2 && ! detailsUser[1].equals(NetworkManager.localIpAddress.toString())) {
-								System.out.println("ip to connect : (" + detailsUser[1] + ")");
 								Client client = new Client(InetAddress.getByName(detailsUser[1].substring(1)),"-d:");
 								client.start();
 								client.join();
@@ -255,6 +254,9 @@ public class MainWindow extends JFrame {
 							for( int i = 0; i < userParts.length; i++) {
 								userName += userParts[i];
 							}
+							LocalFilesManager conv = new LocalFilesManager("username.txt", LocalFilesManager.getPath());
+							DatabaseDriver database = new DatabaseDriver();
+							System.out.println(database.retrieveHistory(User.localUserName, userName)); 
 							displayMessage(userName);
 						}
 					});

@@ -13,8 +13,15 @@ public class LocalFilesManager {
 	  * @returns : none
 	 **/
 	public LocalFilesManager (String name, String path) {
-		File file = new File(path + name);
-		this.localFile = file;
+		try {
+			File file = new File(path + name);
+			file.createNewFile();
+			this.localFile = file;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
 	}
 	
 	/**
