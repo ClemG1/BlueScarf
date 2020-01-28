@@ -471,6 +471,7 @@ public class DatabaseDriver {
 			String query = "SELECT messages FROM history WHERE name1 = '" + name1 +"' AND name2 = '" + name2 + "';";
 			ResultSet result = this.statement.executeQuery(query);
 			if (result.next()) {
+				System.out.println("I'm in the if");
 				history = result.getString(1);
 			}
 			return history;

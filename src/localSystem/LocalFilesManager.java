@@ -14,6 +14,7 @@ public class LocalFilesManager {
 	 **/
 	public LocalFilesManager (String name, String path) {
 		try {
+			System.out.println(path + name);
 			File file = new File(path + name);
 			file.createNewFile();
 			this.localFile = file;

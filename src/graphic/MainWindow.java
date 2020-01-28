@@ -249,15 +249,11 @@ public class MainWindow extends JFrame {
 					
 					userButton.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
-							String userParts[] = userButton.getText().split(" ");
-							String userName = "";
-							for( int i = 0; i < userParts.length; i++) {
-								userName += userParts[i];
-							}
-							LocalFilesManager conv = new LocalFilesManager("username.txt", LocalFilesManager.getPath());
-							DatabaseDriver database = new DatabaseDriver();
-							System.out.println(database.retrieveHistory(User.localUserName, userName)); 
-							displayMessage(userName);
+							String userName = userButton.getText();
+							LocalFilesManager conv = new LocalFilesManager(userName + ".txt", LocalFilesManager.getPath()+"conv/");
+							//DatabaseDriver database = new DatabaseDriver();
+							//String history = database.retrieveHistory(User.localUserName, userName);
+							displayMessage("username");
 						}
 					});
 					
