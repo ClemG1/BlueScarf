@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import database.DatabaseDriver;
 import localSystem.*;
@@ -241,7 +243,7 @@ public class MainWindow extends JFrame {
 				//add 20 users or less to the panel
 				int index = startIndex;
 				currentIndex = startIndex;
-				while ((index  <  numberOfUser) && (index < (startIndex+20))) { //the display is limit a 20 users
+				/*while ((index  <  numberOfUser) && (index < (startIndex+20))) { //the display is limit a 20 users
 					final JButton userButton = new JButton(usersTab[index]);
 					onlineUsersGridBag.setConstraints(userButton, onlineUsersConstraints);
 					onlineUsersPanel.add(userButton);
@@ -249,26 +251,44 @@ public class MainWindow extends JFrame {
 					
 					userButton.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
-							String userName = userButton.getText();
-							LocalFilesManager conv = new LocalFilesManager(userName + ".txt", LocalFilesManager.getPath()+"conv/");
-							//DatabaseDriver database = new DatabaseDriver();
-							//String history = database.retrieveHistory(User.localUserName, userName);
-							displayMessage("username");
+							try {
+								String test = userButton.getText().toString();
+								System.out.println(test);
+								LocalFilesManager convFile = new LocalFilesManager(test + ".txt", LocalFilesManager.getPath()+"conv/");
+							}
+							catch (Exception ex) {
+								System.out.println(ex.toString());
+								ex.printStackTrace();
+							}
 						}
 					});
 					
 					index++;
-				}
+				}*/
+				final JList<String> userList = new JList<String>(usersTab);
+				userList.setBorder(new EmptyBorder(10, 10, 10, 10));
+				userList.setBackground(new Color(238,238,238));
+				onlineUsersGridBag.setConstraints(userList, onlineUsersConstraints);
 				
-				//add empty button to complete the display
-				if(index < (startIndex + 20)) {
-					for(int k = index; k < (startIndex + 20); k++) {
-						JButton emptyButton = new JButton("Not Connected");
-						onlineUsersGridBag.setConstraints(emptyButton, onlineUsersConstraints);
-						onlineUsersPanel.add(emptyButton);
+				userList.addListSelectionListener(new ListSelectionListener() {
+					
+					@Override
+					public void valueChanged(ListSelectionEvent lse) {
+						try {
+							String test[] = userList.getSelectedValue().split(" ");
+							System.out.println(test[0]);
+							System.out.println(test[1]);
+						}
+						catch (Exception e) {
+							System.out.println(e.toString());
+							e.printStackTrace();
+						}
 					}
-				}
+				});
 				
+				onlineUsersPanel.add(userList);
+				
+				/*
 				//add scroll button at the bottom
 				onlineUsersConstraints.gridwidth = 1; //reset to default
 				onlineUsersConstraints.weightx = 1.0; //same size for both button
@@ -296,7 +316,7 @@ public class MainWindow extends JFrame {
 							MainWindow.addOnlineUsers(currentIndex - 20);
 						}
 					}
-				});
+				});*/
 			}
 		}
 		catch (Exception e) {
