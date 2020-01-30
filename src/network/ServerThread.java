@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.*;
 
+import database.DatabaseDriver;
 import localSystem.LocalFilesManager;
+import localSystem.User;
 
 public class ServerThread extends Thread{
 	
@@ -73,7 +75,16 @@ public class ServerThread extends Thread{
 						}
 						break;
 					case "-m:" :
-						System.out.println(msgData);
+						String userData[] = msgData.split(":"); //index 0 = name, index 1 = ip
+						String userName = userData[0];
+						userName = userName.trim();
+						String userNameParts[] = userName.split(" ");
+						LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
+						DatabaseDriver database = new DatabaseDriver();
+						String history = database.retrieveHistory(User.localUserName, userName);
+						convFile.write(history, '\0');
+						Client convClient = new Client(InetAddress.getByName(userData[1].substring(1)), "-s:");
+						convClient.start();
 						break;
 					case "-u:" :
 						contact.write(msgData, (char) 0);
@@ -96,6 +107,8 @@ public class ServerThread extends Thread{
 							String contactData[] = contactEntriesOnDeconnection[i].split(":");
 							onlineUsersFile.write(contactData[0], '-');
 						}
+						break;
+					case "-s:" :
 						break;
 					default :
 						System.out.println("Incorrect message header.");

@@ -14,6 +14,7 @@ public class Client extends Thread {
 	//Attributes
 	private Socket socket;
 	private String messageType;
+	public static boolean newMessage = false;
 	
 	/**
 	  * @brief : class constructor
@@ -37,25 +38,27 @@ public class Client extends Thread {
 	 * @return : none
 	 * @note : print the message which has been send
 	 */
-	private void send() {
+	private void initConversation() {
 		try {
 			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("Please enter your message : ");
-			String msg = scanner.next();
-			while (msg.compareToIgnoreCase("exit") != 0) {
-				bufferOut.write("-m:" + msg);
-				bufferOut.newLine();
-				bufferOut.flush();
-				System.out.println("Send : " + msg);
-				System.out.println("Please enter your message : ");
-				msg = scanner.next();
-			}
-			scanner.close();
+			
+			String call = "-m:" + User.localUserName + ":" + NetworkManager.localIpAddress.toString();
+			
+			bufferOut.write(call);
+			bufferOut.newLine();
+			bufferOut.flush();
+			
 			bufferOut.close();
 		} 
 		catch (IOException ioe) {
 			System.out.println("Client : " + ioe);
+		}
+	}
+	
+	private void conversation() {
+		//sending protocol
+		if(newMessage) { //update by the watchdog
+			
 		}
 	}
 	
@@ -67,6 +70,8 @@ public class Client extends Thread {
 			bufferOut.write(myContact);
 			bufferOut.newLine();
 			bufferOut.flush();
+			
+			bufferOut.close();
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -136,7 +141,8 @@ public class Client extends Thread {
 				socket.close();
 				break;
 			case "-m:" :
-				send ();
+				initConversation ();
+				conversation();
 				break;
 			case "-u:" :
 				updateUserMessage();
@@ -145,6 +151,9 @@ public class Client extends Thread {
 			case "-r:" :
 				responseMessage();
 				socket.close();
+				break;
+			case "-s:" :
+				conversation();
 				break;
 			default :
 				System.out.println("Message type unkown.");
