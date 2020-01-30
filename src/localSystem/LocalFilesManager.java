@@ -1,6 +1,7 @@
 package localSystem;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class LocalFilesManager {
 	
@@ -14,7 +15,6 @@ public class LocalFilesManager {
 	 **/
 	public LocalFilesManager (String name, String path) {
 		try {
-			System.out.println(path + name);
 			File file = new File(path + name);
 			file.createNewFile();
 			this.localFile = file;
@@ -133,13 +133,13 @@ public class LocalFilesManager {
 		try {
 			String message = "";
 			manageReadPermission();
-			FileReader bufferIn = new FileReader(this.localFile);
+			Scanner bufferIn = new Scanner(this.localFile);
 			//reading loop
-			int character;
-			while ( (character = (bufferIn.read())) != -1) {
-				message = message + (char) character;
+			while (bufferIn.hasNextLine()) {
+				String data = bufferIn.nextLine();
+				message = message.concat(data);
 			}
-
+			
 			bufferIn.close();
 			return message;
 		}

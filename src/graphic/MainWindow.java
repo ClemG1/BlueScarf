@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.xml.crypto.Data;
 
 import database.DatabaseDriver;
 import localSystem.*;
@@ -275,9 +276,15 @@ public class MainWindow extends JFrame {
 					@Override
 					public void valueChanged(ListSelectionEvent lse) {
 						try {
-							String test[] = userList.getSelectedValue().split(" ");
-							System.out.println(test[0]);
-							System.out.println(test[1]);
+							if(userList.getValueIsAdjusting()) {
+								String userName = userList.getSelectedValue();
+								userName = userName.trim();
+								String userNameParts[] = userName.split(" ");
+								LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
+								DatabaseDriver database = new DatabaseDriver();
+								String history = database.retrieveHistory(User.localUserName, userName);
+								convFile.write(history, '\0');
+							}
 						}
 						catch (Exception e) {
 							System.out.println(e.toString());
