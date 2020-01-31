@@ -90,7 +90,7 @@ public class DatabaseDriver {
 			}
 			
 			//create history table
-			query = "CREATE TABLE history (name1 VARCHAR(25), name2 VARCHAR(25), messages TEXT, PRIMARY KEY (name1,name2));";
+			query = "CREATE TABLE history (name1 VARCHAR(25) NOT NULL, name2 VARCHAR(25) NOT NULL, messages TEXT, retrieve TINYINT(1), uptodate TINYINT(1), PRIMARY KEY (name1,name2));";
 			result = this.statement.executeUpdate(query);
 			if ( result == 0) {
 				System.out.println("history table created.");
@@ -474,7 +474,7 @@ public class DatabaseDriver {
 				history = result.getString(1);
 			}
 			else {
-				query = "INSERT INTO history (name1,name2,messages) VALUES ('" + name1 + "','" + name2 + "','" + history + "');";
+				query = "INSERT INTO history (name1,name2,messages,retrieve,uptodate) VALUES ('" + name1 + "','" + name2 + "','" + history + "',0,1);";
 				int resultInsert = this.statement.executeUpdate(query);
 			}
 			return history;
@@ -483,6 +483,70 @@ public class DatabaseDriver {
 			System.out.println(e.toString());
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public boolean historyIsRetrieve(String name1, String name2) {
+		try {
+			boolean isRetrieve = false;
+			int intResult;
+			String query = "SELECT retrieve FROM history WHERE name1 = '" + name1 +"' AND name2 = '" + name2 + "';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next()) {
+				intResult = result.getInt(1);
+				if(intResult == 1) {
+					isRetrieve = true;
+				}
+			}
+			return isRetrieve;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean historyIsUpToDate(String name1, String name2) {
+		try {
+			boolean upToDate = false;
+			int intResult;
+			String query = "SELECT uptodate FROM history WHERE name1 = '" + name1 +"' AND name2 = '" + name2 + "';";
+			ResultSet result = this.statement.executeQuery(query);
+			if (result.next()) {
+				intResult = result.getInt(1);
+				if(intResult == 1) {
+					upToDate = true;
+				}
+			}
+			return upToDate;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public void setHistoryRetrieveField (String name1, String name2, int isRetrieve) {
+		try {
+			String query = "UPDATE history SET retrieve = " + isRetrieve + " WHERE name1 = '" + name1 +"' AND name2 = '" + name2 + "';";
+			int result = this.statement.executeUpdate(query);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void setHistoryUpToDateField (String name1, String name2, int isUpToDate) {
+		try {
+			String query = "UPDATE history SET uptodate = " + isUpToDate + " WHERE name1 = '" + name1 +"' AND name2 = '" + name2 + "';";
+			int result = this.statement.executeUpdate(query);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
 		}
 	}
 

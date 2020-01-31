@@ -286,9 +286,13 @@ public class MainWindow extends JFrame {
 								String history = database.retrieveHistory(User.localUserName, userName);
 								
 								LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
-								String newMessages = convFile.readAllFile();
-								convFile.overwrite(history, '-');
-								convFile.write(newMessages, '-');
+								if(!database.historyIsRetrieve(User.localUserName, userName)) {
+									String newMessages = convFile.readAllFile();
+									convFile.overwrite(history, '\0');
+									convFile.write(newMessages, '-');
+									database.setHistoryRetrieveField(User.localUserName, userName, 1);
+									database.setHistoryUpToDateField(User.localUserName, userName, 0);
+								}
 								
 								LocalFilesManager contactFile = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 								String contacts = contactFile.readAllFile();
