@@ -10,7 +10,7 @@ public class ConvFileWatchdog extends FileWatchdog {
 	}
 	
 	protected void doOnChange() {
-		Client.newMessage = true;
+		Client.sendMessage();
 	}
 	
 }

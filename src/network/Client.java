@@ -6,6 +6,7 @@ import java.io.OutputStreamWriter;
 import java.net.*;
 import java.util.Scanner;
 
+import localSystem.ConvFileWatchdog;
 import localSystem.LocalFilesManager;
 import localSystem.User;
 
@@ -14,7 +15,7 @@ public class Client extends Thread {
 	//Attributes
 	private Socket socket;
 	private String messageType;
-	public static boolean newMessage = false;
+	private static BufferedWriter bufferOut;
 	public static String speakWith;
 	
 	/**
@@ -26,6 +27,7 @@ public class Client extends Thread {
 		try {
 			this.socket = new Socket(ipAddress,NetworkManager.portServer);
 			this.messageType = messageType;
+			bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -40,9 +42,7 @@ public class Client extends Thread {
 	 * @note : print the message which has been send
 	 */
 	private void initConversation() {
-		try {
-			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-			
+		try {			
 			String call = "-m:" + User.localUserName + ":" + NetworkManager.localIpAddress.toString();
 			
 			bufferOut.write(call);
@@ -56,33 +56,40 @@ public class Client extends Thread {
 		}
 	}
 	
-	private void conversation() {
+	private void startConversation() {
 		try {
-			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 			speakWith = speakWith.trim();
 			String speakWithPatrs[] = speakWith.split(" ");
 			String convFileName = speakWithPatrs[0].concat(speakWithPatrs[1]);
 			
-			LocalFilesManager convFile = new LocalFilesManager(convFileName + ".txt", LocalFilesManager.getPath());
+			ConvFileWatchdog convFileWatchdog = new ConvFileWatchdog(LocalFilesManager.getPath() + "conv/" + convFileName + ".txt");
+			convFileWatchdog.start();
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public static void sendMessage() {
+		try {
+			speakWith = speakWith.trim();
+			String speakWithPatrs[] = speakWith.split(" ");
+			String convFileName = speakWithPatrs[0].concat(speakWithPatrs[1]);
 			
-			//sending protocol
-			while(true) {
-				if(newMessage) { //update by the watchdog
-					String conv = convFile.readAllFile();
-					String messages[] = conv.split("-");
-					String latestMessage = messages[messages.length-1].substring(5); //the five first characters are "send:"
-					
-					String messageToSend = "-s:" + User.localUserName + ":" + latestMessage;
-					
-					bufferOut.write(messageToSend);
-					bufferOut.newLine();
-					bufferOut.flush();
-					
-					newMessage = false;
-				}
-			}
+			LocalFilesManager convFile = new LocalFilesManager(convFileName + ".txt", LocalFilesManager.getPath() + "conv/");
 			
-			//bufferOut.close();
+			String conv = convFile.readAllFile();
+			System.out.println("conv length : " + conv.length());
+			String messages[] = conv.split("-");
+			String latestMessage = messages[messages.length-1].substring(5); //the five first characters are "send:"
+			
+			String messageToSend = "-s:" + User.localUserName + ":" + latestMessage;
+			
+			bufferOut.write(messageToSend);
+			bufferOut.newLine();
+			bufferOut.flush();
+			
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -92,7 +99,6 @@ public class Client extends Thread {
 	
 	private void sendConnectionMsg () {
 		try {
-			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 			
 			String myContact = "-c:" + User.localUserName + ":" + NetworkManager.localIpAddress.toString();
 			bufferOut.write(myContact);
@@ -109,7 +115,6 @@ public class Client extends Thread {
 	
 	private void responseMessage() {
 		try {
-			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 			String myContacts = "-u:" + contact.readAllFile();
 			bufferOut.write(myContacts);
@@ -125,7 +130,6 @@ public class Client extends Thread {
 	
 	private void updateUserMessage() {
 		try {
-			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 			bufferOut.write("-u:" + ServerThread.newUserData);
 			bufferOut.newLine();
 			bufferOut.flush();
@@ -139,7 +143,6 @@ public class Client extends Thread {
 	
 	private void deconnectionMessage() {
 		try {
-			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 			String deconnectionMessage = "-d:" + User.localUserName + ":" + NetworkManager.localIpAddress.toString();
 			bufferOut.write(deconnectionMessage);
 			bufferOut.newLine();
@@ -170,7 +173,7 @@ public class Client extends Thread {
 				break;
 			case "-m:" :
 				initConversation ();
-				conversation();
+				startConversation();
 				break;
 			case "-u:" :
 				updateUserMessage();
@@ -181,7 +184,7 @@ public class Client extends Thread {
 				socket.close();
 				break;
 			case "-s:" :
-				conversation();
+				startConversation();
 				break;
 			default :
 				System.out.println("Message type unkown.");
