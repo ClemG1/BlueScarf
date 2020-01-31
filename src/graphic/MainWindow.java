@@ -286,7 +286,9 @@ public class MainWindow extends JFrame {
 								String history = database.retrieveHistory(User.localUserName, userName);
 								
 								LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
+								String newMessages = convFile.readAllFile();
 								convFile.overwrite(history, '-');
+								convFile.write(newMessages, '-');
 								
 								LocalFilesManager contactFile = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 								String contacts = contactFile.readAllFile();
