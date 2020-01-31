@@ -75,6 +75,7 @@ public class ServerThread extends Thread{
 						}
 						break;
 					case "-m:" : //format : -m:Name:/10.7.30
+						System.out.println("I received a -m packet");
 						
 						String userData[] = msgData.split(":"); //index 0 = name, index 1 = ip
 						
@@ -117,6 +118,7 @@ public class ServerThread extends Thread{
 						}
 						break;
 					case "-s:" : //format : -s:Name:Message
+						System.out.println("I received a -s packet");
 						
 						//write the message in the matching conv file
 						String messageDataParts[] = msgData.split(":"); //0 = name of the person who send the message, 1 = the message
