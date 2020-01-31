@@ -86,7 +86,7 @@ public class ServerThread extends Thread{
 						String history = database.retrieveHistory(User.localUserName, userName);
 						
 						LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
-						convFile.write(history, '\0');
+						convFile.overwrite(history, '-');
 						
 						Client convClient = new Client(InetAddress.getByName(userData[1].substring(1)), "-s:");
 						convClient.start();

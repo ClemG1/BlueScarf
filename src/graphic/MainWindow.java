@@ -286,19 +286,23 @@ public class MainWindow extends JFrame {
 								String history = database.retrieveHistory(User.localUserName, userName);
 								
 								LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
-								convFile.write(history, '\0');
+								convFile.overwrite(history, '-');
 								
 								LocalFilesManager contactFile = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 								String contacts = contactFile.readAllFile();
 								String contactLog[] = contacts.split("-");
-								for(int i = 0; i < contactLog.length; i++) {
+								for(int i = 0; i < contactLog.length-1; i++) {
 									String contactData[] = contactLog[i].split(":"); //index 0 = name, index 1 = ip
-									if(contactData[1].contains(userName)) {
+									System.out.println("Contact data : " + contactData[0]);
+									if(contactData[0].contains(userName)) {
 										Client.speakWith = userName;
 										Client convClient = new Client(InetAddress.getByName(contactData[1].substring(1)), "-m:");
 										convClient.start();
+										System.out.println("Client started");
 									}
 								}
+								
+								displayMessage(userName);
 							}
 						}
 						catch (Exception e) {
@@ -358,7 +362,10 @@ public class MainWindow extends JFrame {
 			
 			//gets all the message with the user given in parameter
 			final String chatWith = userName;
-			final LocalFilesManager convFile = new LocalFilesManager("conv/" + userName + ".txt",LocalFilesManager.getPath());
+			userName = userName.trim();
+			String userNameParts[] = userName.split(" ");
+			String convFileName = userNameParts[0].concat(userNameParts[1]);
+			final LocalFilesManager convFile = new LocalFilesManager(convFileName + ".txt",LocalFilesManager.getPath() + "conv/");
 			String messages = convFile.readAllFile();
 			String messagesTab[] = messages.split("-");
 			int numberOfMessages = messagesTab.length;
@@ -371,7 +378,7 @@ public class MainWindow extends JFrame {
 			
 			//display the messages
 			int index = 0;
-			while (index  < (numberOfMessages-1)) {
+			while (index  < (numberOfMessages)) {
 				
 				//split the header and the data
 				String messageDriver[] = new String[2];

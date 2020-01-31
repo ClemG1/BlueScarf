@@ -49,7 +49,7 @@ public class Client extends Thread {
 			bufferOut.newLine();
 			bufferOut.flush();
 			
-			bufferOut.close();
+			//bufferOut.close();
 		} 
 		catch (IOException ioe) {
 			System.out.println("Client : " + ioe);
