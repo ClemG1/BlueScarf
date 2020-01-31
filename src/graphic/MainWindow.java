@@ -26,6 +26,7 @@ public class MainWindow extends JFrame {
 	public static int currentIndex; //use to update the online user list
 	private static JPanel chatPanel;
 	private JPanel filesPanel;
+	public static String currentUserInChatWith;
 
 	/**
 	 * Launch the application.
@@ -280,6 +281,7 @@ public class MainWindow extends JFrame {
 								
 								String userName = userList.getSelectedValue();
 								userName = userName.trim();
+								currentUserInChatWith = userName;
 								String userNameParts[] = userName.split(" ");
 								
 								DatabaseDriver database = new DatabaseDriver();
