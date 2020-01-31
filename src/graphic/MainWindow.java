@@ -277,19 +277,24 @@ public class MainWindow extends JFrame {
 					public void valueChanged(ListSelectionEvent lse) {
 						try {
 							if(userList.getValueIsAdjusting()) { //use to prevent the double execution
+								
 								String userName = userList.getSelectedValue();
 								userName = userName.trim();
 								String userNameParts[] = userName.split(" ");
-								LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
+								
 								DatabaseDriver database = new DatabaseDriver();
 								String history = database.retrieveHistory(User.localUserName, userName);
+								
+								LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
 								convFile.write(history, '\0');
+								
 								LocalFilesManager contactFile = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 								String contacts = contactFile.readAllFile();
 								String contactLog[] = contacts.split("-");
 								for(int i = 0; i < contactLog.length; i++) {
 									String contactData[] = contactLog[i].split(":"); //index 0 = name, index 1 = ip
 									if(contactData[1].contains(userName)) {
+										Client.speakWith = userName;
 										Client convClient = new Client(InetAddress.getByName(contactData[1].substring(1)), "-m:");
 										convClient.start();
 									}

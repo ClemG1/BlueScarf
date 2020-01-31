@@ -74,17 +74,23 @@ public class ServerThread extends Thread{
 							onlineUsersFile.write(contactData[0], '-');
 						}
 						break;
-					case "-m:" :
+					case "-m:" : //format : -m:Name:/10.7.30
+						
 						String userData[] = msgData.split(":"); //index 0 = name, index 1 = ip
+						
 						String userName = userData[0];
 						userName = userName.trim();
 						String userNameParts[] = userName.split(" ");
-						LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
+						
 						DatabaseDriver database = new DatabaseDriver();
 						String history = database.retrieveHistory(User.localUserName, userName);
+						
+						LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
 						convFile.write(history, '\0');
+						
 						Client convClient = new Client(InetAddress.getByName(userData[1].substring(1)), "-s:");
 						convClient.start();
+						
 						break;
 					case "-u:" :
 						contact.write(msgData, (char) 0);
@@ -108,7 +114,14 @@ public class ServerThread extends Thread{
 							onlineUsersFile.write(contactData[0], '-');
 						}
 						break;
-					case "-s:" :
+					case "-s:" : //format : -s:Name:Message
+						
+						//write the message in the matching conv file
+						String messageDataParts[] = msgData.split(":"); //0 = name of the person who send the message, 1 = the message
+						String convUser = messageDataParts[0].trim();
+						LocalFilesManager messageFile = new LocalFilesManager(convUser + ".txt", LocalFilesManager.getPath() + "conv/");
+						messageFile.write("recv:" + messageDataParts[1], '-');
+						
 						break;
 					default :
 						System.out.println("Incorrect message header.");

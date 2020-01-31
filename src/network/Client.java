@@ -15,6 +15,7 @@ public class Client extends Thread {
 	private Socket socket;
 	private String messageType;
 	public static boolean newMessage = false;
+	public static String speakWith;
 	
 	/**
 	  * @brief : class constructor
@@ -56,9 +57,36 @@ public class Client extends Thread {
 	}
 	
 	private void conversation() {
-		//sending protocol
-		if(newMessage) { //update by the watchdog
+		try {
+			BufferedWriter bufferOut = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+			speakWith = speakWith.trim();
+			String speakWithPatrs[] = speakWith.split(" ");
+			String convFileName = speakWithPatrs[0].concat(speakWithPatrs[1]);
 			
+			LocalFilesManager convFile = new LocalFilesManager(convFileName + ".txt", LocalFilesManager.getPath());
+			
+			//sending protocol
+			while(true) {
+				if(newMessage) { //update by the watchdog
+					String conv = convFile.readAllFile();
+					String messages[] = conv.split("-");
+					String latestMessage = messages[messages.length-1].substring(5); //the five first characters are "send:"
+					
+					String messageToSend = "-s:" + User.localUserName + ":" + latestMessage;
+					
+					bufferOut.write(messageToSend);
+					bufferOut.newLine();
+					bufferOut.flush();
+					
+					newMessage = false;
+				}
+			}
+			
+			//bufferOut.close();
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
 		}
 	}
 	
