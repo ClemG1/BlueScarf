@@ -82,13 +82,16 @@ public class Client extends Thread {
 			String conv = convFile.readAllFile();
 			System.out.println("conv length : " + conv.length());
 			String messages[] = conv.split("-");
-			String latestMessage = messages[messages.length-1].substring(5); //the five first characters are "send:"
-			
-			String messageToSend = "-s:" + User.localUserName + ":" + latestMessage;
-			
-			bufferOut.write(messageToSend);
-			bufferOut.newLine();
-			bufferOut.flush();
+			String header = messages[messages.length-1].substring(0,5);
+			if(header.contains("send:")) {
+				String latestMessage = messages[messages.length-1].substring(5); //the five first characters are "send:"
+				
+				String messageToSend = "-s:" + User.localUserName + ":" + latestMessage;
+				
+				bufferOut.write(messageToSend);
+				bufferOut.newLine();
+				bufferOut.flush();
+			}
 			
 		}
 		catch (Exception e) {
