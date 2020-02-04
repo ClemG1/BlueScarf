@@ -128,6 +128,7 @@ public class ServerThread extends Thread{
 						String convUser = convUserParts[0].concat(convUserParts[1]);
 						LocalFilesManager messageFile = new LocalFilesManager(convUser + ".txt", LocalFilesManager.getPath() + "conv/");
 						messageFile.write("recv:" + messageDataParts[1], '-');
+						System.out.println("I just write this recv : " + messageDataParts[1]);
 						MainWindow.displayMessage(messageDataParts[0]);
 						break;
 					default :
