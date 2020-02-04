@@ -110,7 +110,6 @@ public class MainWindow extends JFrame {
 						for(int i = 0; i < convFiles.length; i++ ) {
 							LocalFilesManager convFile = new LocalFilesManager(convFiles[i], LocalFilesManager.getPath() + "conv/");
 							String fileNameParts[] = convFiles[i].trim().split("."); //index 0 = user name, index 1 = "txt"
-							System.out.println("size : " + fileNameParts.length);
 							String userName = fileNameParts[0];
 							String newHistory = convFile.readAllFile();
 							database.updateHistory(User.localUserName, userName, newHistory);
@@ -306,9 +305,8 @@ public class MainWindow extends JFrame {
 								LocalFilesManager contactFile = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 								String contacts = contactFile.readAllFile();
 								String contactLog[] = contacts.split("-");
-								for(int i = 0; i < contactLog.length-1; i++) {
+								for(int i = 0; i < contactLog.length; i++) {
 									String contactData[] = contactLog[i].split(":"); //index 0 = name, index 1 = ip
-									System.out.println("Contact data : " + contactData[0]);
 									if(contactData[0].contains(userName)) {
 										Client.speakWith = userName;
 										Client convClient = new Client(InetAddress.getByName(contactData[1].substring(1)), "-m:");
@@ -348,6 +346,7 @@ public class MainWindow extends JFrame {
 					public void mouseClicked(MouseEvent e) {
 						MainWindow.addOnlineUsers(currentIndex + 20);
 					}
+				
 				});
 				
 				//event listener for the scroll up bécraséutton
@@ -412,9 +411,7 @@ public class MainWindow extends JFrame {
 				
 				//split the header and the data
 				String messageDriver[] = new String[2];
-				System.out.println("message : " + messagesTab[index]);
 				messageDriver[0] = messagesTab[index].trim().substring(0, 5); //header
-				System.out.println("header : " + messagesTab[index].substring(0, 5));
 				messageDriver[1] = messagesTab[index].trim().substring(5); //data
 				
 				if(messageDriver[0].equals("send:") ) { //decide if it's display left or right based on the header
@@ -451,7 +448,7 @@ public class MainWindow extends JFrame {
 			chatGridBag.setConstraints(sendButton, chatConstraints);
 			chatPanel.add(sendButton);
 			
-			//event listener for the send button
+			//event listener for the send button						System.out.println("partie 5 ça passe");
 			sendButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					String toSend = draftArea.getText();

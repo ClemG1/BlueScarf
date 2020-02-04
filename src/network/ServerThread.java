@@ -123,15 +123,10 @@ public class ServerThread extends Thread{
 						
 						//write the message in the matching conv file
 						String messageDataParts[] = msgData.split(":"); //0 = name of the person who send the message, 1 = the message
-						System.out.println("partie 1 ça passe");
-						messageDataParts[0] = messageDataParts[0].trim();
-						System.out.println("partie 2 ça passe");
+						messageDataParts[0] = messageDataParts[0].trim();;
 						String convUserParts[] = messageDataParts[0].split(" ");
-						System.out.println("partie 3 ça passe");
 						String convUser = convUserParts[0].concat(convUserParts[1]);
-						System.out.println("partie 4 ça passe");
 						LocalFilesManager messageFile = new LocalFilesManager(convUser + ".txt", LocalFilesManager.getPath() + "conv/");
-						System.out.println("partie 5 ça passe");
 						messageFile.write("recv:" + messageDataParts[1], "-");
 						System.out.println("I just write this recv : " + messageDataParts[1] + " in " );
 						MainWindow.displayMessage(messageDataParts[0]);

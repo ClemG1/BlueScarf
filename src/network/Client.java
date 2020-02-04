@@ -48,7 +48,6 @@ public class Client extends Thread {
 			bufferOut.newLine();
 			bufferOut.flush();
 			
-			//bufferOut.close();
 		} 
 		catch (IOException ioe) {
 			System.out.println("Client : " + ioe);
@@ -57,9 +56,7 @@ public class Client extends Thread {
 	
 	private void startConversation() {
 		try {
-			speakWith = speakWith.trim();
-			String speakWithPatrs[] = speakWith.split(" ");
-			String convFileName = speakWithPatrs[0].concat(speakWithPatrs[1]);
+			System.out.println("conv thread");
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -91,7 +88,6 @@ public class Client extends Thread {
 			bufferOut.newLine();
 			bufferOut.flush();
 			
-			bufferOut.close();
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -106,7 +102,7 @@ public class Client extends Thread {
 			bufferOut.write(myContacts);
 			bufferOut.newLine();
 			bufferOut.flush();
-			bufferOut.close();
+
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -119,7 +115,7 @@ public class Client extends Thread {
 			bufferOut.write("-u:" + ServerThread.newUserData);
 			bufferOut.newLine();
 			bufferOut.flush();
-			bufferOut.close();
+
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -133,7 +129,7 @@ public class Client extends Thread {
 			bufferOut.write(deconnectionMessage);
 			bufferOut.newLine();
 			bufferOut.flush();
-			bufferOut.close();
+
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
