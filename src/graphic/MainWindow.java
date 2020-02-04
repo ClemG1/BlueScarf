@@ -110,6 +110,7 @@ public class MainWindow extends JFrame {
 						for(int i = 0; i < convFiles.length; i++ ) {
 							LocalFilesManager convFile = new LocalFilesManager(convFiles[i], LocalFilesManager.getPath());
 							String fileNameParts[] = convFiles[i].split("."); //index 0 = user name, index 1 = "txt"
+							System.out.println("size : " + fileNameParts.length);
 							String userName = fileNameParts[0];
 							String newHistory = convFile.readAllFile();
 							database.updateHistory(User.localUserName, userName, newHistory);

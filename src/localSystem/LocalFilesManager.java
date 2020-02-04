@@ -180,8 +180,8 @@ public class LocalFilesManager {
 	public String[] findFilesInDirectory() {
 		try {
 			if(this.localFile.isDirectory()) {
-				System.out.println("This is the list of files that I found : " + this.localFile.list());
-				return this.localFile.list();
+				String fileList[] = this.localFile.list();
+				return fileList;
 			}
 			else {
 				return null;
