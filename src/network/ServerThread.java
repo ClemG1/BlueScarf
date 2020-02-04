@@ -88,7 +88,7 @@ public class ServerThread extends Thread{
 						String history = database.retrieveHistory(User.localUserName, userName);
 						
 						LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
-						convFile.overwrite(history, "-");
+						convFile.overwrite(history, "");
 						
 						Client.speakWith = userName;
 						
