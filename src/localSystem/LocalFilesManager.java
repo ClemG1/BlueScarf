@@ -176,5 +176,21 @@ public class LocalFilesManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public String[] findFilesInDirectory() {
+		try {
+			if(this.localFile.isDirectory()) {
+				return this.localFile.list();
+			}
+			else {
+				return null;
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }

@@ -550,4 +550,17 @@ public class DatabaseDriver {
 		}
 	}
 
+	
+	public void updateHistory(String name1, String name2, String text) {
+		try {
+			String query = "UPDATE history SET messages = '" + text + "' WHERE name 1 = '" + name1 + "' AND name2 = '" + name2  + "';";
+			int result = this.statement.executeUpdate(query);
+			setHistoryUpToDateField(name1, name2, 1);
+			setHistoryRetrieveField(name1, name2, 0);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
 }

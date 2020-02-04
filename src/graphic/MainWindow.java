@@ -58,6 +58,8 @@ public class MainWindow extends JFrame {
 			addWindowListener(new WindowAdapter() {
 				public void windowClosing (WindowEvent e) {
 					try {
+						
+						//management of the contact on deconnection
 						DatabaseDriver database = new DatabaseDriver();
 						LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 						LocalFilesManager onlineUsersFile = new LocalFilesManager("onlineUsers.txt", LocalFilesManager.getPath());
@@ -101,6 +103,18 @@ public class MainWindow extends JFrame {
 						}
 						
 						contact.overwrite("\0", '\0');
+						
+						//management of conv on deconnection
+						LocalFilesManager convDirectory = new LocalFilesManager("conv/", LocalFilesManager.getPath());
+						String[] convFiles = convDirectory.findFilesInDirectory();
+						for(int i = 0; i < convFiles.length; i++ ) {
+							LocalFilesManager convFile = new LocalFilesManager(convFiles[i], LocalFilesManager.getPath());
+							String fileNameParts[] = convFiles[i].split("."); //index 0 = user name, index 1 = "txt"
+							String userName = fileNameParts[0];
+							String newHistory = convFile.readAllFile();
+							database.updateHistory(User.localUserName, userName, newHistory);
+							convFile.deleteFile();
+						}
 					}
 					catch (Exception ex) {
 						System.out.println(ex.toString());
