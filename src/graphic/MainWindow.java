@@ -300,16 +300,8 @@ public class MainWindow extends JFrame {
 								String userNameParts[] = userName.split(" ");
 								
 								DatabaseDriver database = new DatabaseDriver();
-								String history = database.retrieveHistory(User.localUserName, userName);
-								
-								LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
-								if(!database.historyIsRetrieve(User.localUserName, userName)) {
-									String newMessages = convFile.readAllFile();
-									convFile.overwrite(history, '\0');
-									convFile.write(newMessages, '\0');
-									database.setHistoryRetrieveField(User.localUserName, userName, 1);
-									database.setHistoryUpToDateField(User.localUserName, userName, 0);
-								}
+
+
 								
 								LocalFilesManager contactFile = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 								String contacts = contactFile.readAllFile();
@@ -352,13 +344,13 @@ public class MainWindow extends JFrame {
 				onlineUsersPanel.repaint();
 			
 				//event listener for the scroll down button
-				scrollDownButton.addMouseListener(new MouseAdapter() {
+				scrollDownButton.addMouseListener(new MouseAdapter() {User.localUserName
 					public void mouseClicked(MouseEvent e) {
 						MainWindow.addOnlineUsers(currentIndex + 20);
 					}
 				});
 				
-				//event listener for the scroll up button
+				//event listener for the scroll up bécraséutton
 				scrollUpButton.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
 						if(currentIndex - 20 >= 0) {
@@ -383,23 +375,26 @@ public class MainWindow extends JFrame {
 			//clear the panel
 			chatPanel.removeAll();
 			
-			//check if the history has been retrieve
-			String history = "";
-			DatabaseDriver database = new DatabaseDriver();
-			if(! database.historyIsRetrieve(User.localUserName, userName)) {
-				history = database.retrieveHistory(User.localUserName, userName);
-			}
-			
 			//gets all the message with the user given in parameter
 			final String chatWith = userName;
 			userName = userName.trim();
 			String userNameParts[] = userName.split(" ");
 			String convFileName = userNameParts[0].concat(userNameParts[1]);
 			final LocalFilesManager convFile = new LocalFilesManager(convFileName + ".txt",LocalFilesManager.getPath() + "conv/");
-
-			if(! history.isEmpty()) {
-				convFile.overwrite(history, '-');
+			
+			
+			//check if the history has been retrieve
+			DatabaseDriver database =  new DatabaseDriver();
+			
+			String history = database.retrieveHistory(User.localUserName, userName);
+			if(!database.historyIsRetrieve(User.localUserName, userName)) {
+				String newMessages = convFile.readAllFile();
+				convFile.overwrite(history, '\0');
+				convFile.write(newMessages, '\0');
+				database.setHistoryRetrieveField(User.localUserName, userName, 1);
+				database.setHistoryUpToDateField(User.localUserName, userName, 0);
 			}
+
 			String messages = convFile.readAllFile();
 			String messagesTab[] = messages.split("-");
 			int numberOfMessages = messagesTab.length;
@@ -412,10 +407,11 @@ public class MainWindow extends JFrame {
 			
 			//display the messages
 			int index = 0;
-			while (index  < (numberOfMessages)) {
+			while (index  < (numberOfMessages)-1) {
 				
 				//split the header and the data
 				String messageDriver[] = new String[2];
+				System.out.println("index vaut: " + index );
 				messageDriver[0] = messagesTab[index].substring(0, 5); //header
 				messageDriver[1] = messagesTab[index].substring(5); //data
 				

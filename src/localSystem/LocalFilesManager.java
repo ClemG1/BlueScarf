@@ -87,6 +87,7 @@ public class LocalFilesManager {
 		try {
 			FileWriter bufferOut = new FileWriter(this.localFile,true);
 			bufferOut.write(toWrite + separator);
+			System.out.println("J'ai écrit: " + toWrite);
 			bufferOut.flush();
 			bufferOut.close();
 		}
@@ -106,6 +107,7 @@ public class LocalFilesManager {
 			bufferOut.write(toWrite + separator);
 			bufferOut.flush();
 			bufferOut.close();
+			System.out.print("J'ai tout écrasé");
 		}
 		catch (IOException ioe) {
 			System.out.println(ioe.toString());
