@@ -109,10 +109,25 @@ public class MainWindow extends JFrame {
 						String[] convFiles = convDirectory.findFilesInDirectory();
 						for(int i = 0; i < convFiles.length; i++ ) {
 							LocalFilesManager convFile = new LocalFilesManager(convFiles[i], LocalFilesManager.getPath() + "conv/");
-							String fileNameParts[] = convFiles[i].trim().split("."); //index 0 = user name, index 1 = "txt"
+							System.out.println("File : " + convFiles[i].trim());
+							String fileNameParts[] = convFiles[i].trim().split("\\."); //index 0 = user name, index 1 = "txt"
 							String userName = fileNameParts[0];
+							
+							//looking to separate the first name and surname
+							String firstName = "";
+							String surname = "";
+							for(int j = 1; j < userName.length(); j++) {
+								char currentLetter = userName.charAt(j);
+								if(Character.isUpperCase(currentLetter)) {
+									firstName = userName.substring(0,j);
+									surname = userName.substring(j);
+									break;
+								}
+							}
+							String databaseName = firstName + " " + surname;
+							
 							String newHistory = convFile.readAllFile();
-							database.updateHistory(User.localUserName, userName, newHistory);
+							database.updateHistory(User.localUserName, databaseName, newHistory);
 							convFile.deleteFile();
 						}
 					}
