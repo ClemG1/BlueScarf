@@ -79,7 +79,7 @@ public class MainWindow extends JFrame {
 								int userIndex = 0;
 								boolean found = false;
 								while(userIndex < contacts.length && ! found) { //stop when we find an other user than us
-									String detailsUserToConnect[] = contacts[userIndex].split(":"); //index 0 = name, index 1 = ip address
+									String detailsUserToConnect[] = contacts[userIndex].trim().split(":"); //index 0 = name, index 1 = ip address
 									if(detailsUserToConnect[1].equals(NetworkManager.localIpAddress.toString())) {
 										userIndex++;
 									}
@@ -94,7 +94,7 @@ public class MainWindow extends JFrame {
 						onlineUsersFile.overwrite("", ""); //reset the file
 						
 						for(int i = 0; i < contacts.length; i++) {
-							String detailsUser[] = contacts[i].split(":"); //index 0 = name, index 1 = ip address
+							String detailsUser[] = contacts[i].trim().split(":"); //index 0 = name, index 1 = ip address
 							if(detailsUser.length == 2 && ! detailsUser[1].equals(NetworkManager.localIpAddress.toString())) {
 								Client client = new Client(InetAddress.getByName(detailsUser[1].substring(1)),"-d:");
 								client.start();
@@ -109,7 +109,7 @@ public class MainWindow extends JFrame {
 						String[] convFiles = convDirectory.findFilesInDirectory();
 						for(int i = 0; i < convFiles.length; i++ ) {
 							LocalFilesManager convFile = new LocalFilesManager(convFiles[i], LocalFilesManager.getPath() + "conv/");
-							String fileNameParts[] = convFiles[i].split("."); //index 0 = user name, index 1 = "txt"
+							String fileNameParts[] = convFiles[i].trim().split("."); //index 0 = user name, index 1 = "txt"
 							System.out.println("size : " + fileNameParts.length);
 							String userName = fileNameParts[0];
 							String newHistory = convFile.readAllFile();

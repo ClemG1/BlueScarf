@@ -103,7 +103,7 @@ public class ServerThread extends Thread{
 						onlineUsersFile.overwrite("","");
 						String contactEntriesOnUpdate[] = contact.readAllFile().split("-");
 						for (int i = 0; i < contactEntriesOnUpdate.length-1; i++) {
-							String contactData[] = contactEntriesOnUpdate[i].split(":");
+							String contactData[] = contactEntriesOnUpdate[i].trim().split(":");
 							onlineUsersFile.write(contactData[0], "-");
 						}
 						break;
@@ -114,7 +114,7 @@ public class ServerThread extends Thread{
 						onlineUsersFile.overwrite("","");
 						String contactEntriesOnDeconnection[] = contact.readAllFile().split("-");
 						for (int i = 0; i < contactEntriesOnDeconnection.length-1; i++) {
-							String contactData[] = contactEntriesOnDeconnection[i].split(":");
+							String contactData[] = contactEntriesOnDeconnection[i].trim().split(":");
 							onlineUsersFile.write(contactData[0], "-");
 						}
 						break;
