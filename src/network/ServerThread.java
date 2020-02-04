@@ -56,7 +56,7 @@ public class ServerThread extends Thread{
 						responseClient.start();
 						responseClient.join();
 						
-						contact.write(msgData, '-'); //update our contact file
+						contact.write(msgData, "-"); //update our contact file
 						
 						//inform the others about the newcomer
 						for(int i = 0; i < onlineUsers.length-1; i++) {
@@ -68,11 +68,11 @@ public class ServerThread extends Thread{
 						}
 						
 						//update online user from contact
-						onlineUsersFile.overwrite(Character.toString((char) 0),(char) 0);
+						onlineUsersFile.overwrite("","");
 						String contactEntriesOnConnection[] = contact.readAllFile().split("-");
 						for (int i = 0; i < contactEntriesOnConnection.length; i++) {
 							String contactData[] = contactEntriesOnConnection[i].split(":");
-							onlineUsersFile.write(contactData[0], '-');
+							onlineUsersFile.write(contactData[0], "-");
 						}
 						break;
 					case "-m:" : //format : -m:Name:/10.7.30
@@ -88,7 +88,7 @@ public class ServerThread extends Thread{
 						String history = database.retrieveHistory(User.localUserName, userName);
 						
 						LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
-						convFile.overwrite(history, '-');
+						convFile.overwrite(history, "-");
 						
 						Client.speakWith = userName;
 						
@@ -97,25 +97,25 @@ public class ServerThread extends Thread{
 						
 						break;
 					case "-u:" :
-						contact.write(msgData, (char) 0);
+						contact.write(msgData, "");
 						
 						//update online user from contact
-						onlineUsersFile.overwrite(Character.toString((char) 0),(char) 0);
+						onlineUsersFile.overwrite("","");
 						String contactEntriesOnUpdate[] = contact.readAllFile().split("-");
 						for (int i = 0; i < contactEntriesOnUpdate.length-1; i++) {
 							String contactData[] = contactEntriesOnUpdate[i].split(":");
-							onlineUsersFile.write(contactData[0], '-');
+							onlineUsersFile.write(contactData[0], "-");
 						}
 						break;
 					case "-d:" :
 						contact.deleteInFile(msgData);
 						
 						//update online user from contact
-						onlineUsersFile.overwrite(Character.toString((char) 0),(char) 0);
+						onlineUsersFile.overwrite("","");
 						String contactEntriesOnDeconnection[] = contact.readAllFile().split("-");
 						for (int i = 0; i < contactEntriesOnDeconnection.length-1; i++) {
 							String contactData[] = contactEntriesOnDeconnection[i].split(":");
-							onlineUsersFile.write(contactData[0], '-');
+							onlineUsersFile.write(contactData[0], "-");
 						}
 						break;
 					case "-s:" : //format : -s:Name:Message
@@ -132,7 +132,7 @@ public class ServerThread extends Thread{
 						System.out.println("partie 4 ça passe");
 						LocalFilesManager messageFile = new LocalFilesManager(convUser + ".txt", LocalFilesManager.getPath() + "conv/");
 						System.out.println("partie 5 ça passe");
-						messageFile.write("recv:" + messageDataParts[1], '-');
+						messageFile.write("recv:" + messageDataParts[1], "-");
 						System.out.println("I just write this recv : " + messageDataParts[1] + " in " );
 						MainWindow.displayMessage(messageDataParts[0]);
 						break;

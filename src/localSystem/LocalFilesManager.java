@@ -79,7 +79,7 @@ public class LocalFilesManager {
 	  * @returns : none
 	  * @note : if the file doesn't exist it is created
 	 **/
-	public void write (String toWrite , char separator) {
+	public void write (String toWrite , String separator) {
 		if (!this.localFile.exists()) {
 			createFile();
 		}
@@ -97,7 +97,7 @@ public class LocalFilesManager {
 		}
 	}
 	
-	public void overwrite (String toWrite , char separator) {
+	public void overwrite (String toWrite , String separator) {
 		if (!this.localFile.exists()) {
 			createFile();
 		}
@@ -170,7 +170,7 @@ public class LocalFilesManager {
 					newData += dataParts[k] + "-";
 				}
 			}
-			overwrite(newData, '\0');
+			overwrite(newData, "");
 			bufferIn.close();
 		}
 		catch (Exception e) {

@@ -45,7 +45,7 @@ public class DatabaseDriver {
 		catch (Exception e) {
 			UnknownDatabaseWindow.start();
 			LocalFilesManager databaseFile = new LocalFilesManager("databaseConf.txt",LocalFilesManager.getPath());
-			databaseFile.overwrite("none", '-');
+			databaseFile.overwrite("none", "-");
 		}
 	}
 	
@@ -467,7 +467,7 @@ public class DatabaseDriver {
 	
 	public String retrieveHistory(String name1, String name2) {
 		try {
-			String history = "recv:Welcome on BlueScarf, you can start a new chat with this user. Enjoy !";
+			String history = "recv:Welcome on BlueScarf, you can start a new chat with this user. Enjoy !-";
 			String query = "SELECT messages FROM history WHERE name1 = '" + name1 +"' AND name2 = '" + name2 + "';";
 			ResultSet result = this.statement.executeQuery(query);
 			if (result.next()) {

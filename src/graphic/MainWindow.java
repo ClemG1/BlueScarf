@@ -91,7 +91,7 @@ public class MainWindow extends JFrame {
 							}
 						}
 						
-						onlineUsersFile.overwrite("\0", '\0'); //reset the file
+						onlineUsersFile.overwrite("", ""); //reset the file
 						
 						for(int i = 0; i < contacts.length; i++) {
 							String detailsUser[] = contacts[i].split(":"); //index 0 = name, index 1 = ip address
@@ -102,7 +102,7 @@ public class MainWindow extends JFrame {
 							}
 						}
 						
-						contact.overwrite("\0", '\0');
+						contact.overwrite("", "");
 						
 						//management of conv on deconnection
 						LocalFilesManager convDirectory = new LocalFilesManager("conv/", LocalFilesManager.getPath());
@@ -389,13 +389,14 @@ public class MainWindow extends JFrame {
 			String history = database.retrieveHistory(User.localUserName, userName);
 			if(!database.historyIsRetrieve(User.localUserName, userName)) {
 				String newMessages = convFile.readAllFile();
-				convFile.overwrite(history, '\0');
-				convFile.write(newMessages, '\0');
+				convFile.overwrite(history, "");
+				convFile.write(newMessages, "");
 				database.setHistoryRetrieveField(User.localUserName, userName, 1);
 				database.setHistoryUpToDateField(User.localUserName, userName, 0);
 			}
 
 			String messages = convFile.readAllFile();
+			messages = messages.trim();
 			String messagesTab[] = messages.split("-");
 			int numberOfMessages = messagesTab.length;
 			
@@ -407,13 +408,14 @@ public class MainWindow extends JFrame {
 			
 			//display the messages
 			int index = 0;
-			while (index  < (numberOfMessages)-1) {
+			while (index  < numberOfMessages) {
 				
 				//split the header and the data
 				String messageDriver[] = new String[2];
-				System.out.println("index vaut: " + index );
-				messageDriver[0] = messagesTab[index].substring(0, 5); //header
-				messageDriver[1] = messagesTab[index].substring(5); //data
+				System.out.println("message : " + messagesTab[index]);
+				messageDriver[0] = messagesTab[index].trim().substring(0, 5); //header
+				System.out.println("header : " + messagesTab[index].substring(0, 5));
+				messageDriver[1] = messagesTab[index].trim().substring(5); //data
 				
 				if(messageDriver[0].equals("send:") ) { //decide if it's display left or right based on the header
 					JTextArea message = new JTextArea("You : " + messageDriver[1]);
@@ -454,7 +456,7 @@ public class MainWindow extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					String toSend = draftArea.getText();
 					Client.sendMessage(toSend);
-					convFile.write("send:" + toSend, '-');
+					convFile.write("send:" + toSend, "");
 					displayMessage(chatWith);
 				}
 			});
