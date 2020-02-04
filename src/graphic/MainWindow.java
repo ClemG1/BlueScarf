@@ -26,7 +26,7 @@ public class MainWindow extends JFrame {
 	public static int currentIndex; //use to update the online user list
 	private static JPanel chatPanel;
 	private JPanel filesPanel;
-	public static String currentUserInChatWith;
+	public static String currentUserInChatWith = User.localUserName;
 
 	/**
 	 * Launch the application.
@@ -382,12 +382,22 @@ public class MainWindow extends JFrame {
 			//clear the panel
 			chatPanel.removeAll();
 			
+			//check if the history has been retrieve
+			String history = "";
+			DatabaseDriver database = new DatabaseDriver();
+			if(! database.historyIsRetrieve(User.localUserName, userName)) {
+				history = database.retrieveHistory(User.localUserName, userName);
+			}
+			
 			//gets all the message with the user given in parameter
 			final String chatWith = userName;
 			userName = userName.trim();
 			String userNameParts[] = userName.split(" ");
 			String convFileName = userNameParts[0].concat(userNameParts[1]);
 			final LocalFilesManager convFile = new LocalFilesManager(convFileName + ".txt",LocalFilesManager.getPath() + "conv/");
+			if(! history.isEmpty()) {
+				convFile.overwrite(history, '-');
+			}
 			String messages = convFile.readAllFile();
 			String messagesTab[] = messages.split("-");
 			int numberOfMessages = messagesTab.length;
