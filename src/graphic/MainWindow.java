@@ -108,7 +108,7 @@ public class MainWindow extends JFrame {
 						LocalFilesManager convDirectory = new LocalFilesManager("conv/", LocalFilesManager.getPath());
 						String[] convFiles = convDirectory.findFilesInDirectory();
 						for(int i = 0; i < convFiles.length; i++ ) {
-							LocalFilesManager convFile = new LocalFilesManager(convFiles[i], LocalFilesManager.getPath());
+							LocalFilesManager convFile = new LocalFilesManager(convFiles[i], LocalFilesManager.getPath() + "conv/");
 							String fileNameParts[] = convFiles[i].split("."); //index 0 = user name, index 1 = "txt"
 							System.out.println("size : " + fileNameParts.length);
 							String userName = fileNameParts[0];
@@ -457,6 +457,7 @@ public class MainWindow extends JFrame {
 			sendButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					String toSend = draftArea.getText();
+					Client.sendMessage(toSend);
 					convFile.write("send:" + toSend, '-');
 					displayMessage(chatWith);
 				}
