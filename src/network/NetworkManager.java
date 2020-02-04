@@ -14,10 +14,8 @@ public class NetworkManager {
 	public static InetAddress localIpAddress;
 	
 	/**
-	  * @brief : class constructor
+	  * class constructor, TCP protocol used
 	  * @param : mode (client or server)
-	  * @returns : none
-	  * @note : TCP protocol used
 	 **/
 	public NetworkManager() {
 		try {
@@ -37,7 +35,6 @@ public class NetworkManager {
 			        }
 			    }
 			}
-			System.out.println("my ip is : " + localIpAddress);
 			
 		}
 		catch (Exception e) {
@@ -48,15 +45,16 @@ public class NetworkManager {
 	}
 	
 	/**
-	  * @brief : start a thread server bind to the server port 
-	  * @param : none
-	  * @returns: none
+	  * start a thread server bind to the server port 
 	 **/
 	private void startServer() {
 		Server server = new Server();
 		server.start();
 	}
 	
+	/**
+	 * use to connect to the network
+	 */
 	public void connectToNetwork ( ) {
 		try {
 			

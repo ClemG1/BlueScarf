@@ -14,9 +14,9 @@ public class DatabaseDriver {
 	private Statement statement;
 	
 	/**
-	  * @brief : class constructor
+	  * class constructor
 	  * @param : none
-	  * @returns : none
+	  * @return : none
 	 **/
 	public DatabaseDriver() {
 		try {
@@ -50,9 +50,9 @@ public class DatabaseDriver {
 	}
 	
 	/**
-	  * @brief : create the database use by the application
+	  * create the database use by the application
 	  * @param : none
-	  * @returns : none
+	  * @return : none
 	 **/
 	public void createDatabase() {
 		try {			
@@ -70,7 +70,7 @@ public class DatabaseDriver {
 				System.out.println("Admin table created.");
 			}
 			//Add the root admin
-			query = "INSERT INTO admin (name,login,password,email) VALUES ('root','root','Iamgroot','root@bluescarf.com');";
+			query = "INSERT INTO admin (name,login,password,email) VALUES ('Bruce Wayne','root','Iamgroot','root@bluescarf.com');";
 			result = this.statement.executeUpdate(query);
 			if ( result == 1) {
 				System.out.println("Root added.");
@@ -103,9 +103,9 @@ public class DatabaseDriver {
 	}
 	
 	/**
-	  * @brief : check if the user is an admin by is login and password
+	  * check if the user is an admin by is login and password
 	  * @param : a login and password
-	  * @returns : true if the login and password match with an admin else false
+	  * @return : true if the login and password match with an admin else false
 	 **/
 	public boolean isAdmin(String login, String password) {
 		try {
@@ -128,9 +128,9 @@ public class DatabaseDriver {
 	}
 	
 	/**
-	  * @brief : check if the login and password match with a user
+	  * check if the login and password match with a user
 	  * @param : a login and password
-	  * @returns : true if the login and password match with an user else false
+	  * @return : true if the login and password match with an user else false
 	 **/
 	public boolean isUser (String login, String password) {
 		try {
@@ -153,9 +153,9 @@ public class DatabaseDriver {
 	}
 	
 	/**
-	  * @brief : retrieve the name of a user using his login and password
+	  * retrieve the name of a user using his login and password
 	  * @param : a login and password
-	  * @returns : the name
+	  * @return : the name
 	 **/
 	public String getNameByLoginPassword(String login, String password) {
 		try {
@@ -178,9 +178,9 @@ public class DatabaseDriver {
 	}
 	
 	/**
-	  * @brief : retrieve the name of a admin using his login and password
+	  * retrieve the name of a admin using his login and password
 	  * @param : a login and password
-	  * @returns : the name
+	  * @return : the name
 	 **/
 	public String getAdminNameByLoginPassword(String login, String password) {
 		try {
@@ -203,9 +203,9 @@ public class DatabaseDriver {
 	}
 	
 	/**
-	  * @brief : retrieve the id of a user using his name
+	  * retrieve the id of a user using his name
 	  * @param : a name
-	  * @returns : the id
+	  * @return : the id
 	 **/
 	public int getIdByName (String name) {
 		try {
@@ -228,9 +228,9 @@ public class DatabaseDriver {
 	}
 	
 	/**
-	  * @brief : retrieve the id of a admin using his name
+	  * retrieve the id of a admin using his name
 	  * @param : a name
-	  * @returns : the id
+	  * @return : the id
 	 **/
 	public int getAdminIdByName (String name) {
 		try {
@@ -253,9 +253,9 @@ public class DatabaseDriver {
 	}
 
 	/**
-	  * @brief : give the ip address to connect to when you launch the app
+	  * give the ip address to connect to when you launch the app
 	  * @param : none
-	  * @returns : the ip address or NULL if no one is connected
+	  * @return : the ip address or NULL if no one is connected
 	 **/
 	public String getIpToConnect() {
 		try {
@@ -274,13 +274,14 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * update the ip to contact when a newcomer try to connect at the network
+	 * @param ip address (String)
+	 */
 	public void updateIpToConnect(String ip) {
 		try {
 			String query = "UPDATE connectTo SET ip = '" + ip + "' WHERE id = 0;";
 			int result = this.statement.executeUpdate(query);
-			if ( result == 1) {
-				System.out.println("Ip updated.");
-			}
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -288,6 +289,9 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * reset the ip to contact to null when the last user quit the application
+	 */
 	public void setIpToConnectToNULL() {
 		try {
 			String query = "UPDATE connectTo SET ip = NULL WHERE id = 0;";
@@ -302,6 +306,13 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * create a new user with the matching informations 
+	 * @param name
+	 * @param login
+	 * @param password
+	 * @param email
+	 */
 	public void createUser(String name, String login, String password, String email) {
 		try {
 			if (email == null) {
@@ -319,6 +330,13 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * create a new admin with the matching informations 
+	 * @param name
+	 * @param login
+	 * @param password
+	 * @param email
+	 */
 	public void createAdmin(String name, String login, String password, String email) {
 		try {
 			if (email == null) {
@@ -336,6 +354,11 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * create a new history between two users. The first name match with the local file system
+	 * @param name1
+	 * @param name2
+	 */
 	public void createHistory(String name1, String name2) {
 		try {
 			String query = "INSERT INTO history (name1,name2,messages) VALUES ('" + name1 + "','" + name2 +"','recv:Welcome on BlueScraf let's talk!');";
@@ -347,6 +370,12 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * delete an user account
+	 * @param name
+	 * @param login
+	 * @param password
+	 */
 	public void deleteUser(String name, String login, String password) {
 		try {
 			String query = "DELETE FROM user WHERE name = '" + name + "' AND login = '" + login + "' AND password = '" + password + "';";
@@ -358,6 +387,12 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * delete an admin account
+	 * @param name
+	 * @param login
+	 * @param password
+	 */
 	public void deleteAdmin(String name, String login, String password) {
 		try {
 			String query = "DELETE FROM admin WHERE name = '" + name + "' AND login = '" + login + "' AND password = '" + password + "';";
@@ -369,6 +404,12 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * get the id of an user using his login 'n password
+	 * @param login
+	 * @param password
+	 * @return
+	 */
 	public int getIdByLoginPassword(String login, String password) {
 		try {
 			int id;
@@ -389,6 +430,12 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * get the id of an admin using his login 'n password
+	 * @param login
+	 * @param password
+	 * @return
+	 */
 	public int getAdminIdByLoginPassword(String login, String password) {
 		try {
 			int id;
@@ -409,6 +456,11 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * check if the login is free to use
+	 * @param login
+	 * @return a boolean
+	 */
 	public boolean loginIsFree(String login) {
 		try {
 			boolean isFree = false;
@@ -426,6 +478,11 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * check if the admin login is free to use
+	 * @param login
+	 * @return boolean
+	 */
 	public boolean adminLoginIsFree(String login) {
 		try {
 			boolean isFree = false;
@@ -443,6 +500,11 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * update the user login
+	 * @param login
+	 * @param id
+	 */
 	public void updateLogin(String login, int id) {
 		try {
 			String query = "UPDATE user SET login = '" + login + "' WHERE id = " + id + ";";
@@ -454,6 +516,11 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * update the admin login
+	 * @param login
+	 * @param id
+	 */
 	public void updateAdminLogin(String login, int id) {
 		try {
 			String query = "UPDATE admin SET login = '" + login + "' WHERE id = " + id + ";";
@@ -465,6 +532,12 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * retrieve the history between two users
+	 * @param name1
+	 * @param name2
+	 * @return the history (String)
+	 */
 	public String retrieveHistory(String name1, String name2) {
 		try {
 			String history = "recv:Welcome on BlueScarf, you can start a new chat with this user. Enjoy !-";
@@ -486,6 +559,12 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * check if the history has already been loaded
+	 * @param name1
+	 * @param name2
+	 * @return a boolean
+	 */
 	public boolean historyIsRetrieve(String name1, String name2) {
 		try {
 			boolean isRetrieve = false;
@@ -507,6 +586,12 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * check if the history is up to date
+	 * @param name1
+	 * @param name2
+	 * @return a boolean
+	 */
 	public boolean historyIsUpToDate(String name1, String name2) {
 		try {
 			boolean upToDate = false;
@@ -528,6 +613,12 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * set the history retrieve field
+	 * @param name1
+	 * @param name2
+	 * @param isRetrieve 0 = false, 1 = one
+	 */
 	public void setHistoryRetrieveField (String name1, String name2, int isRetrieve) {
 		try {
 			String query = "UPDATE history SET retrieve = " + isRetrieve + " WHERE name1 = '" + name1 +"' AND name2 = '" + name2 + "';";
@@ -539,6 +630,12 @@ public class DatabaseDriver {
 		}
 	}
 	
+	/**
+	 * set the history uptodate field
+	 * @param name1
+	 * @param name2
+	 * @param isUpToDate
+	 */
 	public void setHistoryUpToDateField (String name1, String name2, int isUpToDate) {
 		try {
 			String query = "UPDATE history SET uptodate = " + isUpToDate + " WHERE name1 = '" + name1 +"' AND name2 = '" + name2 + "';";
@@ -550,7 +647,12 @@ public class DatabaseDriver {
 		}
 	}
 
-	
+	/**
+	 * update the messages in the history
+	 * @param name1
+	 * @param name2
+	 * @param the messages
+	 */
 	public void updateHistory(String name1, String name2, String text) {
 		try {
 			String query = "UPDATE history SET messages = '" + text + "' WHERE name1 = '" + name1 + "' AND name2 = '" + name2  + "';";

@@ -10,9 +10,8 @@ public class Server extends Thread {
 	private ServerSocket serverSocket;
 
 	/**
-	  * @brief : class constructor
+	  * class constructor
 	  * @param : the port for the server socket
-	  * @returns : none
 	 **/
 	public Server() {
 		try {
@@ -26,9 +25,7 @@ public class Server extends Thread {
 	
 	
 	/**
-	  * @brief : run function of the thread
-	  * @param : none
-	  * @returns: none
+	  * run function of the thread
 	 **/
 	public void run() {
 		

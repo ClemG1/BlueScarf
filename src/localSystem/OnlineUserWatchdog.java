@@ -9,8 +9,9 @@ public class OnlineUserWatchdog extends FileWatchdog {
 		setDelay(1000);
 	}
 	
+	@Override
 	protected void doOnChange() {
-		MainWindow.addOnlineUsers(MainWindow.currentIndex);
+		MainWindow.addOnlineUsers();
 	}
 	
 }

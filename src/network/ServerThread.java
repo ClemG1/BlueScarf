@@ -16,18 +16,15 @@ public class ServerThread extends Thread{
 	public static String newUserData;
 	
 	/**
-	  * @brief : class constructor
+	  * class constructor
 	  * @param : socket to communicate with
-	  * @returns : none
 	 **/
 	public ServerThread (Socket socket) {
 		this.socket = socket;
 	}
 	
 	/**
-	  * @brief : run function of the thread
-	  * @param : none
-	  * @returns: none
+	  * run function of the thread
 	 **/
 	public void run() {
 		try {
@@ -75,9 +72,7 @@ public class ServerThread extends Thread{
 							onlineUsersFile.write(contactData[0], "-");
 						}
 						break;
-					case "-m:" : //format : -m:Name:/10.7.30
-						System.out.println("I received a -m packet");
-						
+					case "-m:" : //format : -m:Name:/10.7.30				
 						String userData[] = msgData.split(":"); //index 0 = name, index 1 = ip
 						
 						String userName = userData[0];
@@ -119,7 +114,6 @@ public class ServerThread extends Thread{
 						}
 						break;
 					case "-s:" : //format : -s:Name:Message
-						System.out.println("I received a -s packet");
 						
 						//write the message in the matching conv file
 						String messageDataParts[] = msgData.split(":"); //0 = name of the person who send the message, 1 = the message
@@ -128,7 +122,6 @@ public class ServerThread extends Thread{
 						String convUser = convUserParts[0].concat(convUserParts[1]);
 						LocalFilesManager messageFile = new LocalFilesManager(convUser + ".txt", LocalFilesManager.getPath() + "conv/");
 						messageFile.write("recv:" + messageDataParts[1], "-");
-						System.out.println("I just write this recv : " + messageDataParts[1] + " in " );
 						MainWindow.displayMessage(messageDataParts[0]);
 						break;
 					default :

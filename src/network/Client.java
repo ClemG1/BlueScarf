@@ -18,9 +18,8 @@ public class Client extends Thread {
 	public static String speakWith;
 	
 	/**
-	  * @brief : class constructor
+	  * class constructor
 	  * @param : ip to connect to, port to connect to 
-	  * @returns : none
 	 **/
 	public Client(InetAddress ipAddress, String messageType) {
 		try {
@@ -34,11 +33,8 @@ public class Client extends Thread {
 		}
 	}
 	
-	/*
-	 * @brief : send a message written by the user by the socket
-	 * @param : none
-	 * @return : none
-	 * @note : print the message which has been send
+	/**
+	 * initialize a conversation between two users
 	 */
 	private void initConversation() {
 		try {			
@@ -54,16 +50,10 @@ public class Client extends Thread {
 		}
 	}
 	
-	private void startConversation() {
-		try {
-			System.out.println("conv thread");
-		}
-		catch (Exception e) {
-			System.out.println(e.toString());
-			e.printStackTrace();
-		}
-	}
-	
+	/**
+	 * send a message to a user
+	 * @param the message
+	 */
 	public static void sendMessage(String toSend) {
 		try {
 			String messageToSend = "-s:" + User.localUserName + ":" + toSend;
@@ -71,7 +61,6 @@ public class Client extends Thread {
 			bufferOut.write(messageToSend);
 			bufferOut.newLine();
 			bufferOut.flush();
-			System.out.println("Message sent");
 			
 		}
 		catch (Exception e) {
@@ -80,6 +69,9 @@ public class Client extends Thread {
 		}
 	}
 	
+	/**
+	 * use to to connect to the network
+	 */
 	private void sendConnectionMsg () {
 		try {
 			
@@ -95,6 +87,9 @@ public class Client extends Thread {
 		}
 	}
 	
+	/**
+	 * use to response to a newcomer
+	 */
 	private void responseMessage() {
 		try {
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
@@ -110,6 +105,9 @@ public class Client extends Thread {
 		}
 	}
 	
+	/**
+	 * use to send an update message to all the other users
+	 */
 	private void updateUserMessage() {
 		try {
 			bufferOut.write("-u:" + ServerThread.newUserData);
@@ -123,6 +121,9 @@ public class Client extends Thread {
 		}
 	}
 	
+	/**
+	 * use to say that we are now deconnected
+	 */
 	private void deconnectionMessage() {
 		try {
 			String deconnectionMessage = "-d:" + User.localUserName + ":" + NetworkManager.localIpAddress.toString();
@@ -138,9 +139,7 @@ public class Client extends Thread {
 	}
 	
 	/**
-	  * @brief : run function of the thread
-	  * @param : none
-	  * @returns: none
+	  * run function of the thread
 	 **/
 	public void run() {
 		try {
@@ -155,7 +154,6 @@ public class Client extends Thread {
 				break;
 			case "-m:" :
 				initConversation ();
-				startConversation();
 				break;
 			case "-u:" :
 				updateUserMessage();
@@ -166,7 +164,6 @@ public class Client extends Thread {
 				socket.close();
 				break;
 			case "-s:" :
-				startConversation();
 				break;
 			default :
 				System.out.println("Message type unkown.");

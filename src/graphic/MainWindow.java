@@ -23,7 +23,6 @@ public class MainWindow extends JFrame {
 	
 	private JPanel contentPanel;
 	private static JPanel onlineUsersPanel;
-	public static int currentIndex; //use to update the online user list
 	private static JPanel chatPanel;
 	private JPanel filesPanel;
 	public static String currentUserInChatWith = User.localUserName;
@@ -109,7 +108,6 @@ public class MainWindow extends JFrame {
 						String[] convFiles = convDirectory.findFilesInDirectory();
 						for(int i = 0; i < convFiles.length; i++ ) {
 							LocalFilesManager convFile = new LocalFilesManager(convFiles[i], LocalFilesManager.getPath() + "conv/");
-							System.out.println("File : " + convFiles[i].trim());
 							String fileNameParts[] = convFiles[i].trim().split("\\."); //index 0 = user name, index 1 = "txt"
 							String userName = fileNameParts[0];
 							
@@ -224,7 +222,7 @@ public class MainWindow extends JFrame {
 			//create a panel for the display of online users
 			onlineUsersPanel = new JPanel();
 			onlineUsersPanel.setBorder(new EmptyBorder(10,10,10,10));
-			addOnlineUsers(0); //start at the first user by default	
+			addOnlineUsers(); //start at the first user by default	
 			contentPanelGridBag.setConstraints(onlineUsersPanel, contentPanelConstraints);
 			contentPanel.add(onlineUsersPanel);
 			OnlineUserWatchdog onlineUserWatchdog = new OnlineUserWatchdog(LocalFilesManager.getPath() + "onlineUsers.txt");
@@ -251,7 +249,7 @@ public class MainWindow extends JFrame {
 	/**
 	 * Add the online user to the online user panel
 	 */
-	public static void addOnlineUsers(int startIndex) {
+	public static void addOnlineUsers() {
 		try {
 			
 			//discover all the user online
@@ -260,119 +258,109 @@ public class MainWindow extends JFrame {
 			String usersTab[] = users.split("-");
 			int numberOfUser = usersTab.length;
 			
-			if(startIndex < numberOfUser) { //update only if the start index match with at least one user
-				//clear old list that might be display
-				onlineUsersPanel.removeAll();
+			//clear old list that might be display
+			onlineUsersPanel.removeAll();
 
-				//define the layout for onlineUsersPanel
-				GridBagLayout onlineUsersGridBag = new GridBagLayout();
-				onlineUsersPanel.setLayout(onlineUsersGridBag);
-				GridBagConstraints onlineUsersConstraints = new GridBagConstraints();
-				onlineUsersConstraints.fill = GridBagConstraints.BOTH;
-				onlineUsersConstraints.gridwidth = GridBagConstraints.REMAINDER;
-				
-				//add 20 users or less to the panel
-				int index = startIndex;
-				currentIndex = startIndex;
-				/*while ((index  <  numberOfUser) && (index < (startIndex+20))) { //the display is limit a 20 users
-					final JButton userButton = new JButton(usersTab[index]);
-					onlineUsersGridBag.setConstraints(userButton, onlineUsersConstraints);
-					onlineUsersPanel.add(userButton);
-					
-					
-					userButton.addMouseListener(new MouseAdapter() {
-						public void mouseClicked(MouseEvent e) {
-							try {
-								String test = userButton.getText().toString();
-								System.out.println(test);
-								LocalFilesManager convFile = new LocalFilesManager(test + ".txt", LocalFilesManager.getPath()+"conv/");
-							}
-							catch (Exception ex) {
-								System.out.println(ex.toString());
-								ex.printStackTrace();
-							}
-						}
-					});
-					
-					index++;
-				}*/
-				final JList<String> userList = new JList<String>(usersTab);
-				userList.setBorder(new EmptyBorder(10, 10, 10, 10));
-				userList.setBackground(new Color(238,238,238));
-				onlineUsersGridBag.setConstraints(userList, onlineUsersConstraints);
-				
-				userList.addListSelectionListener(new ListSelectionListener() {
-					
-					@Override
-					public void valueChanged(ListSelectionEvent lse) {
-						try {
-							if(userList.getValueIsAdjusting()) { //use to prevent the double execution
-								
-								String userName = userList.getSelectedValue();
-								userName = userName.trim();
-								currentUserInChatWith = userName;
-								String userNameParts[] = userName.split(" ");
-								
-								DatabaseDriver database = new DatabaseDriver();
-
-
-								
-								LocalFilesManager contactFile = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
-								String contacts = contactFile.readAllFile();
-								String contactLog[] = contacts.split("-");
-								for(int i = 0; i < contactLog.length; i++) {
-									String contactData[] = contactLog[i].split(":"); //index 0 = name, index 1 = ip
-									if(contactData[0].contains(userName)) {
-										Client.speakWith = userName;
-										Client convClient = new Client(InetAddress.getByName(contactData[1].substring(1)), "-m:");
-										convClient.start();
-										System.out.println("Client started");
-									}
-								}
-								
-								displayMessage(userName);
-							}
-						}
-						catch (Exception e) {
-							System.out.println(e.toString());
-							e.printStackTrace();
-						}
-					}
-				});
-				
-				onlineUsersPanel.add(userList);
-				
-				/*
-				//add scroll button at the bottom
-				onlineUsersConstraints.gridwidth = 1; //reset to default
-				onlineUsersConstraints.weightx = 1.0; //same size for both button
-				JButton scrollDownButton = new JButton("v");
-				onlineUsersGridBag.setConstraints(scrollDownButton, onlineUsersConstraints);
-				onlineUsersPanel.add(scrollDownButton);
-				onlineUsersConstraints.gridwidth = GridBagConstraints.REMAINDER;
-				JButton scrollUpButton = new JButton("^");
-				onlineUsersGridBag.setConstraints(scrollUpButton, onlineUsersConstraints);
-				onlineUsersPanel.add(scrollUpButton);
-				onlineUsersPanel.revalidate();
-				onlineUsersPanel.repaint();
+			//define the layout for onlineUsersPanel
+			GridBagLayout onlineUsersGridBag = new GridBagLayout();
+			onlineUsersPanel.setLayout(onlineUsersGridBag);
+			GridBagConstraints onlineUsersConstraints = new GridBagConstraints();
+			onlineUsersConstraints.fill = GridBagConstraints.BOTH;
+			onlineUsersConstraints.gridwidth = GridBagConstraints.REMAINDER;
 			
-				//event listener for the scroll down button
-				scrollDownButton.addMouseListener(new MouseAdapter() {User.localUserName
-					public void mouseClicked(MouseEvent e) {
-						MainWindow.addOnlineUsers(currentIndex + 20);
-					}
+			/*while ((index  <  numberOfUser) && (index < (startIndex+20))) { //the display is limit a 20 users
+				final JButton userButton = new JButton(usersTab[index]);
+				onlineUsersGridBag.setConstraints(userButton, onlineUsersConstraints);
+				onlineUsersPanel.add(userButton);
 				
-				});
 				
-				//event listener for the scroll up bécraséutton
-				scrollUpButton.addMouseListener(new MouseAdapter() {
+				userButton.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
-						if(currentIndex - 20 >= 0) {
-							MainWindow.addOnlineUsers(currentIndex - 20);
+						try {
+							String test = userButton.getText().toString();
+							System.out.println(test);
+							LocalFilesManager convFile = new LocalFilesManager(test + ".txt", LocalFilesManager.getPath()+"conv/");
+						}
+						catch (Exception ex) {
+							System.out.println(ex.toString());
+							ex.printStackTrace();
 						}
 					}
-				});*/
-			}
+				});
+				
+				index++;
+			}*/
+			final JList<String> userList = new JList<String>(usersTab);
+			userList.setBorder(new EmptyBorder(10, 10, 10, 10));
+			userList.setBackground(new Color(238,238,238));
+			onlineUsersGridBag.setConstraints(userList, onlineUsersConstraints);
+			
+			userList.addListSelectionListener(new ListSelectionListener() {
+				
+				@Override
+				public void valueChanged(ListSelectionEvent lse) {
+					try {
+						if(userList.getValueIsAdjusting()) { //use to prevent the double execution
+							
+							String userName = userList.getSelectedValue();
+							userName = userName.trim();
+							currentUserInChatWith = userName;
+							
+							LocalFilesManager contactFile = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
+							String contacts = contactFile.readAllFile();
+							String contactLog[] = contacts.split("-");
+							for(int i = 0; i < contactLog.length; i++) {
+								String contactData[] = contactLog[i].split(":"); //index 0 = name, index 1 = ip
+								if(contactData[0].contains(userName)) {
+									Client.speakWith = userName;
+									Client convClient = new Client(InetAddress.getByName(contactData[1].substring(1)), "-m:");
+									convClient.start();
+									System.out.println("Client started");
+								}
+							}
+							
+							displayMessage(userName);
+						}
+					}
+					catch (Exception e) {
+						System.out.println(e.toString());
+						e.printStackTrace();
+					}
+				}
+			});
+			
+			onlineUsersPanel.add(userList);
+			
+			/*
+			//add scroll button at the bottom
+			onlineUsersConstraints.gridwidth = 1; //reset to default
+			onlineUsersConstraints.weightx = 1.0; //same size for both button
+			JButton scrollDownButton = new JButton("v");
+			onlineUsersGridBag.setConstraints(scrollDownButton, onlineUsersConstraints);
+			onlineUsersPanel.add(scrollDownButton);
+			onlineUsersConstraints.gridwidth = GridBagConstraints.REMAINDER;
+			JButton scrollUpButton = new JButton("^");
+			onlineUsersGridBag.setConstraints(scrollUpButton, onlineUsersConstraints);
+			onlineUsersPanel.add(scrollUpButton);
+			onlineUsersPanel.revalidate();
+			onlineUsersPanel.repaint();
+		
+			//event listener for the scroll down button
+			scrollDownButton.addMouseListener(new MouseAdapter() {User.localUserName
+				public void mouseClicked(MouseEvent e) {
+					MainWindow.addOnlineUsers(currentIndex + 20);
+				}
+			
+			});
+			
+			//event listener for the scroll up bécraséutton
+			scrollUpButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					if(currentIndex - 20 >= 0) {
+						MainWindow.addOnlineUsers(currentIndex - 20);
+					}
+				}
+			});*/
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());

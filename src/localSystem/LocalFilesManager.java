@@ -9,9 +9,8 @@ public class LocalFilesManager {
 	private File localFile; //use to stock the File that this class creates
 	
 	/**
-	  * @brief : class constructor
+	  * class constructor
 	  * @param : name of the file
-	  * @returns : none
 	 **/
 	public LocalFilesManager (String name, String path) {
 		try {
@@ -26,18 +25,15 @@ public class LocalFilesManager {
 	}
 	
 	/**
-	  * @brief : use to find the path of the current directory
-	  * @param : none
-	  * @returns : a path
+	  * use to find the path of the current directory
+	  * @return : a path
 	 **/
 	public static String getPath() {
 		return System.getProperty("user.dir") + "/configFiles/" ;
 	}
 	
 	/**
-	  * @brief : create a new file
-	  * @param : none
-	  * @returns : none
+	  * create a new file
 	 **/
 	public void createFile() {
 		try {
@@ -52,9 +48,7 @@ public class LocalFilesManager {
 	}
 	
 	/**
-	  * @brief : delete a file
-	  * @param : none
-	  * @returns : none
+	  * delete a file
 	 **/
 	public void deleteFile () {
 		if (! this.localFile.delete()) {
@@ -63,9 +57,8 @@ public class LocalFilesManager {
 	}
 	
 	/**
-	  * @brief : checkout if the file is writable, otherwise the file is set writable
+	  * checkout if the file is writable, otherwise the file is set writable
 	  * @param : a file
-	  * @returns : none
 	 **/
 	private void manageWritePermission () {
 		if(! this.localFile.canWrite()) {
@@ -74,10 +67,8 @@ public class LocalFilesManager {
 	}
 	
 	/**
-	  * @brief : write a string into a file
+	  * Write a string into a file. If the file doesn't exist it is created
 	  * @param : the string to write
-	  * @returns : none
-	  * @note : if the file doesn't exist it is created
 	 **/
 	public void write (String toWrite , String separator) {
 		if (!this.localFile.exists()) {
@@ -114,9 +105,8 @@ public class LocalFilesManager {
 	}
 	
 	/**
-	  * @brief : checkout if the file is writable, otherwise the file is set writable
+	  * checkout if the file is writable, otherwise the file is set writable
 	  * @param : a file
-	  * @returns : none
 	 **/
 	private void manageReadPermission () {
 		if(! this.localFile.canRead()) {
@@ -125,9 +115,8 @@ public class LocalFilesManager {
 	}
 	
 	/**
-	  * @brief : write a string into a file
+	  * write a string into a file
 	  * @param : the file, the string to write
-	  * @returns : none
 	 **/
 	public String readAllFile () {
 		try {
@@ -151,9 +140,8 @@ public class LocalFilesManager {
 	}
 	
 	/**
-	  * @brief : delete a line in a file
+	  * delete a line in a file
 	  * @param : the file, the string to delete, the separator in the file
-	  * @returns : none
 	 **/
 	public void deleteInFile (String toDelete) {
 		
@@ -177,6 +165,10 @@ public class LocalFilesManager {
 		}
 	}
 	
+	/**
+	 * find all the files in a directory
+	 * @return an array with the name of all the files
+	 */
 	public String[] findFilesInDirectory() {
 		try {
 			if(this.localFile.isDirectory()) {
