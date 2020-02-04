@@ -6,7 +6,6 @@ import java.io.OutputStreamWriter;
 import java.net.*;
 import java.util.Scanner;
 
-import localSystem.ConvFileWatchdog;
 import localSystem.LocalFilesManager;
 import localSystem.User;
 
@@ -61,9 +60,6 @@ public class Client extends Thread {
 			speakWith = speakWith.trim();
 			String speakWithPatrs[] = speakWith.split(" ");
 			String convFileName = speakWithPatrs[0].concat(speakWithPatrs[1]);
-			
-			ConvFileWatchdog convFileWatchdog = new ConvFileWatchdog(LocalFilesManager.getPath() + "conv/" + convFileName + ".txt");
-			convFileWatchdog.start();
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -71,27 +67,14 @@ public class Client extends Thread {
 		}
 	}
 	
-	public static void sendMessage() {
+	public static void sendMessage(String toSend) {
 		try {
-			speakWith = speakWith.trim();
-			String speakWithPatrs[] = speakWith.split(" ");
-			String convFileName = speakWithPatrs[0].concat(speakWithPatrs[1]);
-			
-			LocalFilesManager convFile = new LocalFilesManager(convFileName + ".txt", LocalFilesManager.getPath() + "conv/");
-			
-			String conv = convFile.readAllFile();
-			System.out.println("conv length : " + conv.length());
-			String messages[] = conv.split("-");
-			String header = messages[messages.length-1].substring(0,5);
-			if(header.contains("send:")) {
-				String latestMessage = messages[messages.length-1].substring(5); //the five first characters are "send:"
+			String messageToSend = "-s:" + User.localUserName + ":" + toSend;
 				
-				String messageToSend = "-s:" + User.localUserName + ":" + latestMessage;
-				
-				bufferOut.write(messageToSend);
-				bufferOut.newLine();
-				bufferOut.flush();
-			}
+			bufferOut.write(messageToSend);
+			bufferOut.newLine();
+			bufferOut.flush();
+			System.out.println("Message sent");
 			
 		}
 		catch (Exception e) {
