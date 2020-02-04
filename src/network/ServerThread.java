@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.*;
 
 import database.DatabaseDriver;
+import graphic.MainWindow;
 import localSystem.LocalFilesManager;
 import localSystem.User;
 
@@ -127,7 +128,7 @@ public class ServerThread extends Thread{
 						String convUser = convUserParts[0].concat(convUserParts[1]);
 						LocalFilesManager messageFile = new LocalFilesManager(convUser + ".txt", LocalFilesManager.getPath() + "conv/");
 						messageFile.write("recv:" + messageDataParts[1], '-');
-						
+						MainWindow.displayMessage(messageDataParts[0]);
 						break;
 					default :
 						System.out.println("Incorrect message header.");

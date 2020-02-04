@@ -306,7 +306,7 @@ public class MainWindow extends JFrame {
 								if(!database.historyIsRetrieve(User.localUserName, userName)) {
 									String newMessages = convFile.readAllFile();
 									convFile.overwrite(history, '\0');
-									convFile.write(newMessages, '-');
+									convFile.write(newMessages, '\0');
 									database.setHistoryRetrieveField(User.localUserName, userName, 1);
 									database.setHistoryUpToDateField(User.localUserName, userName, 0);
 								}
