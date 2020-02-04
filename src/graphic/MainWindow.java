@@ -395,7 +395,8 @@ public class MainWindow extends JFrame {
 			String userNameParts[] = userName.split(" ");
 			String convFileName = userNameParts[0].concat(userNameParts[1]);
 			final LocalFilesManager convFile = new LocalFilesManager(convFileName + ".txt",LocalFilesManager.getPath() + "conv/");
-			if(!history.isEmpty()) {
+
+			if(! history.isEmpty()) {
 				convFile.overwrite(history, '-');
 			}
 			String messages = convFile.readAllFile();
