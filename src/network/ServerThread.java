@@ -47,7 +47,7 @@ public class ServerThread extends Thread{
 						
 						//Retrieve the information on all current online user 
 						String allOnlineUsers = contact.readAllFile();
-						String onlineUsers[] = allOnlineUsers.split("|");
+						String onlineUsers[] = allOnlineUsers.split("\\|");
 						
 						//send to the newcomer all the other user
 						String newContactData[] = msgData.split(":"); //index 0 = name, index 1 = ip address
@@ -55,7 +55,7 @@ public class ServerThread extends Thread{
 						responseClient.start();
 						responseClient.join();
 						
-						contact.write(msgData, "|"); //update our contact file
+						contact.write(msgData, "\\|"); //update our contact file
 						
 						//inform the others about the newcomer
 						for(int i = 0; i < onlineUsers.length; i++) {
@@ -68,10 +68,10 @@ public class ServerThread extends Thread{
 						
 						//update online user from contact
 						onlineUsersFile.overwrite("","");
-						String contactEntriesOnConnection[] = contact.readAllFile().split("|");
+						String contactEntriesOnConnection[] = contact.readAllFile().split("\\|");
 						for (int i = 0; i < contactEntriesOnConnection.length; i++) {
 							String contactData[] = contactEntriesOnConnection[i].split(":");
-							onlineUsersFile.write(contactData[0], "|");
+							onlineUsersFile.write(contactData[0], "\\|");
 						}
 						break;
 					case "-m:" : //format : -m:Name:/10.7.30				
@@ -98,10 +98,10 @@ public class ServerThread extends Thread{
 						
 						//update online user from contact
 						onlineUsersFile.overwrite("","");
-						String contactEntriesOnUpdate[] = contact.readAllFile().split("|");
+						String contactEntriesOnUpdate[] = contact.readAllFile().split("\\|");
 						for (int i = 0; i < contactEntriesOnUpdate.length; i++) {
 							String contactData[] = contactEntriesOnUpdate[i].trim().split(":");
-							onlineUsersFile.write(contactData[0], "|");
+							onlineUsersFile.write(contactData[0], "\\|");
 						}
 						break;
 					case "-d:" :
@@ -110,10 +110,10 @@ public class ServerThread extends Thread{
 						
 						//update online user from contact
 						onlineUsersFile.overwrite("","");
-						String contactEntriesOnDeconnection[] = contact.readAllFile().split("|");
+						String contactEntriesOnDeconnection[] = contact.readAllFile().split("\\|");
 						for (int i = 0; i < contactEntriesOnDeconnection.length; i++) {
 							String contactData[] = contactEntriesOnDeconnection[i].trim().split(":");
-							onlineUsersFile.write(contactData[0], "|");
+							onlineUsersFile.write(contactData[0], "\\|");
 						}
 						break;
 					case "-s:" : //format : -s:Name:Message
@@ -125,7 +125,7 @@ public class ServerThread extends Thread{
 						String convUserParts[] = messageDataParts[0].split(" ");
 						String convUser = convUserParts[0].concat(convUserParts[1]);
 						LocalFilesManager messageFile = new LocalFilesManager(convUser + ".txt", LocalFilesManager.getPath() + "conv/");
-						messageFile.write("recv:" + messageDataParts[1], "|");
+						messageFile.write("recv:" + messageDataParts[1], "\\|");
 						if(newMessageFrom.contains(MainWindow.currentUserInChatWith)) {
 							MainWindow.displayMessage(messageDataParts[0]);
 						}

@@ -60,11 +60,11 @@ public class NetworkManager {
 			
 			//add our user name to onlineUsers file and refresh the main window
 			LocalFilesManager onlineUsers = new LocalFilesManager("onlineUsers.txt", LocalFilesManager.getPath());
-			onlineUsers.write(User.localUserName, "-");
+			onlineUsers.write(User.localUserName, "\\|");
 			
 			//add our ip to contact.txt file matching our user name
 			LocalFilesManager contact = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
-			contact.write(User.localUserName + ":" + localIpAddress.toString(), "-"); 
+			contact.write(User.localUserName + ":" + localIpAddress.toString(), "\\|"); 
 			
 			DatabaseDriver database = new DatabaseDriver();
 			String ipToConnect = database.getIpToConnect();

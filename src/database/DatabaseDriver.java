@@ -45,7 +45,7 @@ public class DatabaseDriver {
 		catch (Exception e) {
 			UnknownDatabaseWindow.start();
 			LocalFilesManager databaseFile = new LocalFilesManager("databaseConf.txt",LocalFilesManager.getPath());
-			databaseFile.overwrite("none", "|");
+			databaseFile.overwrite("none", "\\|");
 		}
 	}
 	
