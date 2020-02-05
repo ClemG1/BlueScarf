@@ -85,7 +85,7 @@ public class ServerThread extends Thread{
 						String history = database.retrieveHistory(User.localUserName, userName);
 						
 						LocalFilesManager convFile = new LocalFilesManager(userNameParts[0] + userNameParts[1] + ".txt", LocalFilesManager.getPath()+"conv/");
-						convFile.overwrite(history, "");
+						//convFile.overwrite(history, "");
 						
 						Client.speakWith = userName;
 						
@@ -118,19 +118,21 @@ public class ServerThread extends Thread{
 						break;
 					case "-s:" : //format : -s:Name:Message
 						
-						//write the message in the matching conv file
-						String messageDataParts[] = msgData.split(":"); //0 = name of the person who send the message, 1 = the message
-						messageDataParts[0] = messageDataParts[0].trim();
-						newMessageFrom = messageDataParts[0];
-						String convUserParts[] = messageDataParts[0].split(" ");
-						String convUser = convUserParts[0].concat(convUserParts[1]);
-						LocalFilesManager messageFile = new LocalFilesManager(convUser + ".txt", LocalFilesManager.getPath() + "conv/");
-						messageFile.write("recv:" + messageDataParts[1], "|");
-						if(newMessageFrom.contains(MainWindow.currentUserInChatWith)) {
-							MainWindow.displayMessage(messageDataParts[0]);
-						}
-						else {
-							NewMessageWindow.start();
+						if(!msgData.isEmpty()) {
+							//write the message in the matching conv file
+							String messageDataParts[] = msgData.split(":"); //0 = name of the person who send the message, 1 = the message
+							messageDataParts[0] = messageDataParts[0].trim();
+							newMessageFrom = messageDataParts[0];
+							String convUserParts[] = messageDataParts[0].split(" ");
+							String convUser = convUserParts[0].concat(convUserParts[1]);
+							LocalFilesManager messageFile = new LocalFilesManager(convUser + ".txt", LocalFilesManager.getPath() + "conv/");
+							messageFile.write("recv:" + messageDataParts[1], "|");
+							if(newMessageFrom.contains(MainWindow.currentUserInChatWith)) {
+								MainWindow.displayMessage(messageDataParts[0]);
+							}
+							else {
+								NewMessageWindow.start();
+							}
 						}
 						break;
 					default :
