@@ -16,6 +16,7 @@ public class Client extends Thread {
 	private String messageType;
 	private static BufferedWriter bufferOut;
 	public static String speakWith;
+	public static boolean keepTalking = true;
 	
 	/**
 	  * class constructor
@@ -61,6 +62,8 @@ public class Client extends Thread {
 			bufferOut.write(messageToSend);
 			bufferOut.newLine();
 			bufferOut.flush();
+			
+			System.out.println("message sent");
 			
 		}
 		catch (Exception e) {
@@ -154,6 +157,9 @@ public class Client extends Thread {
 				break;
 			case "-m:" :
 				initConversation ();
+				while(keepTalking) {}
+				interrupt();
+				System.out.println("client stop");
 				break;
 			case "-u:" :
 				updateUserMessage();
@@ -164,6 +170,9 @@ public class Client extends Thread {
 				socket.close();
 				break;
 			case "-s:" :
+				while(keepTalking) {}
+				interrupt();
+				System.out.println("client stop");
 				break;
 			default :
 				System.out.println("Message type unkown.");

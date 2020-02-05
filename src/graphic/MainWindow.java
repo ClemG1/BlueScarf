@@ -27,7 +27,6 @@ public class MainWindow extends JFrame {
 	private static JPanel chatPanel;
 	private JPanel filesPanel;
 	public static String currentUserInChatWith = User.localUserName;
-	public static ArrayList<String> chatWith = new ArrayList<String>();
 
 	/**
 	 * Launch the application.
@@ -304,6 +303,8 @@ public class MainWindow extends JFrame {
 					try {
 						if(userList.getValueIsAdjusting()) { //use to prevent the double execution
 							
+							Client.keepTalking = false;
+							
 							String userName = userList.getSelectedValue();
 							userName = userName.trim();
 							currentUserInChatWith = userName;
@@ -314,13 +315,10 @@ public class MainWindow extends JFrame {
 							for(int i = 0; i < contactLog.length; i++) {
 								String contactData[] = contactLog[i].split(":"); //index 0 = name, index 1 = ip
 								if(contactData[0].contains(userName)) {
-									if(!chatWith.contains(userName)) {
-										Client.speakWith = userName;
-										Client convClient = new Client(InetAddress.getByName(contactData[1].substring(1)), "-m:");
-										convClient.start();
-										chatWith.add(userName);
-										System.out.println("Client started");
-									}
+									Client.speakWith = userName;
+									Client convClient = new Client(InetAddress.getByName(contactData[1].substring(1)), "-m:");
+									convClient.start();
+									System.out.println("Client started");
 								}
 							}
 							
