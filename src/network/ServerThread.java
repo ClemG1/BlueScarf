@@ -92,6 +92,8 @@ public class ServerThread extends Thread{
 						Client convClient = new Client(InetAddress.getByName(userData[1].substring(1)), "-s:");
 						convClient.start();
 						
+						MainWindow.chatWith.add(userName);
+						
 						break;
 					case "-u:" :
 						contact.write(msgData, "");
@@ -106,6 +108,8 @@ public class ServerThread extends Thread{
 						break;
 					case "-d:" :
 						contact.deleteInFile(msgData);
+						
+						MainWindow.chatWith.remove(msgData);
 						
 						//update online user from contact
 						onlineUsersFile.overwrite("","");

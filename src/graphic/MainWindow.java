@@ -7,6 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,6 +27,7 @@ public class MainWindow extends JFrame {
 	private static JPanel chatPanel;
 	private JPanel filesPanel;
 	public static String currentUserInChatWith = User.localUserName;
+	public static ArrayList<String> chatWith = new ArrayList<String>();
 
 	/**
 	 * Launch the application.
@@ -312,10 +314,13 @@ public class MainWindow extends JFrame {
 							for(int i = 0; i < contactLog.length; i++) {
 								String contactData[] = contactLog[i].split(":"); //index 0 = name, index 1 = ip
 								if(contactData[0].contains(userName)) {
-									Client.speakWith = userName;
-									Client convClient = new Client(InetAddress.getByName(contactData[1].substring(1)), "-m:");
-									convClient.start();
-									System.out.println("Client started");
+									if(!chatWith.contains(userName)) {
+										Client.speakWith = userName;
+										Client convClient = new Client(InetAddress.getByName(contactData[1].substring(1)), "-m:");
+										convClient.start();
+										chatWith.add(userName);
+										System.out.println("Client started");
+									}
 								}
 							}
 							
@@ -388,8 +393,9 @@ public class MainWindow extends JFrame {
 			//check if the history has been retrieve
 			DatabaseDriver database =  new DatabaseDriver();
 			
-			String history = database.retrieveHistory(User.localUserName, userName);
 			if(!database.historyIsRetrieve(User.localUserName, userName)) {
+				System.out.println("History loaded");
+				String history = database.retrieveHistory(User.localUserName, userName);
 				String newMessages = convFile.readAllFile();
 				convFile.overwrite(history, "");
 				convFile.write(newMessages, "");
