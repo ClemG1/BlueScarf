@@ -153,7 +153,7 @@ public class LocalFilesManager {
 			String dataParts[] = toModify.split("\\|");
 			for(int k =  0; k < dataParts.length-1; k++) {
 				if(! dataParts[k].contains(toDelete)) {
-					newData += dataParts[k] + "\\|";
+					newData += dataParts[k] + "|";
 				}
 			}
 			overwrite(newData, "");

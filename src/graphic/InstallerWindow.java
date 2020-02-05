@@ -123,7 +123,9 @@ public class InstallerWindow extends JFrame{
 						databaseFile.write(user, "|");
 						databaseFile.write(password, "|");
 						DatabaseDriver database = new DatabaseDriver();
-						database.createDatabase();
+						if(!database.alreadyCreated()) {
+							database.createDatabase();
+						}
 						dispose();
 					}
 					else {

@@ -21,7 +21,7 @@ public class DatabaseDriver {
 	public DatabaseDriver() {
 		try {
 			LocalFilesManager databaseFile = new LocalFilesManager("databaseConf.txt",LocalFilesManager.getPath());
-			String databaseData[] = databaseFile.readAllFile().split("\\*"); //o = database, 1 = username, 2 = password
+			String databaseData[] = databaseFile.readAllFile().split("\\|"); //o = database, 1 = username, 2 = password
 			
 			if(databaseData[0].contains("none")) {
 				UnknownDatabaseWindow.start();
@@ -46,6 +46,27 @@ public class DatabaseDriver {
 			UnknownDatabaseWindow.start();
 			LocalFilesManager databaseFile = new LocalFilesManager("databaseConf.txt",LocalFilesManager.getPath());
 			databaseFile.overwrite("none", "|");
+		}
+	}
+	
+	/**
+	 * check if the database has already been created on the network
+	 * @return a boolean
+	 */
+	public boolean alreadyCreated() {
+		try {
+			boolean exist = true;
+			String query = "SHOW TABLES LIKE 'user'";
+			ResultSet result = this.statement.executeQuery(query);
+			if(!result.next()) {
+				exist = false;
+			}
+			return exist;
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+			return false;
 		}
 	}
 	
