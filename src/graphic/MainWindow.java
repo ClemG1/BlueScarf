@@ -65,9 +65,9 @@ public class MainWindow extends JFrame {
 						LocalFilesManager onlineUsersFile = new LocalFilesManager("onlineUsers.txt", LocalFilesManager.getPath());
 						
 						String allOnlineUsers = onlineUsersFile.readAllFile();
-						String onlineUsers[] = allOnlineUsers.split("-");
+						String onlineUsers[] = allOnlineUsers.split("|");
 						String allContacts = contact.readAllFile();
-						String contacts[] = allContacts.split("-");
+						String contacts[] = allContacts.split("|");
 						
 						//ip to connect management
 						if(onlineUsers.length == 1) { //I'm the last one on the network
@@ -256,7 +256,7 @@ public class MainWindow extends JFrame {
 			//discover all the user online
 			LocalFilesManager filesManager = new LocalFilesManager("onlineUsers.txt",LocalFilesManager.getPath());
 			String users = filesManager.readAllFile();
-			String usersTab[] = users.split("-");
+			String usersTab[] = users.split("|");
 			int numberOfUser = usersTab.length;
 			
 			//clear old list that might be display
@@ -311,7 +311,7 @@ public class MainWindow extends JFrame {
 							
 							LocalFilesManager contactFile = new LocalFilesManager("contact.txt", LocalFilesManager.getPath());
 							String contacts = contactFile.readAllFile();
-							String contactLog[] = contacts.split("-");
+							String contactLog[] = contacts.split("|");
 							for(int i = 0; i < contactLog.length; i++) {
 								String contactData[] = contactLog[i].split(":"); //index 0 = name, index 1 = ip
 								if(contactData[0].contains(userName)) {
@@ -403,7 +403,7 @@ public class MainWindow extends JFrame {
 
 			String messages = convFile.readAllFile();
 			messages = messages.trim();
-			String messagesTab[] = messages.split("-");
+			String messagesTab[] = messages.split("|");
 			int numberOfMessages = messagesTab.length;
 			
 			//define the layout for the chat panel
@@ -460,7 +460,7 @@ public class MainWindow extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					String toSend = draftArea.getText();
 					Client.sendMessage(toSend);
-					convFile.write("send:" + toSend, "-");
+					convFile.write("send:" + toSend, "|");
 					displayMessage(chatWith);
 				}
 			});

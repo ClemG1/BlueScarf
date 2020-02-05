@@ -119,9 +119,9 @@ public class InstallerWindow extends JFrame{
 				else {
 					LocalFilesManager databaseFile = new LocalFilesManager("databaseConf.txt", LocalFilesManager.getPath());
 					if(databaseFile.readAllFile().contains("none")) {
-						databaseFile.overwrite(link, "*");
-						databaseFile.write(user, "*");
-						databaseFile.write(password, "*");
+						databaseFile.overwrite(link, "|");
+						databaseFile.write(user, "|");
+						databaseFile.write(password, "|");
 						DatabaseDriver database = new DatabaseDriver();
 						database.createDatabase();
 						dispose();
