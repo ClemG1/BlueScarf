@@ -461,7 +461,7 @@ public class MainWindow extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					String toSend = draftArea.getText();
 					Client.sendMessage(toSend);
-					convFile.write("send:" + toSend, "\\|");
+					convFile.write("send:" + toSend, "|");
 					displayMessage(chatWith);
 				}
 			});
