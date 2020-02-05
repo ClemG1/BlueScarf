@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_qHw7UEhXEeq5OJgV2ypdWA" name="deconnection">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_qLY3EEhXEeq5OJgV2ypdWA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_qID2QEhXEeq5OJgV2ypdWA" name="Interaction1">
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_rDb5YEhXEeq5OJgV2ypdWA" name="MainWindow" coveredBy="_uaiYEEhXEeq5OJgV2ypdWA"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_sYzJ0EhXEeq5OJgV2ypdWA" name="Client" coveredBy="_uai_IEhXEeq5OJgV2ypdWA _0D7CcEhXEeq5OJgV2ypdWA _85FsUEhXEeq5OJgV2ypdWA"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_x0Pe0EhXEeq5OJgV2ypdWA" name="otherUsersServer" coveredBy="_0D7CcUhXEeq5OJgV2ypdWA _35JAgEhXEeq5OJgV2ypdWA"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_2Q5QUEhXEeq5OJgV2ypdWA" name="otherLocalFiles" coveredBy="_35JAgUhXEeq5OJgV2ypdWA"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_69b38EhXEeq5OJgV2ypdWA" name="DatabaseDriver" coveredBy="_85FsUUhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_uaiYEEhXEeq5OJgV2ypdWA" name="Message3SendEvent" covered="_rDb5YEhXEeq5OJgV2ypdWA" message="_uahJ8EhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_uai_IEhXEeq5OJgV2ypdWA" name="Message3ReceiveEvent" covered="_sYzJ0EhXEeq5OJgV2ypdWA" message="_uahJ8EhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_0D7CcEhXEeq5OJgV2ypdWA" name="Message7SendEvent" covered="_sYzJ0EhXEeq5OJgV2ypdWA" message="_0D6bYEhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_0D7CcUhXEeq5OJgV2ypdWA" name="Message7ReceiveEvent" covered="_x0Pe0EhXEeq5OJgV2ypdWA" message="_0D6bYEhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_35JAgEhXEeq5OJgV2ypdWA" name="Message11SendEvent" covered="_x0Pe0EhXEeq5OJgV2ypdWA" message="_35IZcEhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_35JAgUhXEeq5OJgV2ypdWA" name="Message11ReceiveEvent" covered="_2Q5QUEhXEeq5OJgV2ypdWA" message="_35IZcEhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_85FsUEhXEeq5OJgV2ypdWA" name="Message15SendEvent" covered="_sYzJ0EhXEeq5OJgV2ypdWA" message="_85FFQEhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_85FsUUhXEeq5OJgV2ypdWA" name="Message15ReceiveEvent" covered="_69b38EhXEeq5OJgV2ypdWA" message="_85FFQEhXEeq5OJgV2ypdWA"/>
+    <message xmi:type="uml:Message" xmi:id="_uahJ8EhXEeq5OJgV2ypdWA" name="start(Mode : deconnection)" messageSort="asynchCall" receiveEvent="_uai_IEhXEeq5OJgV2ypdWA" sendEvent="_uaiYEEhXEeq5OJgV2ypdWA"/>
+    <message xmi:type="uml:Message" xmi:id="_0D6bYEhXEeq5OJgV2ypdWA" name="sendDeconnectionMessage()" messageSort="asynchCall" receiveEvent="_0D7CcUhXEeq5OJgV2ypdWA" sendEvent="_0D7CcEhXEeq5OJgV2ypdWA"/>
+    <message xmi:type="uml:Message" xmi:id="_35IZcEhXEeq5OJgV2ypdWA" name="updateContactLog()" messageSort="asynchCall" receiveEvent="_35JAgUhXEeq5OJgV2ypdWA" sendEvent="_35JAgEhXEeq5OJgV2ypdWA"/>
+    <message xmi:type="uml:Message" xmi:id="_85FFQEhXEeq5OJgV2ypdWA" name="uploadConversations()" messageSort="asynchCall" receiveEvent="_85FsUUhXEeq5OJgV2ypdWA" sendEvent="_85FsUEhXEeq5OJgV2ypdWA"/>
+  </packagedElement>
+</uml:Model>

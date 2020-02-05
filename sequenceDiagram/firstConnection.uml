@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_K4gC8EhXEeq5OJgV2ypdWA" name="firstConnection">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_K8RIoEhXEeq5OJgV2ypdWA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_K44dcEhXEeq5OJgV2ypdWA" name="Interaction1">
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_TDYZsEhXEeq5OJgV2ypdWA" name="User" coveredBy="_WIkB8EhXEeq5OJgV2ypdWA _bJwD4EhXEeq5OJgV2ypdWA"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_VLWLwEhXEeq5OJgV2ypdWA" name="Server" coveredBy="_WIkpAEhXEeq5OJgV2ypdWA"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_W_8V4EhXEeq5OJgV2ypdWA" name="Client" coveredBy="_bJwD4UhXEeq5OJgV2ypdWA _fWCeIUhXEeq5OJgV2ypdWA _fWWnMEhXEeq5OJgV2ypdWA _ioa04UhXEeq5OJgV2ypdWA"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_dBQYEEhXEeq5OJgV2ypdWA" name="DatabaseDriver" coveredBy="_fWDFMEhXEeq5OJgV2ypdWA _fWWAIUhXEeq5OJgV2ypdWA _iobb8EhXEeq5OJgV2ypdWA _fWTj4EhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_WIkB8EhXEeq5OJgV2ypdWA" name="Message3SendEvent" covered="_TDYZsEhXEeq5OJgV2ypdWA" message="_WIja4EhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_WIkpAEhXEeq5OJgV2ypdWA" name="Message3ReceiveEvent" covered="_VLWLwEhXEeq5OJgV2ypdWA" message="_WIja4EhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_bJwD4EhXEeq5OJgV2ypdWA" name="Message7SendEvent" covered="_TDYZsEhXEeq5OJgV2ypdWA" message="_bJvc0EhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_bJwD4UhXEeq5OJgV2ypdWA" name="Message7ReceiveEvent" covered="_W_8V4EhXEeq5OJgV2ypdWA" message="_bJvc0EhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_fWCeIUhXEeq5OJgV2ypdWA" name="Message11SendEvent" covered="_W_8V4EhXEeq5OJgV2ypdWA" message="_fWCeIEhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_fWDFMEhXEeq5OJgV2ypdWA" name="Message11ReceiveEvent" covered="_dBQYEEhXEeq5OJgV2ypdWA" message="_fWCeIEhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="_fWTj4EhXEeq5OJgV2ypdWA" name="BehaviorExecutionSpecification14" covered="_dBQYEEhXEeq5OJgV2ypdWA" finish="_fWWAIUhXEeq5OJgV2ypdWA" start="_fWDFMEhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_fWWAIUhXEeq5OJgV2ypdWA" name="Message16SendEvent" covered="_dBQYEEhXEeq5OJgV2ypdWA" message="_fWWAIEhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_fWWnMEhXEeq5OJgV2ypdWA" name="Message16ReceiveEvent" covered="_W_8V4EhXEeq5OJgV2ypdWA" message="_fWWAIEhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_ioa04UhXEeq5OJgV2ypdWA" name="Message18SendEvent" covered="_W_8V4EhXEeq5OJgV2ypdWA" message="_ioa04EhXEeq5OJgV2ypdWA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_iobb8EhXEeq5OJgV2ypdWA" name="Message18ReceiveEvent" covered="_dBQYEEhXEeq5OJgV2ypdWA" message="_ioa04EhXEeq5OJgV2ypdWA"/>
+    <message xmi:type="uml:Message" xmi:id="_WIja4EhXEeq5OJgV2ypdWA" name="start()" messageSort="asynchCall" receiveEvent="_WIkpAEhXEeq5OJgV2ypdWA" sendEvent="_WIkB8EhXEeq5OJgV2ypdWA"/>
+    <message xmi:type="uml:Message" xmi:id="_bJvc0EhXEeq5OJgV2ypdWA" name="start(Mode : Connection)" messageSort="asynchCall" receiveEvent="_bJwD4UhXEeq5OJgV2ypdWA" sendEvent="_bJwD4EhXEeq5OJgV2ypdWA"/>
+    <message xmi:type="uml:Message" xmi:id="_fWCeIEhXEeq5OJgV2ypdWA" name="getIpToContact()" receiveEvent="_fWDFMEhXEeq5OJgV2ypdWA" sendEvent="_fWCeIUhXEeq5OJgV2ypdWA"/>
+    <message xmi:type="uml:Message" xmi:id="_fWWAIEhXEeq5OJgV2ypdWA" name="null" messageSort="reply" receiveEvent="_fWWnMEhXEeq5OJgV2ypdWA" sendEvent="_fWWAIUhXEeq5OJgV2ypdWA"/>
+    <message xmi:type="uml:Message" xmi:id="_ioa04EhXEeq5OJgV2ypdWA" name="writeMyIp()" messageSort="asynchCall" receiveEvent="_iobb8EhXEeq5OJgV2ypdWA" sendEvent="_ioa04UhXEeq5OJgV2ypdWA"/>
+  </packagedElement>
+</uml:Model>
