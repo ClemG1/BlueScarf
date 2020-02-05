@@ -21,6 +21,10 @@ NB : If you just installed BlueScarf, you only have an admin account : login = r
 * You are currently using the version 1.0. You can only send messages to the other users.
 * For more information please read our manual in our report
 
+## **Other Informations**
+
+You can find the design of the project (COO) on the 'design' branch
+
 ### Author
 
 Developed by Nozahic Morvan and Gehin Clement
