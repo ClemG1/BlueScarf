@@ -1,4 +1,0 @@
-rm configFiles/onlineUsers.txt
-rm configFiles/contact.txt
-touch configFiles/onlineUsers.txt
-touch configFiles/contact.txt

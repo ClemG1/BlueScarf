@@ -1,17 +1,24 @@
-# BlueScarf
+# **BlueScarf**
 
-# NORMES #
-+ the constants will be in UPPERCASE
-+ the variables will respect the camel case (thisIsACamelCase)
-+ the classes and the name of each files will start with a uppercase letter
-+ the functions will respect the camel case
-+ to describe each function you need to respect the following statment :
-	/*
-	 *@brief : write what the function do
-	 *@param : list the parameters | none if there is no parameter
-	 *@returns : what the function returns | none if the function returns nothing
-	 *@note : this is optional, use it if you want to add an important observation on the function (e.g. suppose that the cell is well formed)
-	*/
-+ all new functionalities will be developed on an independant branch
-+ all new functionalities will be tested on the beta branch before add to the final app on the master branch
-+ all the design (UML) can be find on the design branch
+## **How to install BlueScarf**
+
+-Make sure that you have a mysql database on your network.
+-Make sure that you have an account whit writing permission on your database
+-To install BlueScarf you can either : 1- write ./install in your terminal
+                                       2- start AppInstaller from your favorite IDE (windows users). Warning : Don't forget to add 'mysql-connector.jar' to the build path of your IDE. You can find it in this directory.
+
+## **How to start BlueScarf**
+
+-Make sure that you installed BlueScarf first
+-To start BlueScarf you can either : 1- write ./start in your terminal
+                                     2- start App from your favorite IDE (windows users). Warning : Don't forget to add 'mysql-connector.jar' to the build path of your IDE. You can find it in this directory.
+NB : If you just installed BlueScarf you only have an admin account : login = root, password = Iamgroot.
+
+## **How to use BlueScarf**
+
+-You are currently using the version 1.0. You can only send messages to the other users.
+-For more information please read our manual in our report
+
+### Author
+
+Developed by Nozahic Morvan and Gehin Clement
