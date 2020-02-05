@@ -37,7 +37,7 @@ public class NewMessageWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public NewMessageWindow() {
-		setBounds(100, 100, 450, 175);
+		setBounds(100, 100, 350, 175);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -46,7 +46,7 @@ public class NewMessageWindow extends JFrame {
 		JTextPane txtpnNewMessage = new JTextPane();
 		txtpnNewMessage.setBackground(new Color(238,238,238));
 		txtpnNewMessage.setText("You have received a new message from " + ServerThread.newMessageFrom + ".");
-		txtpnNewMessage.setBounds(24, 46, 450, 26);
+		txtpnNewMessage.setBounds(24, 46, 350, 26);
 		contentPane.add(txtpnNewMessage);
 		
 		JButton btnOk = new JButton("OK");
